@@ -1,0 +1,15 @@
+.home-search {
+  font-size: 1em;
+  width: 100%;
+}
+
+.home-search-container {
+  width: 33%;
+  height: 100px;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
