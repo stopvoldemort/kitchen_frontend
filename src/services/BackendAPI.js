@@ -1,14 +1,15 @@
+const BASE_URL = "http://localhost:3000/"
+
 export default class BackendAPI {
 
   static fetchCities() {
-    return fetch("http://localhost:3000/")
+    return fetch(BASE_URL)
       .then(res => res.json())
   }
 
   static fetchKitchens(searchTerm) {
-    let data = new FormData();
-    data.append("city", searchTerm);
-    return fetch("http://localhost:3000/kitchens", {method: "POST", body: data})
+    const url = `${BASE_URL}/kitchens?query=${searchTerm}`
+    return fetch(url)
       .then(res => res.json())
   }
 

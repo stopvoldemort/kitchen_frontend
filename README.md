@@ -11,6 +11,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * 'semantic-ui-react'
 * 'semantic-ui-css'
 * 'redux-thunk'
+* 'cuid'
 
 
 

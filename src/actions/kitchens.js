@@ -11,6 +11,7 @@ export function fetchCities() {
 
 export function fetchKitchens(searchTerm) {
   return function(dispatch) {
+    dispatch({type: "LOADING_KITCHENS"})
     BackendAPI.fetchKitchens(searchTerm)
       .then(json => {
         dispatch({type: "FETCH_KITCHENS", payload: json}

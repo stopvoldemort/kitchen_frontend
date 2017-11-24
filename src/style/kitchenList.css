@@ -1,0 +1,33 @@
+[class*="col-"] {
+    padding: 10px;
+    float: left;
+}
+
+.col-1 {
+  position: sticky;
+  top: 0;
+  width: 25%;
+}
+
+.col-2 {
+  left: 25%;
+  width: 35%;
+}
+
+.col-3 {
+  position: sticky;
+  top: 0;
+  left: 60%;
+  width: 40%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.test {
+  font-size: 50px;
+}

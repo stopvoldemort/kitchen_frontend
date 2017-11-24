@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import '../../style/home.css'
-import { fetchKitchens } from '../../actions/kitchens'
 import { Redirect } from 'react-router-dom'
 
 
@@ -21,9 +20,16 @@ class SearchForm extends Component {
 
   handleSubmit = (ev) => {
     ev.preventDefault()
-    const searchTerm = this.state.input
-    this.props.fetchKitchens(searchTerm)
-    this.setState({input: "", redirectToKitchenList: true}, () => console.log(this.state))
+    this.setState({redirectToKitchenList: true})
+  }
+
+  searchSubmitted = () => {
+    if (this.state.redirectToKitchenList) {
+      const path = `/kitchens/?query=${this.state.input}`
+      return <Redirect push to={path}/>
+    } else {
+      return null
+    }
   }
 
   render() {
@@ -36,7 +42,7 @@ class SearchForm extends Component {
             <Button className="teal" value="Search">Search</Button>
           </div>
         </form>
-        {this.state.redirectToKitchenList ? <Redirect to="/kitchens"/> : null}
+        {this.searchSubmitted()}
       </div>
     )
   }
@@ -44,10 +50,4 @@ class SearchForm extends Component {
 
 const mapStateToProps = (state) => ({ cities: state.kitchens.cities })
 
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    fetchKitchens: (searchTerm) => dispatch(fetchKitchens(searchTerm))
-  })
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchForm)
+export default connect(mapStateToProps)(SearchForm)
