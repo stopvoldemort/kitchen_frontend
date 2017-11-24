@@ -3,6 +3,7 @@ import { Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import '../../style/home.css'
 import { fetchKitchens } from '../../actions/kitchens'
+import { Redirect } from 'react-router-dom'
 
 
 class SearchForm extends Component {
@@ -10,41 +11,43 @@ class SearchForm extends Component {
   // Would be good to add autocomplete. I have already passed an array of cities down as a prop
 
   state = {
-    input: ""
+    input: "",
+    redirectToKitchenList: false
   }
 
   handleChange = (ev) => {
     this.setState({input: ev.target.value})
-    console.log("props", this.props);
   }
 
-  handleClick = () => {
-    // Need to set this up so it passes the search term into fetchKittens()
-    this.props.fetchKitchens()
-    this.setState({input: ""})
+  handleSubmit = (ev) => {
+    ev.preventDefault()
+    const searchTerm = this.state.input
+    this.props.fetchKitchens(searchTerm)
+    this.setState({input: "", redirectToKitchenList: true}, () => console.log(this.state))
   }
 
   render() {
+
     return (
       <div className="home-search-container" >
-        <div className="ui action input">
-          <input type="text" onChange={this.handleChange} value={this.state.input} className="home-search" placeholder="Where do you want to cook?" />
-          <Button className="teal" onClick={this.handleClick} value="Search">Search</Button>
-        </div>
+        <form onSubmit={this.handleSubmit}>
+          <div className="ui action input">
+            <input type="text" onChange={this.handleChange} value={this.state.input} className="home-search" placeholder="Where do you want to cook?" />
+            <Button className="teal" value="Search">Search</Button>
+          </div>
+        </form>
+        {this.state.redirectToKitchenList ? <Redirect to="/kitchens"/> : null}
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log("state", state);
-  return {cities: state.kitchens.cities}
-}
+const mapStateToProps = (state) => ({ cities: state.kitchens.cities })
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchKitchens: () => dispatch(fetchKitchens())
-  }
+  return ({
+    fetchKitchens: (searchTerm) => dispatch(fetchKitchens(searchTerm))
+  })
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchForm)

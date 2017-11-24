@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import SearchForm from './SearchForm.js'
 import '../../style/home.css'
-import { fetchCities } from '../../actions/general'
+import { fetchCities } from '../../actions/kitchens'
 import { connect } from 'react-redux'
 
 class HomeContainer extends Component {

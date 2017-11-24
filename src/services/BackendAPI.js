@@ -5,8 +5,10 @@ export default class BackendAPI {
       .then(res => res.json())
   }
 
-  static fetchKitchens() {
-    return fetch("http://localhost:3000/kitchens")
+  static fetchKitchens(searchTerm) {
+    let data = new FormData();
+    data.append("city", searchTerm);
+    return fetch("http://localhost:3000/kitchens", {method: "POST", body: data})
       .then(res => res.json())
   }
 

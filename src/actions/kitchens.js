@@ -1,11 +1,19 @@
 import BackendAPI from '../services/BackendAPI.js'
 
-export function fetchKitchens() {
+export function fetchCities() {
   return function(dispatch) {
-    BackendAPI.fetchKitchens()
-      .then(json => console.log(json))
-      // .then(json => {
-      //   dispatch({type: "FETCH_CITIES", payload: json}
-      // )})
+    BackendAPI.fetchCities()
+      .then(json => {
+        dispatch({type: "FETCH_CITIES", payload: json}
+      )})
+  }
+}
+
+export function fetchKitchens(searchTerm) {
+  return function(dispatch) {
+    BackendAPI.fetchKitchens(searchTerm)
+      .then(json => {
+        dispatch({type: "FETCH_KITCHENS", payload: json}
+      )})
   }
 }
