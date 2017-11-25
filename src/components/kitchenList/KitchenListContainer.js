@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchKitchens } from '../../actions/kitchens'
 import '../../style/kitchenList.css'
 import { KitchenList } from './KitchenList.js'
-import { KitchenListLoading } from './KitchenListLoading.js'
+import { Loading } from './Loading.js'
 import { KitchenFilter } from './KitchenFilter.js'
 import { KitchenMap } from './KitchenMap.js'
 
@@ -29,7 +29,6 @@ class KitchenListContainer extends Component {
     let filteredKitchens = this.props.kitchens.slice()
     this.state.filters.forEach(filter => {
       filteredKitchens = filteredKitchens.filter(kitchen => (kitchen[filter]))
-      console.log("kitchens", filteredKitchens);
     })
     return filteredKitchens
   }
@@ -41,7 +40,7 @@ class KitchenListContainer extends Component {
           <KitchenFilter importFilters={this.importFilters}/>
         </div>
         <div className="col-2" >
-          {this.props.isLoading ? <KitchenListLoading className="col"/> : <KitchenList className="col" kitchens={this.filterKitchens()}/>}
+          {this.props.isLoading ? <Loading className="col"/> : <KitchenList className="col" kitchens={this.filterKitchens()}/>}
         </div>
         <div className="col-3">
           <KitchenMap />
@@ -52,7 +51,6 @@ class KitchenListContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("state is:", state)
   return ({
     kitchens: state.kitchens.list,
     isLoading: state.kitchens.isLoading

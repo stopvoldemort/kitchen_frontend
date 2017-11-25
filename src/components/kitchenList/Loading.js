@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const KitchenListLoading = () => {
+export const Loading = () => {
   return (
     <div className="ui segment">
       <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>

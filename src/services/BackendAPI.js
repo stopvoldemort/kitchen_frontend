@@ -8,7 +8,13 @@ export default class BackendAPI {
   }
 
   static fetchKitchens(searchTerm) {
-    const url = `${BASE_URL}/kitchens?query=${searchTerm}`
+    const url = `${BASE_URL}kitchens?query=${searchTerm}`
+    return fetch(url)
+      .then(res => res.json())
+  }
+
+  static fetchKitchen(id) {
+    const url = `${BASE_URL}kitchens/${id}`
     return fetch(url)
       .then(res => res.json())
   }

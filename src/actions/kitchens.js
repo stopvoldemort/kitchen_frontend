@@ -18,3 +18,14 @@ export function fetchKitchens(searchTerm) {
       )})
   }
 }
+
+export function fetchKitchen(id) {
+  return function(dispatch) {
+    dispatch({type: "LOADING_KITCHENS"})
+    BackendAPI.fetchKitchen(id)
+      .then(json => {
+        dispatch({type: "FETCH_KITCHEN", payload: json}
+      )}
+    )
+  }
+}

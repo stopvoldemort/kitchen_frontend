@@ -9,13 +9,15 @@ const KitchenCard = ({ kitchen }) => {
     return (totalStars/kitchen.reviews.length)
   }
 
+  const picUrl = "http://hgtvhome.sndimg.com/content/dam/images/hgtv/editorial/blogs/unsized/Kayla/RX-Frigidaire_kitchen-design-ideas_3.jpg"
+
   return (
     <div className="ui card">
       <div className="image">
-        <img src="http://hgtvhome.sndimg.com/content/dam/images/hgtv/editorial/blogs/unsized/Kayla/RX-Frigidaire_kitchen-design-ideas_3.jpg" alt="pic"/>
+        <img src={picUrl} alt="pic"/>
       </div>
       <div className="content">
-        <a className="header">{kitchen.title}</a>
+        <a className="header" href={`/kitchens/${kitchen.id}`} >{kitchen.title}</a>
         <div className="meta">
           <span className="date">
             ${kitchen.base_price} to ${maxPrice}
