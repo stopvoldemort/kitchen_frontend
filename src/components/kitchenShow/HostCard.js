@@ -3,11 +3,10 @@ import { Card, Image } from 'semantic-ui-react'
 
 
 export const HostCard = ({ host }) => {
-  console.log("host", host);
   const picUrl = "https://cdn.pixabay.com/photo/2017/04/01/21/37/beautiful-2194518_1280.jpg"
   return (
     <div>
-      <h3>Your Host</h3>
+      <h2>Your Host</h2>
       <Card>
         <Image src={picUrl} />
         <Card.Content>

@@ -4,6 +4,7 @@ import { fetchKitchen } from '../../actions/kitchens'
 import { Loading } from '../kitchenList/Loading.js'
 import { HostCard } from './HostCard.js'
 import { KitchenShowHeader } from './KitchenShowHeader.js'
+import { KitchenInfo } from './KitchenInfo.js'
 
 
 class KitchenShowContainer extends Component {
@@ -24,7 +25,7 @@ class KitchenShowContainer extends Component {
                 <HostCard host={this.props.kitchen.owner} />
               </div>
               <div className="col-2" >
-                <p>column 2</p>
+                <KitchenInfo kitchen={this.props.kitchen} />
               </div>
               <div className="col-3">
                 <p>column 3</p>

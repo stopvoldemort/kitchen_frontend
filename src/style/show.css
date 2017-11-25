@@ -21,10 +21,6 @@ img {
 	display: block;
 }
 
-.guest-max {
-  color: #4183c4
-}
-
 [class*="col-"] {
     padding: 10px;
     float: left;
@@ -46,4 +42,22 @@ img {
   top: 0;
   left: 70%;
   width: 30%;
+}
+
+.equipment .yes {
+  color: black;
+}
+
+.equipment .no {
+  color: gray;
+  text-decoration: line-through;
+}
+
+.col-left {
+  width: 50%;
+}
+
+.col-right {
+  left: 50%;
+  width: 50%;
 }
