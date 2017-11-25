@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import { Button } from 'semantic-ui-react'
 import '../../style/show.css'
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -51,7 +50,7 @@ class KitchenAvailability extends Component {
         />
         <br /><br />
         <div className="ui input guest-counter">
-          <input type="text" onChange={this.handleChange} type="number" placeholder="Number of guests" />
+          <input onChange={this.handleChange} type="number" placeholder="Number of guests" />
         </div>
         <br /><br />
         <div className="price-wrapper">

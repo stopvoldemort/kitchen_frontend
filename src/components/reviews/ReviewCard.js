@@ -7,7 +7,7 @@ export const ReviewCard = ({ review }) => {
   const stars = `${review.stars} stars`
 
   return (
-    <Card>
+    <Card fluid >
        <Card.Content header={stars} />
        <Card.Content description={review.review} />
      </Card>
