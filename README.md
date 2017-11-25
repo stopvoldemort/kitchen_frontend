@@ -12,6 +12,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * 'semantic-ui-css'
 * 'redux-thunk'
 * 'cuid'
+* 'react-datepicker'
+* 'moment'
 
 
 

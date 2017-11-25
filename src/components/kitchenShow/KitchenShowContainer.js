@@ -5,6 +5,7 @@ import { Loading } from '../kitchenList/Loading.js'
 import { HostCard } from './HostCard.js'
 import { KitchenShowHeader } from './KitchenShowHeader.js'
 import { KitchenInfo } from './KitchenInfo.js'
+import KitchenAvailability from './KitchenAvailability.js'
 
 
 class KitchenShowContainer extends Component {
@@ -28,7 +29,7 @@ class KitchenShowContainer extends Component {
                 <KitchenInfo kitchen={this.props.kitchen} />
               </div>
               <div className="col-3">
-                <p>column 3</p>
+                <KitchenAvailability kitchen={this.props.kitchen}/>
               </div>
             </div>
           </div>
