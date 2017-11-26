@@ -20,7 +20,7 @@ class KitchenListContainer extends Component {
   importFilters = (equipment) => {
     let filters = []
     for (var e in equipment) {
-      equipment[e] ? filters.push(e) : null
+      if (equipment[e]) filters.push(e)
     }
     this.setState({filters: filters})
   }

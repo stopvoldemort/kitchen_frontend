@@ -53,4 +53,10 @@ export default class BackendAPI {
       .then(res => res.json())
   }
 
+  static fetchReservations(userID) {
+    const url = `${BASE_URL}reservations/${userID}`
+    return fetch(url)
+      .then(res => res.json())
+  }
+
 }

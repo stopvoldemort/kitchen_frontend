@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router'
 import '../../style/show.css'
 import { createReservation } from '../../actions/reservations.js'
 
@@ -13,7 +14,8 @@ class KitchenAvailability extends Component {
     super(props)
     this.state = {
       selectedDate: moment(),
-      guests: 0
+      guests: 0,
+      redirectToReservations: false
     };
   }
 
@@ -57,7 +59,7 @@ class KitchenAvailability extends Component {
         }
       }
       this.props.createReservation(bookObj)
-      // On successful reservation creation, need to redirect to My Reservations page
+      this.setState({redirectToReservations: true})
     }
   }
 
@@ -84,6 +86,7 @@ class KitchenAvailability extends Component {
         <br /><br />
         <div className="button-wrapper">
           <button onClick={this.handleBook} className="ui primary massive button">Book Now</button>
+          {(this.state.redirectToReservations) ? <Redirect push to="/reservations" /> : null}
         </div>
       </div>
     )

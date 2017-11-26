@@ -55,6 +55,7 @@ class NavbarContainer extends Component {
 
             <Container>
               <Menu.Item position='right'>
+                <Link to="/reservations"><Button>My Reservations</Button></Link>
                 <Button onClick={this.handleLogout}>Logout</Button>
               </Menu.Item>
             </Container>

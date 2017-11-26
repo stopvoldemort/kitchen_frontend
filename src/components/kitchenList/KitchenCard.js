@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const KitchenCard = ({ kitchen }) => {
 
@@ -17,7 +18,7 @@ const KitchenCard = ({ kitchen }) => {
         <img src={picUrl} alt="pic"/>
       </div>
       <div className="content">
-        <a className="header" href={`/kitchens/${kitchen.id}`} >{kitchen.title}</a>
+        <Link className="header" to={`/kitchens/${kitchen.id}`} >{kitchen.title}</Link>
         <div className="meta">
           <span className="date">${kitchen.base_price} to ${maxPrice}</span>
           <span className="date card-max-guests">Up to {kitchen.max_guests} guests</span>

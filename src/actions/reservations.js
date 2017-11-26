@@ -8,3 +8,12 @@ export function createReservation(bookObj) {
       })
   }
 }
+
+export function fetchReservations(userID) {
+  return function(dispatch) {
+    BackendAPI.fetchReservations(userID)
+      .then(json => {
+        dispatch({type: "FETCH_RESERVATIONS", payload: json})
+      })
+  }
+}
