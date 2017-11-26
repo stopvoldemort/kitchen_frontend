@@ -23,11 +23,15 @@
 
 /* Clear floats after the columns */
 .row:after {
-    content: "";
-    display: table;
-    clear: both;
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .test {
   font-size: 50px;
+}
+
+.card-max-guests {
+  float: right;
 }

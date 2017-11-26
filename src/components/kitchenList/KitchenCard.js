@@ -19,9 +19,10 @@ const KitchenCard = ({ kitchen }) => {
       <div className="content">
         <a className="header" href={`/kitchens/${kitchen.id}`} >{kitchen.title}</a>
         <div className="meta">
-          <span className="date">
-            ${kitchen.base_price} to ${maxPrice}
-          </span>
+          <span className="date">${kitchen.base_price} to ${maxPrice}</span>
+          <span className="date card-max-guests">Up to {kitchen.max_guests} guests</span>
+
+
         </div>
         <div className="description">{kitchen.blurb}</div>
       </div>

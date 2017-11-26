@@ -39,4 +39,18 @@ export default class BackendAPI {
       .then(res => res.json())
   }
 
+  static createReservation(bookObj) {
+    const url = `${BASE_URL}reservations`
+    const myInit = {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify(bookObj)
+    }
+    return fetch(url, myInit)
+      .then(res => res.json())
+  }
+
 }
