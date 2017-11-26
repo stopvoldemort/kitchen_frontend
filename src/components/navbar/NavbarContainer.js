@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import { Input, Menu, Button } from 'semantic-ui-react'
+import { Input, Menu, Button, Form, Message, Container } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { login } from '../../actions/users'
 import { logout } from '../../actions/users'
+import '../../style/navbar.css'
 
 
 class NavbarContainer extends Component {
-
-  // Navbar needs to be connected to the store to know if someone is logged in
 
   state = {
     email: "",
@@ -25,6 +24,7 @@ class NavbarContainer extends Component {
   }
 
   handleLogout = () => {this.props.logout()}
+  resetLoginFail = () => {this.props.resetLoginFail()}
 
   render() {
     return (
@@ -38,32 +38,35 @@ class NavbarContainer extends Component {
           </Menu.Item>
 
           {(!this.props.loggedIn) ? (
-            <div>
+            <Container>
               <Menu.Item position='right'>
-                <form onSubmit={this.handleLogin}>
+                <Form onSubmit={this.handleLogin}>
                   <Input type="text" onChange={this.handleEmailChange} placeholder='Email' value={this.state.email} />
                   <Input type="password" onChange={this.handlePasswordChange} placeholder='Password' value={this.state.password} />
                   <Button type="submit">Login</Button>
-                </form>
+                </Form>
               </Menu.Item>
 
               <Menu.Item>
                 <Button>Sign Up</Button>
               </Menu.Item>
-            </div>
+            </Container>
           ) : (
 
-            <div>
-
+            <Container>
               <Menu.Item position='right'>
                 <Button onClick={this.handleLogout}>Logout</Button>
               </Menu.Item>
-
-            </div>
+            </Container>
           )}
 
 
         </Menu>
+        {(this.props.loginFail) ? (
+          <Message negative onDismiss={this.resetLoginFail}>
+            <Message.Header>Your username and/or password are incorrect</Message.Header>
+          </Message>
+        ) : null }
       </div>
     )
   }
@@ -72,17 +75,18 @@ class NavbarContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     loggedIn: state.user.loggedIn,
-    currentUser: state.user.currentUser
+    currentUser: state.user.currentUser,
+    loginFail: state.user.loginFail,
+    resetLoginFail: state.user.resetLoginFail
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     login: (email, password) => dispatch(login(email, password)),
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
+    resetLoginFail: () => dispatch({type: "RESET_LOGIN_FAIL"})
   }
 }
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavbarContainer)

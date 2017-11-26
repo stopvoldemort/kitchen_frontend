@@ -4,7 +4,11 @@ export function login(email, password) {
   return function(dispatch) {
     BackendAPI.login(email, password)
       .then(json => {
-        dispatch({type: "LOGIN", payload: json})
+        if (json.id) {
+          dispatch({type: "LOGIN", payload: json})
+        } else {
+          dispatch({type: "LOGIN_FAILED"})
+        }
       })
   }
 }
