@@ -48,7 +48,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return ({fetchKitchen: (id) => dispatch(fetchKitchen(id))})
+  return ({
+    fetchKitchen: (id) => dispatch(fetchKitchen(id))
+  })
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(KitchenShowContainer)

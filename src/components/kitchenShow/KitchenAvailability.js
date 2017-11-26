@@ -31,7 +31,7 @@ class KitchenAvailability extends Component {
 
   handleChange = (ev) => {
     const guests = ev.target.value
-    this.setState({guests: guests}, () => console.log(this.state))
+    this.setState({guests: guests})
   }
 
   estimatedPrice = () => {

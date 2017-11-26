@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Input, Menu, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { login } from '../../actions/users'
+import { logout } from '../../actions/users'
 
 
 class NavbarContainer extends Component {
@@ -11,6 +14,17 @@ class NavbarContainer extends Component {
     email: "",
     password: ""
   }
+
+  handleEmailChange = (ev) => {this.setState({email: ev.target.value})}
+  handlePasswordChange = (ev) => {this.setState({password: ev.target.value})}
+
+  handleLogin = (ev) => {
+    ev.preventDefault()
+    this.props.login(this.state.email, this.state.password)
+    this.setState({email: "", password: ""})
+  }
+
+  handleLogout = () => {this.props.logout()}
 
   render() {
     return (
@@ -23,15 +37,31 @@ class NavbarContainer extends Component {
             </Link>
           </Menu.Item>
 
-          <Menu.Item position='right'>
-            <Input placeholder='Email' value={this.state.email} />
-            <Input placeholder='Password' value={this.state.password} />
-            <Button >Login</Button>
-          </Menu.Item>
+          {(!this.props.loggedIn) ? (
+            <div>
+              <Menu.Item position='right'>
+                <form onSubmit={this.handleLogin}>
+                  <Input type="text" onChange={this.handleEmailChange} placeholder='Email' value={this.state.email} />
+                  <Input type="password" onChange={this.handlePasswordChange} placeholder='Password' value={this.state.password} />
+                  <Button type="submit">Login</Button>
+                </form>
+              </Menu.Item>
 
-          <Menu.Item>
-            <Button>Sign Up</Button>
-          </Menu.Item>
+              <Menu.Item>
+                <Button>Sign Up</Button>
+              </Menu.Item>
+            </div>
+          ) : (
+
+            <div>
+
+              <Menu.Item position='right'>
+                <Button onClick={this.handleLogout}>Logout</Button>
+              </Menu.Item>
+
+            </div>
+          )}
+
 
         </Menu>
       </div>
@@ -39,4 +69,20 @@ class NavbarContainer extends Component {
   }
 }
 
-export default NavbarContainer
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.user.loggedIn,
+    currentUser: state.user.currentUser
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (email, password) => dispatch(login(email, password)),
+    logout: () => dispatch(logout())
+  }
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavbarContainer)

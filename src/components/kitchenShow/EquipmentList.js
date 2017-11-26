@@ -3,9 +3,6 @@ import '../../style/show.css'
 
 
 export const EquipmentList = ({ kitchen }) => {
-  console.log("kitchen", kitchen);
-
-
   return (
     <div className="equipment row">
       <p className={(kitchen.food_processor) ? "col-left yes" : "col-left no"}>Food Processor</p>

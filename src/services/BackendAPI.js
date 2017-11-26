@@ -19,4 +19,24 @@ export default class BackendAPI {
       .then(res => res.json())
   }
 
+  static login(email, password) {
+    const url = `${BASE_URL}login`
+    const myInit = {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({email: email, password: password})
+    }
+    return fetch(url, myInit)
+      .then(res => res.json())
+  }
+
+  static logout() {
+    const url = `${BASE_URL}logout`
+    return fetch(url)
+      .then(res => res.json())
+  }
+
 }
