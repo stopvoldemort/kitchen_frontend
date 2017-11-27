@@ -5,7 +5,7 @@ import '../../style/kitchenList.css'
 import { KitchenList } from './KitchenList.js'
 import { Loading } from './Loading.js'
 import { KitchenFilter } from './KitchenFilter.js'
-import { KitchenMap } from './KitchenMap.js'
+import GoogleApiWrapper from './KitchenMap.js'
 
 
 class KitchenListContainer extends Component {
@@ -40,10 +40,10 @@ class KitchenListContainer extends Component {
           <KitchenFilter importFilters={this.importFilters}/>
         </div>
         <div className="col-2" >
-          {this.props.isLoading ? <Loading className="col"/> : <KitchenList className="col" kitchens={this.filterKitchens()}/>}
+          {this.props.isLoading ? <Loading className="col"/> : <KitchenList kitchens={this.filterKitchens()}/>}
         </div>
         <div className="col-3">
-          <KitchenMap />
+          <GoogleApiWrapper  kitchens={this.filterKitchens()}/>
         </div>
       </div>
     )

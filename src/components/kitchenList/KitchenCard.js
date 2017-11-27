@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Card, Icon, Image } from 'semantic-ui-react'
 
 const KitchenCard = ({ kitchen }) => {
 
@@ -13,28 +14,25 @@ const KitchenCard = ({ kitchen }) => {
   const picUrl = "http://hgtvhome.sndimg.com/content/dam/images/hgtv/editorial/blogs/unsized/Kayla/RX-Frigidaire_kitchen-design-ideas_3.jpg"
 
   return (
-    <div className="ui card">
-      <div className="image">
-        <img src={picUrl} alt="pic"/>
-      </div>
-      <div className="content">
-        <Link className="header" to={`/kitchens/${kitchen.id}`} >{kitchen.title}</Link>
-        <div className="meta">
-          <span className="date">${kitchen.base_price} to ${maxPrice}</span>
-          <span className="date card-max-guests">Up to {kitchen.max_guests} guests</span>
-
-
-        </div>
-        <div className="description">{kitchen.blurb}</div>
-      </div>
-      <div className="extra content">
+    <Card>
+      <Image src={picUrl} />
+      <Card.Content>
+        <Link className="header" to={`/kitchens/${kitchen.id}`} >
+          <Card.Header>{kitchen.title}</Card.Header>
+        </Link>
+        <Card.Meta>Up to {kitchen.max_guests} guests</Card.Meta>
+        <Card.Meta>${kitchen.base_price} to ${maxPrice}</Card.Meta>
+        <Card.Description>{kitchen.blurb}</Card.Description>
+      </Card.Content>
+      <Card.Content extra>
         <a>
-          <i className="star icon"></i>
+          <Icon name='star' />
           {avgRating()} stars
         </a>
-      </div>
-    </div>
-  )
+      </Card.Content>
+    </Card>  )
 }
+
+
 
 export default KitchenCard

@@ -21,3 +21,12 @@ export function logout() {
       })
   }
 }
+
+export function createUser(userObj) {
+  return function(dispatch) {
+    BackendAPI.createUser(userObj)
+      .then(json => {
+        dispatch({type: "CREATE_USER", payload: json})
+      })
+  }
+}

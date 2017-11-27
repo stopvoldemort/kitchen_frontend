@@ -6,26 +6,20 @@
 .col-1 {
   position: sticky;
   top: 0;
-  width: 25%;
+  width: 15%;
 }
 
 .col-2 {
-  left: 25%;
-  width: 35%;
+  left: 15%;
+  width: 100px;
 }
 
 .col-3 {
   position: sticky;
   top: 0;
-  left: 60%;
-  width: 40%;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+  left: 40%;
+  width: 60%;
+  height: 500px;
 }
 
 .test {

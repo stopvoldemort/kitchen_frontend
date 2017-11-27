@@ -38,7 +38,7 @@ class SearchForm extends Component {
       <div className="home-search-container" >
         <form onSubmit={this.handleSubmit}>
           <div className="ui action input">
-            <input type="text" onChange={this.handleChange} value={this.state.input} className="home-search" placeholder="Where do you want to cook?" />
+            <input type="text" onChange={this.handleChange} value={this.state.input} className="home-search" placeholder="What city are you in?" />
             <Button className="teal" value="Search">Search</Button>
           </div>
         </form>

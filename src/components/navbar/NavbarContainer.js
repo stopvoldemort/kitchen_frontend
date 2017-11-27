@@ -48,7 +48,7 @@ class NavbarContainer extends Component {
               </Menu.Item>
 
               <Menu.Item>
-                <Button>Sign Up</Button>
+                <Link to='/user/new'><Button primary>Sign Up</Button></Link>
               </Menu.Item>
             </Container>
           ) : (
@@ -57,6 +57,9 @@ class NavbarContainer extends Component {
               <Menu.Item position='right'>
                 <Link to="/reservations"><Button>My Reservations</Button></Link>
                 <Button onClick={this.handleLogout}>Logout</Button>
+              </Menu.Item>
+              <Menu.Item position='right'>
+                <Link to="/reservations"><Button>Add Your Kitchen</Button></Link>
               </Menu.Item>
             </Container>
           )}

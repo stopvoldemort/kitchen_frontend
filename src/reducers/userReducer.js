@@ -1,6 +1,7 @@
 export function userReducer(state = {
   loggedIn: false,
   loginFail: false,
+  signUpFail: false,
   currentUser: {}
 }, action) {
   switch (action.type) {
@@ -16,6 +17,9 @@ export function userReducer(state = {
     case "LOGOUT":
       const newState = {...state, loggedIn: false, currentUser: {}}
       return newState
+    case "CREATE_USER":
+      const signedUpState = {...state, loggedIn: true, currentUser: action.payload, signUpFail: false}
+      return signedUpState
     default:
       return state
   }
