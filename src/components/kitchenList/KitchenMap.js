@@ -10,7 +10,6 @@ export class KitchenMap extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <Map
         google={this.props.google}

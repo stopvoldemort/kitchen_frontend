@@ -65,4 +65,11 @@ export default class BackendAPI {
       .then(res => res.json())
   }
 
+  static createKitchen(kitchenObj) {
+    const url = `${BASE_URL}kitchens`
+    const myInit = makePostInit(kitchenObj)
+    return fetch(url, myInit)
+      .then(res => res.json())
+  }
+
 }

@@ -48,18 +48,20 @@ class NavbarContainer extends Component {
               </Menu.Item>
 
               <Menu.Item>
-                <Link to='/user/new'><Button primary>Sign Up</Button></Link>
+                <Link to='/users/new'><Button primary>Sign Up</Button></Link>
               </Menu.Item>
             </Container>
           ) : (
 
             <Container>
               <Menu.Item position='right'>
-                <Link to="/reservations"><Button>My Reservations</Button></Link>
-                <Button onClick={this.handleLogout}>Logout</Button>
-              </Menu.Item>
-              <Menu.Item position='right'>
-                <Link to="/reservations"><Button>Add Your Kitchen</Button></Link>
+                <Menu.Item>
+                  <Link to="/reservations"><Button>My Reservations</Button></Link>
+                  <Button onClick={this.handleLogout}>Logout</Button>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link to="/kitchens/new"><Button>Add Your Kitchen</Button></Link>
+                </Menu.Item>
               </Menu.Item>
             </Container>
           )}

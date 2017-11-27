@@ -1,26 +1,36 @@
 import React from 'react'
 import { Card, Image } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 
 export const ReservationCard = ({ reservation }) => {
 
   const humanize = (date) => {
     let dateArr = date.split("-")
+    console.log(dateArr);
     const months = ["I am a month that will never be", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    return months[dateArr[1]] + " " + dateArr[2] + ", " + dateArr[0]
+    return months[parseInt(dateArr[1],10)] + " " + dateArr[2] + ", " + dateArr[0]
   }
+
+  console.log(reservation);
+
+  const kitchenUrl = `/kitchens/${reservation.kitchen.id}`
 
   const picUrl = "http://hgtvhome.sndimg.com/content/dam/images/hgtv/editorial/blogs/unsized/Kayla/RX-Frigidaire_kitchen-design-ideas_3.jpg"
 
   return (
     <Card centered>
-      <Image src={picUrl} />
+      <Link to={kitchenUrl}>
+        <Image src={picUrl} />
+      </Link>
       <Card.Content>
         <Card.Header>
           {humanize(reservation.date)}
         </Card.Header>
         <Card.Meta>
-          <span className='date'>{reservation.kitchen.title}</span>
+          <Link to={kitchenUrl}>
+            <span className='date'>{reservation.kitchen.title}</span>
+          </Link>
         </Card.Meta>
         <Card.Description>
           {reservation.kitchen.blurb}

@@ -4,7 +4,8 @@ import moment from 'moment';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 import '../../style/show.css'
-import { createReservation } from '../../actions/reservations.js'
+import { createReservation, resetNewReservationCreated } from '../../actions/reservations.js'
+import { Message } from 'semantic-ui-react'
 
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -15,7 +16,8 @@ class KitchenAvailability extends Component {
     this.state = {
       selectedDate: moment(),
       guests: 0,
-      redirectToReservations: false
+      notLoggedIn: false,
+      noGuests: false
     };
   }
 
@@ -45,9 +47,9 @@ class KitchenAvailability extends Component {
 
   handleBook = () => {
     if (!this.props.currentUser.id) {
-      console.log("you are not signed in")
+      this.setState({notLoggedIn: true})
     } else if (!this.state.guests) {
-      console.log("how many guests?")
+      this.setState({noGuests: true})
     } else {
       const date = this.state.selectedDate.toDate()
       const dateString = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate()
@@ -59,11 +61,15 @@ class KitchenAvailability extends Component {
         }
       }
       this.props.createReservation(bookObj)
-      this.setState({redirectToReservations: true})
     }
   }
 
+  resetBookFail = () => {this.setState({notLoggedIn: false, noGuests: false})}
+
+  componentWillUnmount = () => {this.props.resetNewReservationCreated()}
+
   render() {
+
     return (
       <div>
         <h2>Availability</h2>
@@ -86,17 +92,34 @@ class KitchenAvailability extends Component {
         <br /><br />
         <div className="button-wrapper">
           <button onClick={this.handleBook} className="ui primary massive button">Book Now</button>
-          {(this.state.redirectToReservations) ? <Redirect push to="/reservations" /> : null}
+          {(this.props.newReservationCreated) ? <Redirect push to="/reservations" /> : null}
         </div>
+        {(this.state.notLoggedIn) ? (
+          <Message negative onDismiss={this.resetBookFail}>
+            <Message.Header>You need to be logged in to book a kitchen.</Message.Header>
+          </Message>
+        ) : null }
+        {(this.state.noGuests) ? (
+          <Message negative onDismiss={this.resetBookFail}>
+            <Message.Header>How many guests will there be?</Message.Header>
+          </Message>
+        ) : null }
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => ({currentUser: state.user.currentUser})
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user.currentUser,
+    newReservationCreated: state.reservations.newReservationCreated
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return ({
-    createReservation: (bookObj) => dispatch(createReservation(bookObj))
+    createReservation: (bookObj) => dispatch(createReservation(bookObj)),
+    resetNewReservationCreated: () => dispatch(resetNewReservationCreated()),
   })
 }
 

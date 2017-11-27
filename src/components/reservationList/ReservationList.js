@@ -17,6 +17,7 @@ class ReservationList extends Component {
     ))
   }
 
+
   render() {
     return (
       <div>
@@ -26,11 +27,10 @@ class ReservationList extends Component {
   }
 }
 
-
 const turnStringDatesToNumbers = (dateString) => {
   const dateArr = dateString.split("-")
   const parsedDateArr = dateArr.map(n => parseInt(n, 10))
-  return ((parsedDateArr[0]*1000) + (parsedDateArr[1]*100) + (parsedDateArr[2]*1))
+  return ((parsedDateArr[0]*10000) + (parsedDateArr[1]*100) + (parsedDateArr[2]*1))
 }
 
 const compare = (a,b) => {

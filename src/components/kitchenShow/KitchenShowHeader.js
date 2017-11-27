@@ -5,8 +5,10 @@ import { Divider, Segment } from 'semantic-ui-react'
 export const KitchenShowHeader = ( {kitchen} ) => {
 
   const avgRating = () => {
-    const totalStars = kitchen.reviews.reduce((sum, review) => (sum + review.stars), 0)
-    return (totalStars/kitchen.reviews.length)
+    if (kitchen.reviews.length) {
+      const totalStars = kitchen.reviews.reduce((sum, review) => (sum + review.stars), 0)
+      return `${(totalStars/kitchen.reviews.length)} stars`
+    } else return "No reviews"
   }
 
   return (
@@ -17,7 +19,7 @@ export const KitchenShowHeader = ( {kitchen} ) => {
         <h1>{kitchen.title}</h1>
         <a>
           <i className="star icon"></i>
-          {avgRating()} stars
+          {avgRating()}
         </a>
         <br/>
         <div>Up to {kitchen.max_guests} guests || {kitchen.size} square feet</div>

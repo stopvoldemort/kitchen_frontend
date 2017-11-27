@@ -22,9 +22,9 @@ class CreateUserContainer extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    const x = this.state
+    const state = this.state
     const userObj = {user:
-      {name: x.name, email: x.email, password: x.password, bio: x.bio}
+      {name: state.name, email: state.email, password: state.password, bio: state.bio}
     }
     this.props.createUser(userObj)
   }

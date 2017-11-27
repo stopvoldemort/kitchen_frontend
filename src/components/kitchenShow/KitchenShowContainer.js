@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchKitchen } from '../../actions/kitchens'
+import { fetchKitchen, clearKitchen } from '../../actions/kitchens'
 import { Loading } from '../kitchenList/Loading.js'
 import { HostCard } from './HostCard.js'
 import { KitchenShowHeader } from './KitchenShowHeader.js'
@@ -13,6 +13,10 @@ class KitchenShowContainer extends Component {
   componentDidMount = () => {
     const id = this.props.location.pathname.split("/")[2]
     this.props.fetchKitchen(id)
+  }
+
+  componentWillUnmount = () => {
+    this.props.clearKitchen()
   }
 
   render() {
@@ -49,7 +53,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    fetchKitchen: (id) => dispatch(fetchKitchen(id))
+    fetchKitchen: (id) => dispatch(fetchKitchen(id)),
+    clearKitchen: () => dispatch(clearKitchen())
   })
 }
 

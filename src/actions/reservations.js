@@ -17,3 +17,7 @@ export function fetchReservations(userID) {
       })
   }
 }
+
+export function resetNewReservationCreated() {
+  return function(dispatch) {dispatch({type: "RESET_NEWRESERVATIONCREATED"})}
+}
