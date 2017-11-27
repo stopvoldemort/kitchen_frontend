@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input, Menu, Button, Form, Message, Container } from 'semantic-ui-react'
+import { Input, Menu, Button, Form, Message, Container, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { login } from '../../actions/users'
@@ -33,7 +33,7 @@ class NavbarContainer extends Component {
 
           <Menu.Item>
             <Link to="/">
-              <h3>CounterSpace</h3>
+              <Header color="blue" as='h1'>CounterSpace</Header>
             </Link>
           </Menu.Item>
 

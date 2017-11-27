@@ -7,12 +7,10 @@ export const ReservationCard = ({ reservation }) => {
 
   const humanize = (date) => {
     let dateArr = date.split("-")
-    console.log(dateArr);
     const months = ["I am a month that will never be", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     return months[parseInt(dateArr[1],10)] + " " + dateArr[2] + ", " + dateArr[0]
   }
 
-  console.log(reservation);
 
   const kitchenUrl = `/kitchens/${reservation.kitchen.id}`
 
