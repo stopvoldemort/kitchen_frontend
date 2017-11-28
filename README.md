@@ -15,6 +15,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * 'react-datepicker'
 * 'moment'
 * 'google-maps-react'
+* 'react-stars'
 
 
 

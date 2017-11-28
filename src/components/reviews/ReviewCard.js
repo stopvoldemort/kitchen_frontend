@@ -1,15 +1,18 @@
 import React from 'react'
 import { Card } from 'semantic-ui-react'
+import ReactStars from 'react-stars'
+
 
 
 export const ReviewCard = ({ review }) => {
 
-  const stars = `${review.stars} stars`
 
   return (
     <Card fluid >
-       <Card.Content header={stars} />
-       <Card.Content description={review.review} />
-     </Card>
+      <Card.Content>
+        <ReactStars value={review.stars} edit={false}/>
+      </Card.Content>
+      <Card.Content description={review.review} />
+    </Card>
   )
 }

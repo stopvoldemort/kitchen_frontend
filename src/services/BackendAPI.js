@@ -11,17 +11,6 @@ const makePostInit = (obj) => {
   }
 }
 
-const makeGetRequest = (path) => {
-  return fetch(url)
-    .then(res => res.json())
-}
-
-const makePostRequest = (path, obj) => {
-  const myInit = makePostInit(obj)
-  return fetch(url, myInit)
-    .then(res => res.json())
-}
-
 
 export default class BackendAPI {
 
