@@ -1,16 +1,26 @@
 import React from 'react'
 import '../../style/show.css'
+import { Image } from 'semantic-ui-react'
 
 
 export const ShowImage = (props) => {
 
-  const picUrl = "http://hgtvhome.sndimg.com/content/dam/images/hgtv/editorial/blogs/unsized/Kayla/RX-Frigidaire_kitchen-design-ideas_3.jpg"
+  const clickedMe = () => {
+    props.handleClick()
+  }
+
 
   return (
-    <div className="image frame-square">
-      <div className="image crop">
-    		    <img src={picUrl} alt="cropped kitchen" title="kitchen" />
-    	  </div>
+    <div onClick={clickedMe} className="image frame-square">
+      <Image
+          centered
+          className="title-image"
+          height="100%"
+          bordered
+          src={props.picUrl}
+          alt=""
+        />
     </div>
   )
+
 }

@@ -3,7 +3,6 @@ import { Card, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import ReviewForm from '../reviews/ReviewForm.js'
 
-const picUrl = "http://hgtvhome.sndimg.com/content/dam/images/hgtv/editorial/blogs/unsized/Kayla/RX-Frigidaire_kitchen-design-ideas_3.jpg"
 
 export const ReservationCard = ({ reservation, prior }) => {
 
@@ -14,6 +13,10 @@ export const ReservationCard = ({ reservation, prior }) => {
     const months = ["I am a month that will never be", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     return months[parseInt(dateArr[1],10)] + " " + dateArr[2] + ", " + dateArr[0]
   }
+
+  const picUrl = reservation.kitchen_pictures[0].url
+
+  console.log(reservation);
 
   const kitchenUrl = `/kitchens/${reservation.kitchen.id}`
 

@@ -10,8 +10,8 @@ import '../../style/navbar.css'
 class NavbarContainer extends Component {
 
   state = {
-    email: "",
-    password: ""
+    email: "phil@guest.com",
+    password: "12345"
   }
 
   handleEmailChange = (ev) => {this.setState({email: ev.target.value})}
@@ -27,6 +27,9 @@ class NavbarContainer extends Component {
   resetLoginFail = () => {this.props.resetLoginFail()}
 
   render() {
+
+    console.log(this.props.currentUser)
+
     return (
       <div>
         <Menu>
@@ -57,7 +60,7 @@ class NavbarContainer extends Component {
               <Menu.Item position='right'>
                 <Menu.Item>
                   <Link to="/reservations"><Button>My Reservations</Button></Link>
-                  <Button onClick={this.handleLogout}>Logout</Button>
+                  <Link to="/"><Button onClick={this.handleLogout}>Logout</Button></Link>
                 </Menu.Item>
                 <Menu.Item>
                   <Link to="/kitchens/new"><Button>Add Your Kitchen</Button></Link>

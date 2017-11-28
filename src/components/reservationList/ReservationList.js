@@ -29,15 +29,23 @@ class ReservationList extends Component {
                 <Header as='h2'>Prior Reservations</Header>
                 <div>{this.reservationCards(this.props.reservations.prior, true)}</div>
               </div>
-            ) : null }
+            ) : (
+              <div>
+                You have no prior reservations.
+              </div>
+            ) }
           </Grid.Column>
           <Grid.Column>
-          {(this.props.reservations.future) ? (
-            <div>
-              <Header as='h2'>Upcoming Reservations</Header>
-              <div>{this.reservationCards(this.props.reservations.future)}</div>
-            </div>
-          ) : null }
+            {(this.props.reservations.future) ? (
+              <div>
+                <Header as='h2'>Upcoming Reservations</Header>
+                <div>{this.reservationCards(this.props.reservations.future)}</div>
+              </div>
+            ) : (
+              <div>
+                You have no upcoming reservations.
+              </div>
+            ) }
           </Grid.Column>
         </Grid.Row>
       </Grid>

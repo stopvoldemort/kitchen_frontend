@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchKitchen, clearKitchen } from '../../actions/kitchens'
 import { Loading } from '../kitchenList/Loading.js'
 import { HostCard } from './HostCard.js'
-import { KitchenShowHeader } from './KitchenShowHeader.js'
+import KitchenShowHeader from './KitchenShowHeader.js'
 import { KitchenInfo } from './KitchenInfo.js'
 import KitchenAvailability from './KitchenAvailability.js'
 

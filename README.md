@@ -16,6 +16,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * 'moment'
 * 'google-maps-react'
 * 'react-stars'
+* 'react-dropzone'
+* 'superagent'
 
 
 

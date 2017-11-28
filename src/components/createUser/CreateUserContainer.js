@@ -4,6 +4,7 @@ import '../../style/user.css'
 import { connect } from 'react-redux'
 import { createUser } from '../../actions/users.js'
 import { Redirect } from 'react-router-dom'
+import AddUserPic from './AddUserPic.js'
 
 class CreateUserContainer extends Component {
 
@@ -12,6 +13,7 @@ class CreateUserContainer extends Component {
     email: "",
     password: "",
     bio: "",
+    pic_url: "",
     redirectToHome: false
   }
 
@@ -23,15 +25,17 @@ class CreateUserContainer extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const state = this.state
-    const userObj = {user:
-      {name: state.name, email: state.email, password: state.password, bio: state.bio}
-    }
+    const userObj = {user: {
+      name: state.name, email: state.email, password: state.password, bio: state.bio, pic_url: state.pic_url
+    }}
     this.props.createUser(userObj)
   }
 
   componentDidUpdate = () => {
     if (this.props.currentUser.id) this.setState({redirectToHome: true})
   }
+
+  addImage = (imgUrl) => {this.setState({pic_url: imgUrl})}
 
   render() {
     return (
@@ -40,13 +44,16 @@ class CreateUserContainer extends Component {
           <h1>Sign Up</h1>
           <Form.Input label='Name' placeholder='Name' onChange={this.handleNameChange} />
           <Form.Group widths='equal'>
-            <Form.Input iconPosition='left' label='Email' placeholder='Email address' onChange={this.handlePasswordChange} >
+            <Form.Input iconPosition='left' label='Email' placeholder='Email address' onChange={this.handleEmailChange} >
               <Icon name='at' />
               <input />
             </Form.Input>
-            <Form.Input type="password" label='Password' placeholder='Password' onChange={this.handleEmailChange} />
+            <Form.Input type="password" label='Password' placeholder='Password' onChange={this.handlePasswordChange} />
           </Form.Group>
           <Form.TextArea label='Bio' placeholder='Tell us more about you...' onChange={this.handleBioChange} />
+
+          <AddUserPic addImage={this.addImage} />
+
           <Form.Button primary>Sign Up</Form.Button>
         </Form>
         {(this.state.redirectToHome) ? <Redirect push to="/"/> : null}
