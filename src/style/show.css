@@ -44,22 +44,13 @@ img {
   width: 30%;
 }
 
-.equipment .yes {
+.yes {
   color: black;
 }
 
-.equipment .no {
+.no {
   color: gray;
   text-decoration: line-through;
-}
-
-.col-left {
-  width: 50%;
-}
-
-.col-right {
-  left: 50%;
-  width: 50%;
 }
 
 .button-wrapper {
