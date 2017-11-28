@@ -1,15 +1,27 @@
-const BASE_URL = "http://localhost:3000/"
+const BASE_URL = "http://localhost:3000"
 
-const makePostInit = (bodyObj) => {
+const makePostInit = (obj) => {
   return {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       method: "POST",
-      body: JSON.stringify(bodyObj)
+      body: JSON.stringify(obj)
   }
 }
+
+const makeGetRequest = (path) => {
+  return fetch(url)
+    .then(res => res.json())
+}
+
+const makePostRequest = (path, obj) => {
+  const myInit = makePostInit(obj)
+  return fetch(url, myInit)
+    .then(res => res.json())
+}
+
 
 export default class BackendAPI {
 
@@ -19,59 +31,59 @@ export default class BackendAPI {
   }
 
   static fetchKitchens(searchTerm) {
-    const url = `${BASE_URL}kitchens?query=${searchTerm}`
+    const url = `${BASE_URL}/kitchens?query=${searchTerm}`
     return fetch(url)
       .then(res => res.json())
   }
 
   static fetchKitchen(id) {
-    const url = `${BASE_URL}kitchens/${id}`
+    const url = `${BASE_URL}/kitchens/${id}`
     return fetch(url)
       .then(res => res.json())
   }
 
   static login(email, password) {
-    const url = `${BASE_URL}login`
+    const url = `${BASE_URL}/login`
     const myInit = makePostInit({email: email, password: password})
     return fetch(url, myInit)
       .then(res => res.json())
   }
 
   static logout() {
-    const url = `${BASE_URL}logout`
+    const url = `${BASE_URL}/logout`
     return fetch(url)
       .then(res => res.json())
   }
 
   static createReservation(bookObj) {
-    const url = `${BASE_URL}reservations`
+    const url = `${BASE_URL}/reservations`
     const myInit = makePostInit(bookObj)
     return fetch(url, myInit)
       .then(res => res.json())
   }
 
   static fetchReservations(userID) {
-    const url = `${BASE_URL}reservations/${userID}`
+    const url = `${BASE_URL}/reservations/${userID}`
     return fetch(url)
       .then(res => res.json())
   }
 
   static createUser(userObj) {
-    const url = `${BASE_URL}users`
+    const url = `${BASE_URL}/users`
     const myInit = makePostInit(userObj)
     return fetch(url, myInit)
       .then(res => res.json())
   }
 
   static createKitchen(kitchenObj) {
-    const url = `${BASE_URL}kitchens`
+    const url = `${BASE_URL}/kitchens`
     const myInit = makePostInit(kitchenObj)
     return fetch(url, myInit)
       .then(res => res.json())
   }
 
   static createKitchenReview(reviewObj) {
-    const url = `${BASE_URL}kitchen_reviews`
+    const url = `${BASE_URL}/kitchen_reviews`
     const myInit = makePostInit(reviewObj)
     return fetch(url, myInit)
       .then(res => res.json())
