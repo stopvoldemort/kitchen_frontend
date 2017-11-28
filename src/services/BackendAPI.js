@@ -11,8 +11,6 @@ const makePostInit = (bodyObj) => {
   }
 }
 
-
-
 export default class BackendAPI {
 
   static fetchCities() {
@@ -71,5 +69,13 @@ export default class BackendAPI {
     return fetch(url, myInit)
       .then(res => res.json())
   }
+
+  static createKitchenReview(reviewObj) {
+    const url = `${BASE_URL}kitchen_reviews`
+    const myInit = makePostInit(reviewObj)
+    return fetch(url, myInit)
+      .then(res => res.json())
+  }
+
 
 }

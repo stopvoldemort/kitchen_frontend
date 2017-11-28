@@ -18,9 +18,9 @@ class ReservationList extends Component {
   }
 
 
-  reservationCards = (reservationsArray) => {
+  reservationCards = (reservationsArray, isPrior) => {
     return reservationsArray.map(reservation => (
-      <ReservationCard key={cuid()} reservation={reservation} />
+      <ReservationCard key={cuid()} reservation={reservation} prior={isPrior} />
     ))
   }
 
@@ -38,7 +38,7 @@ class ReservationList extends Component {
         {(this.props.reservations.prior) ? (
           <div>
             <Header as='h2'>Prior Reservations</Header>
-            <div>{this.reservationCards(this.props.reservations.prior)}</div>
+            <div>{this.reservationCards(this.props.reservations.prior, true)}</div>
             <br/><br/><br/>
           </div>
         ) : null }
