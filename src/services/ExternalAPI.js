@@ -9,5 +9,4 @@ export default class ExternalAPI {
       .then(res => res.json())
   }
 
-
 }
