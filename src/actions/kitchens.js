@@ -9,10 +9,10 @@ export function fetchCities() {
   }
 }
 
-export function fetchKitchens(searchTerm) {
+export function fetchKitchens(longitude, latitude) {
   return function(dispatch) {
     dispatch({type: "LOADING_KITCHENS"})
-    BackendAPI.fetchKitchens(searchTerm)
+    BackendAPI.fetchKitchens(longitude, latitude)
       .then(json => {
         dispatch({type: "FETCH_KITCHENS", payload: json})
       })

@@ -14,24 +14,23 @@ class KitchenListContainer extends Component {
   state = {
     filters: [],
     cityLongitude: 0,
-    cityLatitude: 0
+    cityLatitude: 0,
+    selectedKitchenID: 0
   }
 
   componentDidMount() {
-    // const searchTerm = this.props.location.search.split("=")[1].split("%20").join(" ")
-    // this.props.fetchKitchens(searchTerm)
-    this.props.fetchKitchens()
-    this.fetchCityCoordinates()
+    this.fetchCityCoordinatesThenFetchKitchens()
   }
 
 
-  fetchCityCoordinates = () => {
+  fetchCityCoordinatesThenFetchKitchens = () => {
     const searchTerm = this.props.location.search.split("=")[1].split("%20").join(" ")
     ExternalAPI.geocoder(searchTerm)
       .then(json => {
         const latitude = json.results[0].geometry.location.lat
         const longitude = json.results[0].geometry.location.lng
         this.setState({cityLatitude: latitude, cityLongitude: longitude})
+        this.props.fetchKitchens(longitude, latitude)
     })
   }
 
@@ -44,11 +43,15 @@ class KitchenListContainer extends Component {
   }
 
   filterKitchens = () => {
-    let filteredKitchens = this.props.kitchens.slice()
+    let filteredKitchens = [...this.props.kitchens]
     this.state.filters.forEach(filter => {
       filteredKitchens = filteredKitchens.filter(kitchen => (kitchen[filter]))
     })
     return filteredKitchens
+  }
+
+  moveSelectedKitchenToTop = (marker) => {
+    this.setState({selectedKitchenID: marker.name})
   }
 
 
@@ -59,15 +62,16 @@ class KitchenListContainer extends Component {
           <Grid.Column className="sticky" width={2}>
             <KitchenFilter importFilters={this.importFilters}/>
           </Grid.Column>
-          <Grid.Column width={6}>
-            {this.props.isLoading ? <Loading className="col"/> : <KitchenList kitchens={this.filterKitchens()}/>}
+          <Grid.Column width={7}>
+            {this.props.isLoading ? <Loading className="col"/> : <KitchenList selectedKitchenID={this.state.selectedKitchenID} kitchens={this.filterKitchens()}/>}
           </Grid.Column>
-          <Grid.Column width={8}>
+          <Grid.Column width={7}>
             {(!this.state.cityLatitude) ? null :
               <GoogleApiWrapper
               kitchens={this.filterKitchens()}
               cityLatitude={this.state.cityLatitude}
               cityLongitude={this.state.cityLongitude}
+              selectKitchen={this.moveSelectedKitchenToTop}
               />
             }
           </Grid.Column>
@@ -86,7 +90,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    fetchKitchens: (searchTerm) => dispatch(fetchKitchens(searchTerm))
+    fetchKitchens: (longitude, latitude) => dispatch(fetchKitchens(longitude, latitude))
   })
 }
 
