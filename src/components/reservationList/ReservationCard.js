@@ -22,8 +22,6 @@ export const ReservationCard = ({ reservation, prior, currentUser }) => {
 
   const kitchenUrl = `/kitchens/${currentKitchenId}`
 
-  console.log(currentKitchenId, previouslyReviewedKitchenIds);
-
   return (
     <div>
       <Card centered>

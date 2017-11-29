@@ -6,6 +6,7 @@ import { KitchenList } from './KitchenList.js'
 import { Loading } from './Loading.js'
 import { KitchenFilter } from './KitchenFilter.js'
 import GoogleApiWrapper from './KitchenMap.js'
+import { Grid } from 'semantic-ui-react'
 
 
 class KitchenListContainer extends Component {
@@ -35,17 +36,17 @@ class KitchenListContainer extends Component {
 
   render() {
     return (
-      <div className="kitchen-list-container row">
-        <div className="col-1" >
+      <Grid padded>
+        <Grid.Column width={2}>
           <KitchenFilter importFilters={this.importFilters}/>
-        </div>
-        <div className="col-2" >
+        </Grid.Column>
+        <Grid.Column width={6}>
           {this.props.isLoading ? <Loading className="col"/> : <KitchenList kitchens={this.filterKitchens()}/>}
-        </div>
-        <div className="col-3">
+        </Grid.Column>
+        <Grid.Column width={8}>
           <GoogleApiWrapper  kitchens={this.filterKitchens()}/>
-        </div>
-      </div>
+        </Grid.Column>
+      </Grid>
     )
   }
 }

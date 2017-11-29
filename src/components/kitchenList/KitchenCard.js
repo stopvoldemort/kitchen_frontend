@@ -22,12 +22,14 @@ const KitchenCard = ({ kitchen }) => {
   }
 
   return (
-    <Card>
+    <Card fluid>
       <Image src={kitchen.kitchen_pictures[0].url} />
       <Card.Content>
-        <Link className="header" to={`/kitchens/${kitchen.id}`} >
-          <Card.Header>{kitchen.title}</Card.Header>
-        </Link>
+          <Card.Header>
+            <Link to={`/kitchens/${kitchen.id}`} >
+              {kitchen.title}
+            </Link>
+          </Card.Header>
         <Card.Meta>Up to {kitchen.max_guests} guests</Card.Meta>
         <Card.Meta>${kitchen.base_price} to ${maxPrice}</Card.Meta>
         <Card.Description>{kitchen.blurb}</Card.Description>

@@ -33,29 +33,25 @@ export class KitchenFilter extends Component {
   render() {
     return (
       <div>
-        <h3>Filter your results</h3>
+        <h3>Filter</h3>
         <h4>By Equipment</h4>
         <Form>
-          <Form.Group widths="equal">
-            <Form.Field onChange={this.handleChange}
-              control={Checkbox}
-              label={{ children: 'Food Processor' }}
-            />
-            <Form.Field onChange={this.handleChange}
-              control={Checkbox}
-              label={{ children: 'Standing Mixer' }}
-            />
-          </Form.Group>
-          <Form.Group widths="equal">
-            <Form.Field onChange={this.handleChange}
-              control={Checkbox}
-              label={{ children: 'Deep Fryer' }}
-            />
-            <Form.Field onChange={this.handleChange}
-              control={Checkbox}
-              label={{ children: 'Pressure Cooker' }}
-            />
-          </Form.Group>
+          <Form.Field onChange={this.handleChange}
+            control={Checkbox}
+            label={{ children: 'Food Processor' }}
+          />
+          <Form.Field onChange={this.handleChange}
+            control={Checkbox}
+            label={{ children: 'Standing Mixer' }}
+          />
+          <Form.Field onChange={this.handleChange}
+            control={Checkbox}
+            label={{ children: 'Deep Fryer' }}
+          />
+          <Form.Field onChange={this.handleChange}
+            control={Checkbox}
+            label={{ children: 'Pressure Cooker' }}
+          />
         </Form>
       </div>
     )

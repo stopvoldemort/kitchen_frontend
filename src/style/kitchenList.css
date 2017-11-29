@@ -11,14 +11,12 @@
 
 .col-2 {
   left: 15%;
-  width: 100px;
+  max-width: 25%;
 }
 
 .col-3 {
   position: sticky;
   top: 0;
-  left: 40%;
-  width: 60%;
   height: 500px;
 }
 

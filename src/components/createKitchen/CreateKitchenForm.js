@@ -5,6 +5,7 @@ import { createKitchen } from '../../actions/kitchens.js'
 import { Redirect } from 'react-router-dom'
 import { Loading } from '../kitchenList/Loading.js'
 import { AddKitchenPics } from './AddKitchenPics.js'
+import ExternalAPI from '../../services/ExternalAPI.js'
 
 
 class CreateKitchenForm extends Component {
@@ -17,8 +18,8 @@ class CreateKitchenForm extends Component {
     state: "",
     zipcode: 0,
     description: "",
-    size: "",
-    max_guests: "",
+    size: 0,
+    max_guests: 0,
     knives: "",
     pots: "",
     pans: "",
@@ -58,8 +59,20 @@ class CreateKitchenForm extends Component {
     const kitchenObj = {kitchen: this.state}
     kitchenObj.kitchen.owner_id = this.props.currentUser.id
 
-    console.log(kitchenObj);
-    this.props.createKitchen(kitchenObj)
+    const address = this.createAddress()
+    ExternalAPI.geocoder(address)
+      .then(json => {
+        const lat = json.results[0].geometry.location.lat
+        const lng = json.results[0].geometry.location.lng
+        kitchenObj.kitchen.latitude = lat
+        kitchenObj.kitchen.longitude = lng
+        this.props.createKitchen(kitchenObj);
+      })
+  }
+
+  createAddress = () => {
+    const state = this.state
+    return state.street_address + ", " + state.city + ", " + state.state + " " + state.zipcode
   }
 
   componentDidUpdate = () => {
