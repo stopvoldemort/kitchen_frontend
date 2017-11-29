@@ -12,10 +12,10 @@ class CreateKitchenForm extends Component {
   state = {
     title: "",
     blurb: "",
-    street: "",
+    street_address: "",
     city: "",
     state: "",
-    zip: 0,
+    zipcode: 0,
     description: "",
     size: "",
     max_guests: "",
@@ -36,10 +36,10 @@ class CreateKitchenForm extends Component {
 
   handleTitleChange = (e, { value }) => this.setState({ title: value })
   handleBlurbChange = (e, { value }) => this.setState({ blurb: value })
-  handleStreetChange = (e, { value }) => this.setState({ street: value })
+  handleStreetChange = (e, { value }) => this.setState({ street_address: value })
   handleCityChange = (e, { value }) => this.setState({ city: value })
   handleStateChange = (e, { value }) => this.setState({ state: value })
-  handleZipChange = (e, { value }) => this.setState({ zip: value })
+  handleZipChange = (e, { value }) => this.setState({ zipcode: value })
   handleDescriptionChange = (e, { value }) => this.setState({ description: value })
   handleSizeChange = (e, { value }) => this.setState({ size: value })
   handleMaxGuestsChange = (e, { value }) => this.setState({ max_guests: value })

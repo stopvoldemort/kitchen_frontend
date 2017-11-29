@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Image } from 'semantic-ui-react'
+import { Card } from 'semantic-ui-react'
 
 
 export const HostCard = ({ host }) => {
@@ -7,7 +7,7 @@ export const HostCard = ({ host }) => {
     <div>
       <h2>Your Host</h2>
       <Card>
-        <Image src={host.pic_url} />
+        <img className="host-pic" src={host.pic_url} alt=""/>
         <Card.Content>
           <Card.Header>
             {host.name}
