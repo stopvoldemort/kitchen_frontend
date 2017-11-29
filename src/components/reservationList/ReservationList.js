@@ -15,7 +15,12 @@ class ReservationList extends Component {
 
   reservationCards = (reservationsArray, isPrior) => {
     return reservationsArray.map(reservation => (
-      <ReservationCard key={cuid()} reservation={reservation} prior={isPrior} />
+      <ReservationCard
+        key={cuid()}
+        reservation={reservation}
+        currentUser={this.props.currentUser}
+        prior={isPrior}
+      />
     ))
   }
 

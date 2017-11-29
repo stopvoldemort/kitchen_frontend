@@ -1,10 +1,10 @@
 import React from 'react'
-import { Card, Image } from 'semantic-ui-react'
+import { Card, Image, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import ReviewForm from '../reviews/ReviewForm.js'
 
 
-export const ReservationCard = ({ reservation, prior }) => {
+export const ReservationCard = ({ reservation, prior, currentUser }) => {
 
   // Note: 'prior' is an optional argument that is either true or undefined
 
@@ -15,8 +15,14 @@ export const ReservationCard = ({ reservation, prior }) => {
   }
 
   const picUrl = reservation.kitchen_pictures[0].url
+  const currentKitchenId = reservation.kitchen.id
 
-  const kitchenUrl = `/kitchens/${reservation.kitchen.id}`
+  const previouslyReviewedKitchenIds = currentUser.reviewed_kitchens.map(k => k.id)
+  const previouslyReviewed = (previouslyReviewedKitchenIds.includes(currentKitchenId))
+
+  const kitchenUrl = `/kitchens/${currentKitchenId}`
+
+  console.log(currentKitchenId, previouslyReviewedKitchenIds);
 
   return (
     <div>
@@ -40,9 +46,13 @@ export const ReservationCard = ({ reservation, prior }) => {
         <Card.Content extra>
           <a>{reservation.guest_number} guests</a>
         </Card.Content>
-        {prior ?
+        {prior && !previouslyReviewed ?
           <ReviewForm reservation={reservation} />
         : null}
+        {prior && previouslyReviewed ?
+          <Button disabled>You previously reviewed this kitchen</Button>
+        : null}
+
       </Card>
       <br/><br/><br/>
     </div>
