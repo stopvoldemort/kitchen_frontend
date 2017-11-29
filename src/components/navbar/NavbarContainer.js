@@ -27,9 +27,6 @@ class NavbarContainer extends Component {
   resetLoginFail = () => {this.props.resetLoginFail()}
 
   render() {
-
-    console.log(this.props.currentUser)
-
     return (
       <div>
         <Menu>

@@ -21,11 +21,9 @@ const KitchenCard = ({ kitchen }) => {
     } else return "No reviews"
   }
 
-  const picUrl = "http://hgtvhome.sndimg.com/content/dam/images/hgtv/editorial/blogs/unsized/Kayla/RX-Frigidaire_kitchen-design-ideas_3.jpg"
-
   return (
     <Card>
-      <Image src={picUrl} />
+      <Image src={kitchen.kitchen_pictures[0].url} />
       <Card.Content>
         <Link className="header" to={`/kitchens/${kitchen.id}`} >
           <Card.Header>{kitchen.title}</Card.Header>

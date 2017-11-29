@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
-import { Image } from 'semantic-ui-react'
+import { Image, Icon } from 'semantic-ui-react'
 
 const CLOUDINARY_UPLOAD_PRESET = 'rzj0ppvh';
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dwtfwfzsx/upload';
@@ -27,9 +27,6 @@ export default class AddKitchenPics extends Component {
                         .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
                         .field('file', file);
     upload.end((err, response) => {
-      if (err) {
-        console.error(err);
-      }
       if (response.body.secure_url !== '') {
         this.setState({
           url: response.body.secure_url
@@ -37,6 +34,10 @@ export default class AddKitchenPics extends Component {
         this.props.addImage(response.body.secure_url)
       }
     });
+  }
+
+  deleteImage = () => {
+    this.setState({url: ""})
   }
 
   render() {
@@ -51,7 +52,12 @@ export default class AddKitchenPics extends Component {
           </Dropzone>
         </div>
         <div>
-          <Image size="small" floated="left" bordered src={this.state.url} />
+          {(!this.state.url) ? null :
+            <div>
+              <Image size="small" floated="left" bordered src={this.state.url} />
+              <Icon link onClick={this.deleteImage} name="remove"/>
+            </div>
+          }
         </div>
       </div>
     )

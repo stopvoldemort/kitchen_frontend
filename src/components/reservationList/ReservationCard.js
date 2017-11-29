@@ -16,8 +16,6 @@ export const ReservationCard = ({ reservation, prior }) => {
 
   const picUrl = reservation.kitchen_pictures[0].url
 
-  console.log(reservation);
-
   const kitchenUrl = `/kitchens/${reservation.kitchen.id}`
 
   return (

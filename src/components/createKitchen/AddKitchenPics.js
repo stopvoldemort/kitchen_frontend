@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import { KitchenPic } from './KitchenPic.js'
 import cuid from 'cuid'
+import { Grid } from 'semantic-ui-react'
 
 const CLOUDINARY_UPLOAD_PRESET = 'rzj0ppvh';
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dwtfwfzsx/upload';
@@ -28,9 +29,6 @@ export class AddKitchenPics extends Component {
                         .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
                         .field('file', file);
     upload.end((err, response) => {
-      if (err) {
-        console.error(err);
-      }
       if (response.body.secure_url !== '') {
         const newPic = {picUrl: response.body.secure_url, name: file.name}
         this.setState({
@@ -41,11 +39,16 @@ export class AddKitchenPics extends Component {
     });
   }
 
+  removeImage = (name) => {
+    const newImages = this.state.images.filter(image => (image.name!==name))
+    this.setState({images: newImages})
+  }
+
   imgPreviews = () => {
     if (!this.state.images.length) return null
     else {
       return this.state.images.map(img => (
-        <KitchenPic key={cuid()} name={img.name} picUrl={img.picUrl}/>
+        <KitchenPic key={cuid()} name={img.name} picUrl={img.picUrl} removeImage={this.removeImage}/>
       ))
     }
   }
@@ -61,9 +64,11 @@ export class AddKitchenPics extends Component {
             <p>Drop an image or click to select a file to upload.</p>
           </Dropzone>
         </div>
-        <div>
-          {this.imgPreviews()}
-        </div>
+        <Grid>
+          <Grid.Row columns={8} >
+            {this.imgPreviews()}
+          </Grid.Row>
+        </Grid>
       </div>
     )
   }
