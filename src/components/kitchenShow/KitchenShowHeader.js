@@ -10,12 +10,20 @@ export default class KitchenShowHeader extends Component {
     picNum: 0
   }
 
-  handleClick = () => {
+  handleRightClick = () => {
     const kitchen = this.props.kitchen
     if ((this.state.picNum + 1) < kitchen.kitchen_pictures.length) {
       const newNum = this.state.picNum + 1
       this.setState({picNum: newNum})
     } else {this.setState({picNum: 0})}
+  }
+
+  handleLeftClick = () => {
+    const kitchen = this.props.kitchen
+    if (this.state.picNum > 0) {
+      const newNum = this.state.picNum - 1
+      this.setState({picNum: newNum})
+    } else {this.setState({picNum: kitchen.kitchen_pictures.length - 1})}
   }
 
 
@@ -41,7 +49,12 @@ export default class KitchenShowHeader extends Component {
       <div>
         <Segment>
           {(!kitchen.kitchen_pictures.length) ? null :
-            <ShowImage picUrl={kitchen.kitchen_pictures[this.state.picNum].url} handleClick={this.handleClick} />
+            <ShowImage
+              picUrl={kitchen.kitchen_pictures[this.state.picNum].url}
+              handleRightClick={this.handleRightClick}
+              handleLeftClick={this.handleLeftClick}
+              kitchenHasMultiplePics={this.props.kitchen.kitchen_pictures.length > 1}
+            />
           }
           <Divider fitted />
           <h1>{kitchen.title}</h1>
