@@ -21,3 +21,13 @@ export function fetchReservations(userID) {
 export function resetNewReservationCreated() {
   return function(dispatch) {dispatch({type: "RESET_NEWRESERVATIONCREATED"})}
 }
+
+export function cancelReservation(reservationID) {
+  console.log("clicked from reservation action creators");
+  return function(dispatch) {
+    BackendAPI.cancelReservation(reservationID)
+      .then(json => {
+        dispatch({type: "CANCEL_RESERVATION", payload: reservationID})
+      })
+  }
+}

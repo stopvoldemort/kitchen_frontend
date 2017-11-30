@@ -57,6 +57,12 @@ export default class BackendAPI {
       .then(res => res.json())
   }
 
+  static cancelReservation(reservationID) {
+    const url = `${BASE_URL}/reservations/${reservationID}`
+    return fetch(url, {method: "DELETE"})
+      .then(res => res.json())
+  }
+
   static createUser(userObj) {
     const url = `${BASE_URL}/users`
     const myInit = makePostInit(userObj)

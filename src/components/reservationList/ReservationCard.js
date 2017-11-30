@@ -6,7 +6,8 @@ import ReviewForm from '../reviews/ReviewForm.js'
 
 export default class ReservationCard extends Component {
 
-  // Note: 'prior' is an optional argument that is either true or undefined
+  // Note: 'prior' is an optional prop passed dwon from ReservationList
+  // that is either true or undefined
   state = {noReviewContent: false}
 
   resetReviewFail = () => {this.setState({noReviewContent: !this.state.noReviewContent})}
@@ -15,6 +16,11 @@ export default class ReservationCard extends Component {
     let dateArr = date.split("-")
     const months = ["I am a month that will never be", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     return months[parseInt(dateArr[1],10)] + " " + dateArr[2] + ", " + dateArr[0]
+  }
+
+  handleCancelClick = () => {
+    console.log("clicked from reservation card");
+    this.props.cancelReservation(this.props.reservation.id)
   }
 
   render() {
@@ -44,13 +50,16 @@ export default class ReservationCard extends Component {
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
-            <a>{this.props.reservation.guest_number} guests</a>
+            {this.props.reservation.guest_number} guests
           </Card.Content>
           {this.props.prior && !previouslyReviewed ?
             <ReviewForm reservation={this.props.reservation} showErrorMessage={this.resetReviewFail} />
           : null}
           {this.props.prior && previouslyReviewed ?
             <Button disabled>You previously reviewed this kitchen</Button>
+          : null}
+          {!this.props.prior ?
+            <Button onClick={this.handleCancelClick}>Cancel Reservation</Button>
           : null}
 
         </Card>

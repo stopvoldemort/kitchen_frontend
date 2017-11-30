@@ -9,6 +9,10 @@ export function reservationReducer(state = {list: [], newReservationCreated: fal
     case "FETCH_RESERVATIONS":
       const newState = {...state, list: action.payload}
       return newState
+    case "CANCEL_RESERVATION":
+      const newReservations = state.list.filter(res => res.id!==action.payload)
+      const lesserState = {...state, list: newReservations}
+      return lesserState
     default:
       return state
   }

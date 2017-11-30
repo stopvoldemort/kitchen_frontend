@@ -4,7 +4,7 @@ import { Header, Grid } from 'semantic-ui-react'
 import cuid from 'cuid'
 import moment from 'moment'
 import ReservationCard from './ReservationCard.js'
-import { fetchReservations } from '../../actions/reservations.js'
+import { fetchReservations, cancelReservation } from '../../actions/reservations.js'
 
 class ReservationList extends Component {
 
@@ -20,9 +20,11 @@ class ReservationList extends Component {
         reservation={reservation}
         currentUser={this.props.currentUser}
         prior={isPrior}
+        cancelReservation={this.props.cancelReservation}
       />
     ))
   }
+
 
   render() {
     return (
@@ -102,7 +104,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    fetchReservations: (userID) => dispatch(fetchReservations(userID))
+    fetchReservations: (userID) => dispatch(fetchReservations(userID)),
+    cancelReservation: (reservationID) => dispatch(cancelReservation(reservationID))
   })
 }
 
