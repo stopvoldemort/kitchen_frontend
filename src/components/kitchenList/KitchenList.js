@@ -12,7 +12,15 @@ export const KitchenList = (props) => {
         return [...agg, kitchen]
       } else return [kitchen, ...agg]
     }, [])
-    return sortedKitchens.map((kitchen) => <KitchenCard key={cuid()} kitchen={ kitchen }/>)
+
+    return sortedKitchens.map((kitchen) => (
+      <KitchenCard
+        key={cuid()}
+        currentUser={props.currentUser}
+        kitchen={ kitchen }
+        deleteKitchen={props.deleteKitchen}
+      />)
+    )
   }
 
   return (

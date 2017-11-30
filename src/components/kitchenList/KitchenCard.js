@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Card, Image } from 'semantic-ui-react'
+import { Card, Image, Button } from 'semantic-ui-react'
 import ReactStars from 'react-stars'
 
-const KitchenCard = ({ kitchen }) => {
+const KitchenCard = ({ kitchen, currentUser, deleteKitchen }) => {
+
+  const handleClick = () => {deleteKitchen(kitchen.id)}
 
   const maxPrice = kitchen.base_price + (kitchen.price_per_guest * kitchen.max_guests)
 
@@ -37,6 +39,9 @@ const KitchenCard = ({ kitchen }) => {
       <Card.Content extra>
         <a>{avgRating()}</a>
       </Card.Content>
+      {(!currentUser) ? null : (
+        <Button onClick={handleClick}>Remove Your Kitchen</Button>
+      )}
     </Card>  )
 }
 

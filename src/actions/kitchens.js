@@ -46,3 +46,13 @@ export function clearKitchen() {
     dispatch({type: "CLEAR_KITCHEN"})
   }
 }
+
+export function deleteKitchenFromBackend(kitchenID) {
+  return function(dispatch) {
+    BackendAPI.deleteKitchenFromBackend(kitchenID)
+      .then(json => {
+        dispatch({type: "DELETE_KITCHEN_FROM_FRONTEND"})
+      }
+    )
+  }
+}

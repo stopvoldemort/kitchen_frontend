@@ -36,3 +36,9 @@ export function addKitchenReviewToCurrentUser(reviewObj) {
     dispatch({type: "ADD_KITCHEN_REVIEW_TO_CURRENT_USER", payload: reviewObj.kitchen_review})
   }
 }
+
+export function deleteKitchenFromCurrentUser(kitchenID) {
+  return function(dispatch) {
+    dispatch({type: "DELETE_KITCHEN_FROM_CURRENT_USER", payload: kitchenID})
+  }
+}

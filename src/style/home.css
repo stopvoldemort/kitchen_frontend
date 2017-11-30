@@ -123,13 +123,13 @@
 }
 
 .first-text {
-  font-size: 3.0rem;
+  font-size: 4rem;
   position: absolute;
-  left: 45rem;
-  top: 5rem;
+  left: 40%;
+  bottom: 0%;
   opacity: 0;
-  animation-name: topFadeOut;
   color: green;
+  animation-name: bottomFadeOut;
 }
 
 .second-text {

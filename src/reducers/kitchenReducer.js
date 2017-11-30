@@ -20,6 +20,8 @@ export function kitchenReducer(state = {
       return {...state, selectedKitchen: action.payload, isLoading: false}
     case "CLEAR_KITCHEN":
       return {...state, selectedKitchen: {}}
+    case "DELETE_KITCHEN_FROM_FRONTEND":
+      return state
     default:
       return state
   }

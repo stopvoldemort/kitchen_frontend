@@ -63,6 +63,12 @@ export default class BackendAPI {
       .then(res => res.json())
   }
 
+  static deleteKitchenFromBackend(kitchenID) {
+    const url = `${BASE_URL}/kitchens/${kitchenID}`
+    return fetch(url, {method: "DELETE"})
+      .then(res => res.json())
+  }
+
   static createUser(userObj) {
     const url = `${BASE_URL}/users`
     const myInit = makePostInit(userObj)

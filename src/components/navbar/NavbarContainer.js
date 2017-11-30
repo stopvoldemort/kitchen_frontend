@@ -7,10 +7,11 @@ import { logout } from '../../actions/users'
 import '../../style/navbar.css'
 
 
+
 class NavbarContainer extends Component {
 
   state = {
-    email: "phil@guest.com",
+    email: "elise@guest.com",
     password: "12345"
   }
 
@@ -52,15 +53,14 @@ class NavbarContainer extends Component {
               </Menu.Item>
             </Container>
           ) : (
-
             <Container>
               <Menu.Item position='right'>
                 <Menu.Item>
-                  <Link to="/reservations"><Button>My Reservations</Button></Link>
-                  <Link to="/"><Button onClick={this.handleLogout}>Logout</Button></Link>
+                  <Link to="/reservations"><Button size="small">My Reservations</Button></Link>
+                  <Link to="/"><Button size="small" onClick={this.handleLogout}>Logout</Button></Link>
                 </Menu.Item>
                 <Menu.Item>
-                  <Link to="/kitchens/new"><Button>Add Your Kitchen</Button></Link>
+                  <Link to="/mykitchens"><Button size="small">My Kitchens</Button></Link>
                 </Menu.Item>
               </Menu.Item>
             </Container>
