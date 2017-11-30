@@ -16,7 +16,6 @@ class ReviewForm extends Component {
   }
 
   handleOpen = () => this.setState({ modalOpen: true })
-
   handleClose = () => this.setState({ modalOpen: false })
 
   handleSubmit = () => {

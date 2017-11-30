@@ -48,6 +48,7 @@ export default class AddKitchenPics extends Component {
             multiple={false}
             accept="image/*"
             onDrop={this.onImageDrop}>
+            <p>Add as many pictures of your kitchen as you like.</p>
             <p>Drop an image or click to select a file to upload.</p>
           </Dropzone>
         </div>

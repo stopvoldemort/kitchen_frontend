@@ -20,7 +20,6 @@ export default class BackendAPI {
   }
 
   static fetchKitchens(longitude, latitude) {
-    // const url = `${BASE_URL}/kitchens?query=${searchTerm}`
     const url = `${BASE_URL}/kitchens?longitude=${longitude}&latitude=${latitude}`
     return fetch(url)
       .then(res => res.json())

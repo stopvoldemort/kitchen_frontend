@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'semantic-ui-react'
+import { Input, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import '../../style/home.css'
 import { Redirect } from 'react-router-dom'
@@ -38,7 +38,7 @@ class SearchForm extends Component {
       <div className="home-search-container" >
         <form onSubmit={this.handleSubmit}>
           <div className="ui action input">
-            <input type="text" onChange={this.handleChange} value={this.state.input} className="home-search" placeholder="Where do you live?" />
+            <input type="text" size="50" onChange={this.handleChange} value={this.state.input} className="home-search" placeholder="Where do you live?" />
             <Button className="teal" value="Search">Search</Button>
           </div>
         </form>
