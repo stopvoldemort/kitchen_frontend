@@ -8,17 +8,24 @@ class HomeContainer extends Component {
 
   componentDidMount() {this.props.fetchCities()}
 
-  populateCityArr = (n) => {
+  populateCitiesArr = () => {
     const arr = []
     for (let i=0; i<10; i++) {
-      const j = Math.floor(Math.random() * n)
-      arr.push(this.props.cities[j])
+      const j = Math.floor(Math.random() * this.props.cities.length)
+      const city = this.props.cities[j]
+      let capitalizedCity = "New York"
+      if (city) {
+        capitalizedCity = city.toLowerCase().split(' ').map(function(word) {
+          return word[0].toUpperCase() + word.substr(1);
+        }).join(' ')
+        arr.push(capitalizedCity)
+      }
     }
     return arr
   }
 
   render() {
-    const cityArr = this.populateCityArr(this.props.cities.length)
+    const cityArr = this.populateCitiesArr()
 
     return (
       <div className="home-container">

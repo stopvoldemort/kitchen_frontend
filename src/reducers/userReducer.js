@@ -20,6 +20,10 @@ export function userReducer(state = {
     case "CREATE_USER":
       const signedUpState = {...state, loggedIn: true, currentUser: action.payload, signUpFail: false}
       return signedUpState
+    case "ADD_KITCHEN_REVIEW_TO_CURRENT_USER":
+      let stateWithNewReview = {...state}
+      state.currentUser.reviewed_kitchens.push(action.payload)
+      return stateWithNewReview
     default:
       return state
   }

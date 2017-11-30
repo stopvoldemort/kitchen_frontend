@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Modal, Image, TextArea } from 'semantic-ui-react'
+import { Button, Modal, Image } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { createKitchenReview } from '../../actions/kitchenReviews.js'
+import { addKitchenReviewToCurrentUser } from '../../actions/users.js'
 import ReactStars from 'react-stars'
+import '../../style/reviews.css'
 
 const picUrl = "http://hgtvhome.sndimg.com/content/dam/images/hgtv/editorial/blogs/unsized/Kayla/RX-Frigidaire_kitchen-design-ideas_3.jpg"
 
@@ -27,11 +29,14 @@ class ReviewForm extends Component {
         guest_id: this.props.currentUser.id
       }
     }
-    this.props.createKitchenReview(reviewObj)
+    if (reviewObj.kitchen_review.stars && reviewObj.kitchen_review.review) {
+      this.props.createKitchenReview(reviewObj)
+      this.props.addKitchenReviewToCurrentUser(reviewObj)
+    } else {this.props.showErrorMessage()}
     this.handleClose()
   }
 
-  handleTextChange = (ev, { value }) => {this.setState({review: value})}
+  handleTextChange = (ev) => {this.setState({review: ev.target.value})}
   handleStarChange = (new_rating) => {this.setState({stars: new_rating})}
 
   render() {
@@ -46,7 +51,14 @@ class ReviewForm extends Component {
           <Image wrapped size='medium' src={picUrl} />
           <Modal.Description>
             <div>
-              <TextArea required placeholder="Write a review" onChange={this.handleTextChange} />
+              <h4>Write a review</h4>
+              <div className="review-text-container">
+                <textarea
+                  className="review-text-area"
+                  onChange={this.handleTextChange}
+                  placeholder="The kitchen is well laid-out and the dining room couldn't be more beautiful."
+                />
+              </div>
             </div>
             <div>
               <ReactStars half={false} onChange={this.handleStarChange} value={this.state.stars} />
@@ -65,14 +77,14 @@ class ReviewForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.user.currentUser,
-    newReservationCreated: state.reservations.newReservationCreated
+    currentUser: state.user.currentUser
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    createKitchenReview: (reviewObj) => dispatch(createKitchenReview(reviewObj))
+    createKitchenReview: (reviewObj) => dispatch(createKitchenReview(reviewObj)),
+    addKitchenReviewToCurrentUser: (reviewObj) => dispatch(addKitchenReviewToCurrentUser(reviewObj))
   })
 }
 

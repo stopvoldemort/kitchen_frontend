@@ -1,5 +1,5 @@
 .home-search {
-  font-size: 1em;
+  font-size: 1.5em;
   width: 100%;
 }
 
@@ -123,9 +123,9 @@
 }
 
 .first-text {
-  font-size: 4.4rem;
+  font-size: 3.0rem;
   position: absolute;
-  left: 20rem;
+  left: 45rem;
   top: 5rem;
   opacity: 0;
   animation-name: topFadeOut;
@@ -144,7 +144,7 @@
 
 .third-text {
   transform: rotate(-90deg);
-  font-size: 2rem;
+  font-size: 4rem;
   position: absolute;
   left: 15%;
   top: 45%;
@@ -158,12 +158,12 @@
 .fourth-text {
   font-size: 3.4rem;
   position: absolute;
-  top: 15.5rem;
-  left: 10%;
+  top: 35.5rem;
+  left: 60%;
   opacity: 0;
   color: #F0A3BE;
   animation-name: fadeInOut;
-  animation-delay: 5s;
+  animation-delay: 3s;
 }
 
 .fifth-text {
@@ -184,7 +184,7 @@
   top: 5rem;
   opacity: 0;
   animation-name: topFadeOut;
-  animation-delay: 8s;
+  animation-delay: 4s;
   color: green;
 }
 
@@ -200,14 +200,14 @@
 
 .eighth-text {
   transform: rotate(-90deg);
-  font-size: 2rem;
+  font-size: 3rem;
   position: absolute;
-  left: 15%;
+  left: 50%;
   top: 45%;
   opacity: 0;
-  animation-name: topFadeOutVertical;
+  animation-name: bottomFadeOut;
   animation-delay: 10s;
-  color: #A3DDF0;
+  color: #F0A3BE;F0A3BE
   white-space: nowrap;
 }
 
@@ -217,7 +217,7 @@
   top: 15.5rem;
   left: 10%;
   opacity: 0;
-  color: #F0A3BE;
+  color: #A3DDF0;
   animation-name: fadeInOut;
   animation-delay: 11s;
 }
@@ -225,7 +225,7 @@
 .tenth-text {
   font-size: 3rem;
   position: absolute;
-  left: 60%;
+  left: 50%;
   bottom: 0%;
   opacity: 0;
   color: green;

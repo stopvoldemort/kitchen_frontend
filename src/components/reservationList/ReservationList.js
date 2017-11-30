@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Header, Grid } from 'semantic-ui-react'
 import cuid from 'cuid'
 import moment from 'moment'
-import { ReservationCard } from './ReservationCard.js'
+import ReservationCard from './ReservationCard.js'
 import { fetchReservations } from '../../actions/reservations.js'
 
 class ReservationList extends Component {

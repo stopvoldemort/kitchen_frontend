@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { Input, Button } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import '../../style/home.css'
 import { Redirect } from 'react-router-dom'
 
 
 class SearchForm extends Component {
-
-  // Would be good to add autocomplete. I have already passed an array of cities down as a prop
 
   state = {
     input: "",
@@ -39,7 +37,7 @@ class SearchForm extends Component {
         <form onSubmit={this.handleSubmit}>
           <div className="ui action input">
             <input type="text" size="50" onChange={this.handleChange} value={this.state.input} className="home-search" placeholder="Where do you live?" />
-            <Button className="teal" value="Search">Search</Button>
+            <Button size="huge" className="teal" value="Search">Search</Button>
           </div>
         </form>
         {this.searchSubmitted()}

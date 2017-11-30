@@ -30,3 +30,9 @@ export function createUser(userObj) {
       })
   }
 }
+
+export function addKitchenReviewToCurrentUser(reviewObj) {
+  return function(dispatch) {
+    dispatch({type: "ADD_KITCHEN_REVIEW_TO_CURRENT_USER", payload: reviewObj.kitchen_review})
+  }
+}
