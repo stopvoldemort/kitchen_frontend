@@ -6,6 +6,7 @@ import { HostCard } from './HostCard.js'
 import KitchenShowHeader from './KitchenShowHeader.js'
 import { KitchenInfo } from './KitchenInfo.js'
 import KitchenAvailability from './KitchenAvailability.js'
+import { Grid } from 'semantic-ui-react'
 
 
 class KitchenShowContainer extends Component {
@@ -20,26 +21,27 @@ class KitchenShowContainer extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div>
-        {(!this.props.kitchen.title) ? <Loading /> :
+        {(!this.props.kitchen.id) ? <Loading /> :
           <div>
             <KitchenShowHeader kitchen={this.props.kitchen} />
-            <div className="kitchen-show-container row">
-              <div className="col-1" >
-                <HostCard host={this.props.kitchen.owner} />
-              </div>
-              <div className="col-2" >
-                <KitchenInfo kitchen={this.props.kitchen} />
-              </div>
-              <div className="col-3">
-                <KitchenAvailability kitchen={this.props.kitchen}/>
-              </div>
-            </div>
+            <Grid padded>
+              <Grid.Row>
+                <Grid.Column width={4}>
+                  <HostCard host={this.props.kitchen.owner} />
+                </Grid.Column>
+                <Grid.Column width={8}>
+                  <KitchenInfo kitchen={this.props.kitchen} />
+                </Grid.Column>
+                <Grid.Column width={4}>
+                  <KitchenAvailability kitchen={this.props.kitchen}/>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </div>
         }
-      </div>
+    </div>
     )
   }
 }

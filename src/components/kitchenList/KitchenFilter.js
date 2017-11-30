@@ -21,7 +21,7 @@ export class KitchenFilter extends Component {
     return frags.join('_');
   }
 
-  handleChange = (ev) => {
+  handleEquipmentChange = (ev) => {
     const filter = this.dehumanize(ev.target.innerText)
     const newEquipment = Object.assign({}, this.state.equipment)
     newEquipment[filter] = !this.state.equipment[filter]
@@ -36,19 +36,19 @@ export class KitchenFilter extends Component {
         <h3>Filter</h3>
         <h4>By Equipment</h4>
         <Form>
-          <Form.Field onChange={this.handleChange}
+          <Form.Field onChange={this.handleEquipmentChange}
             control={Checkbox}
             label={{ children: 'Food Processor' }}
           />
-          <Form.Field onChange={this.handleChange}
+          <Form.Field onChange={this.handleEquipmentChange}
             control={Checkbox}
             label={{ children: 'Standing Mixer' }}
           />
-          <Form.Field onChange={this.handleChange}
+          <Form.Field onChange={this.handleEquipmentChange}
             control={Checkbox}
             label={{ children: 'Deep Fryer' }}
           />
-          <Form.Field onChange={this.handleChange}
+          <Form.Field onChange={this.handleEquipmentChange}
             control={Checkbox}
             label={{ children: 'Pressure Cooker' }}
           />

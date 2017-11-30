@@ -5,6 +5,8 @@ import { Container, Header } from 'semantic-ui-react'
 
 class CreateKitchenContainer extends Component {
 
+  componentDidMount() {window.scrollTo(0, 0)}
+
   render() {
     return (
       <div>

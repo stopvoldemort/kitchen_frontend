@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 import '../../style/show.css'
 import { createReservation, resetNewReservationCreated } from '../../actions/reservations.js'
-import { Message } from 'semantic-ui-react'
+import { Message, Input } from 'semantic-ui-react'
 
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -38,11 +38,18 @@ class KitchenAvailability extends Component {
 
   handleGuestChange = (ev) => {
     const guests = ev.target.value
-    this.setState({guests: guests})
+    if (guests > this.props.kitchen.max_guests) {
+      // Show error message
+      console.log("too many guests for this kitchen");
+    }
+    else if (guests > 0) this.setState({guests: guests})
   }
 
   estimatedPrice = () => {
-    return `$${this.props.kitchen.base_price + (this.state.guests * this.props.kitchen.price_per_guest)}`
+    const numGuests = this.state.guests
+    const base = this.props.kitchen.base_price
+    const extra = this.props.kitchen.price_per_guest
+    return (numGuests <=2) ? base : base + (extra * (numGuests-2))
   }
 
   handleBook = () => {
@@ -81,12 +88,12 @@ class KitchenAvailability extends Component {
         />
         <br /><br />
         <div className="ui input guest-counter">
-          <input onChange={this.handleGuestChange} type="number" placeholder="Number of guests" />
+          <Input onChange={this.handleGuestChange} size="mini" label="Guests" value={this.state.guests} type="number" />
         </div>
         <br /><br />
         <div className="price-wrapper">
           <h4>
-            Estimated price: {this.estimatedPrice()}
+            Estimated price: ${this.estimatedPrice()}
           </h4>
         </div>
         <br /><br />

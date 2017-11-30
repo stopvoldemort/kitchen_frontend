@@ -62,10 +62,10 @@ class KitchenListContainer extends Component {
           <Grid.Column className="sticky" width={2}>
             <KitchenFilter importFilters={this.importFilters}/>
           </Grid.Column>
-          <Grid.Column width={7}>
+          <Grid.Column width={6}>
             {this.props.isLoading ? <Loading className="col"/> : <KitchenList selectedKitchenID={this.state.selectedKitchenID} kitchens={this.filterKitchens()}/>}
           </Grid.Column>
-          <Grid.Column width={7}>
+          <Grid.Column width={8}>
             {(!this.state.cityLatitude) ? null :
               <GoogleApiWrapper
               kitchens={this.filterKitchens()}

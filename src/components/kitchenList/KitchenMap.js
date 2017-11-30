@@ -4,15 +4,6 @@ import cuid from 'cuid'
 
 export class KitchenMap extends Component {
 
-  state = {
-    activeMarker: {}
-  }
-
-  onMarkerClick = (props, marker, e) => {
-    this.props.selectKitchen(marker)
-  }
-
-
   markers = () => {
     return this.props.kitchens.reduce((agg, kitchen) => {
       if (kitchen.longitude && kitchen.latitude) {
