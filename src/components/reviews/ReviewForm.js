@@ -46,7 +46,7 @@ class ReviewForm extends Component {
           <Image wrapped size='medium' src={picUrl} />
           <Modal.Description>
             <div>
-              <TextArea placeholder="Write a review" onChange={this.handleTextChange} />
+              <TextArea required placeholder="Write a review" onChange={this.handleTextChange} />
             </div>
             <div>
               <ReactStars half={false} onChange={this.handleStarChange} value={this.state.stars} />

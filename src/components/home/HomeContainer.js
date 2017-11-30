@@ -24,16 +24,16 @@ class HomeContainer extends Component {
       <div className="home-container">
         <SearchForm />
         <section className="animation-box">
-          <div className="first-text">{this.props.cities[0]}</div>
-          <div className="second-text">{this.props.cities[1]}</div>
-          <div className="third-text">{this.props.cities[2]}</div>
-          <div className="fourth-text">{this.props.cities[3]}</div>
-          <div className="fifth-text">{this.props.cities[4]}</div>
-          <div className="sixth-text">{this.props.cities[5]}</div>
-          <div className="seventh-text">{this.props.cities[6]}</div>
-          <div className="eighth-text">{this.props.cities[7]}</div>
-          <div className="ninth-text">{this.props.cities[8]}</div>
-          <div className="tenth-text">{this.props.cities[9]}</div>
+          <div className="first-text">{cityArr[0]}</div>
+          <div className="second-text">{cityArr[1]}</div>
+          <div className="third-text">{cityArr[2]}</div>
+          <div className="fourth-text">{cityArr[3]}</div>
+          <div className="fifth-text">{cityArr[4]}</div>
+          <div className="sixth-text">{cityArr[5]}</div>
+          <div className="seventh-text">{cityArr[6]}</div>
+          <div className="eighth-text">{cityArr[7]}</div>
+          <div className="ninth-text">{cityArr[8]}</div>
+          <div className="tenth-text">{cityArr[9]}</div>
         </section>
       </div>
     )
