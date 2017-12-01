@@ -57,7 +57,6 @@ export function deleteKitchenFromBackend(kitchenID) {
   }
 }
 
-
 export function editKitchenOnBackend(kitchenObj) {
   return function(dispatch) {
     BackendAPI.editKitchenOnBackend(kitchenObj)
@@ -65,5 +64,11 @@ export function editKitchenOnBackend(kitchenObj) {
         dispatch({type: "EDIT_KITCHEN_ON_BACKEND"})
       }
     )
+  }
+}
+
+export function clearKitchenList() {
+  return function(dispatch) {
+    dispatch({type: "CLEAR_KITCHEN_LIST"})
   }
 }

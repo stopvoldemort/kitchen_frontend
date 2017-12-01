@@ -225,10 +225,32 @@
 .tenth-text {
   font-size: 3rem;
   position: absolute;
-  left: 50%;
+  left: 10%;
   bottom: 0%;
   opacity: 0;
   color: green;
   animation-name: bottomFadeOut;
   animation-delay: 13s;
+}
+
+.eleventh-text {
+  font-size: 4.4rem;
+  position: absolute;
+  left: 30%;
+  top: 5rem;
+  opacity: 0;
+  animation-name: topFadeOut;
+  animation-delay: 7s;
+  color: red;
+}
+
+.twelfth-text {
+  font-size: 4.4rem;
+  position: absolute;
+  left: 60%;
+  top: 5rem;
+  opacity: 0;
+  animation-name: topFadeOut;
+  animation-delay: 1s;
+  color: blue;
 }

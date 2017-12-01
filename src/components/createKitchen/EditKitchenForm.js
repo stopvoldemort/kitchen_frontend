@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Header, Checkbox, Divider } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { editKitchenOnBackend } from '../../actions/kitchens.js'
+import { editKitchenOnBackend, clearKitchenList } from '../../actions/kitchens.js'
 import { editKitchenFromCurrentUser } from '../../actions/users.js'
 import { Redirect } from 'react-router-dom'
 import { Loading } from '../kitchenList/Loading.js'
@@ -50,10 +50,10 @@ class CreateKitchenForm extends Component {
         const lng = json.results[0].geometry.location.lng
         kitchenObj.kitchen.latitude = lat
         kitchenObj.kitchen.longitude = lng
-        console.log(kitchenObj)
         this.props.editKitchenOnBackend(kitchenObj)
         this.props.editKitchenFromCurrentUser(kitchenObj)
-        this.setState({redirectToKitchen: `/kitchens/${this.props.selectedKitchen.id}`})
+        this.props.clearKitchenList()
+        this.setState({redirectToKitchen: "/mykitchens"})
       })
   }
 
@@ -68,7 +68,6 @@ class CreateKitchenForm extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className="create-kitchen-container">
         {(this.props.isLoading) ? <Loading /> : null}
@@ -141,7 +140,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return ({
     editKitchenOnBackend: (kitchenObj) => dispatch(editKitchenOnBackend(kitchenObj)),
-    editKitchenFromCurrentUser: (kitchenObj) => dispatch(editKitchenFromCurrentUser(kitchenObj))
+    editKitchenFromCurrentUser: (kitchenObj) => dispatch(editKitchenFromCurrentUser(kitchenObj)),
+    clearKitchenList: () => dispatch(clearKitchenList())
   })
 }
 

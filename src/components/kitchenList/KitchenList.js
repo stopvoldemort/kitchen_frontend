@@ -25,7 +25,7 @@ export const KitchenList = (props) => {
 
   return (
     <Card.Group itemsPerRow={1} >
-      { props.kitchens.length ? kitchenCards() : <p>No kitchens available near that location.</p>}
+      { props.kitchens.length ? kitchenCards() : <p>No kitchens available. Please search for a new location.</p>}
     </Card.Group>
   )
 }

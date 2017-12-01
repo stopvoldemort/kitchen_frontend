@@ -14,6 +14,8 @@ export function kitchenReducer(state = {
       return {...state, isLoading: true}
     case "FETCH_KITCHEN":
       return {...state, selectedKitchen: action.payload, isLoading: false}
+    case "CLEAR_KITCHEN_LIST":
+      return {...state, list: []}
     case "CREATING_KITCHENS":
       return {...state, isLoading: true}
     case "CREATE_KITCHEN":

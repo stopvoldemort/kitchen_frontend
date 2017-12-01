@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Header, Checkbox, Divider } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { createKitchen } from '../../actions/kitchens.js'
+import { createKitchen, clearKitchenList } from '../../actions/kitchens.js'
 import { Redirect } from 'react-router-dom'
 import { Loading } from '../kitchenList/Loading.js'
 import { AddKitchenPics } from './AddKitchenPics.js'
@@ -73,8 +73,8 @@ class EditKitchenForm extends Component {
         const lng = json.results[0].geometry.location.lng
         kitchenObj.kitchen.latitude = lat
         kitchenObj.kitchen.longitude = lng
-
-        this.props.createKitchen(kitchenObj);
+        this.props.createKitchen(kitchenObj)
+        this.props.clearKitchenList()
       })
   }
 
@@ -167,7 +167,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    createKitchen: (kitchenObj) => dispatch(createKitchen(kitchenObj))
+    createKitchen: (kitchenObj) => dispatch(createKitchen(kitchenObj)),
+    clearKitchenList: () => dispatch(clearKitchenList())
   })
 }
 

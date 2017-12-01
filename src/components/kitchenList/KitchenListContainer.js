@@ -22,7 +22,6 @@ class KitchenListContainer extends Component {
     this.fetchCityCoordinatesThenFetchKitchens()
   }
 
-
   fetchCityCoordinatesThenFetchKitchens = () => {
     const searchTerm = this.props.location.search.split("=")[1].split("%20").join(" ")
     ExternalAPI.geocoder(searchTerm)

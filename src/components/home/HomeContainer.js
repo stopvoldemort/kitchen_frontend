@@ -10,7 +10,7 @@ class HomeContainer extends Component {
 
   populateCitiesArr = () => {
     const arr = []
-    for (let i=0; i<10; i++) {
+    for (let i=0; i<12; i++) {
       const j = Math.floor(Math.random() * this.props.cities.length)
       const city = this.props.cities[j]
       let capitalizedCity = "New York"
@@ -41,6 +41,8 @@ class HomeContainer extends Component {
           <div className="eighth-text">{cityArr[7]}</div>
           <div className="ninth-text">{cityArr[8]}</div>
           <div className="tenth-text">{cityArr[9]}</div>
+          <div className="eleventh-text">{cityArr[10]}</div>
+          <div className="twelfth-text">{cityArr[11]}</div>
         </section>
       </div>
     )
