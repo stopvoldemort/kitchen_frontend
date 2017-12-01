@@ -11,6 +11,17 @@ const makePostInit = (obj) => {
   }
 }
 
+const makePutInit = (obj) => {
+  return {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "PUT",
+      body: JSON.stringify(obj)
+  }
+}
+
 
 export default class BackendAPI {
 
@@ -86,6 +97,13 @@ export default class BackendAPI {
   static createKitchenReview(reviewObj) {
     const url = `${BASE_URL}/kitchen_reviews`
     const myInit = makePostInit(reviewObj)
+    return fetch(url, myInit)
+      .then(res => res.json())
+  }
+
+  static editKitchenOnBackend(kitchenObj) {
+    const url = `${BASE_URL}/kitchens/${kitchenObj.kitchen.id}`
+    const myInit = makePutInit(kitchenObj)
     return fetch(url, myInit)
       .then(res => res.json())
   }

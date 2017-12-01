@@ -22,6 +22,8 @@ export function kitchenReducer(state = {
       return {...state, selectedKitchen: {}}
     case "DELETE_KITCHEN_FROM_FRONTEND":
       return state
+    case "EDIT_KITCHEN_ON_BACKEND":
+      return state
     default:
       return state
   }

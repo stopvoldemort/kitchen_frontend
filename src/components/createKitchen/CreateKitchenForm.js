@@ -73,8 +73,8 @@ class EditKitchenForm extends Component {
         const lng = json.results[0].geometry.location.lng
         kitchenObj.kitchen.latitude = lat
         kitchenObj.kitchen.longitude = lng
-        console.log(kitchenObj);
-        // this.props.createKitchen(kitchenObj);
+
+        this.props.createKitchen(kitchenObj);
       })
   }
 

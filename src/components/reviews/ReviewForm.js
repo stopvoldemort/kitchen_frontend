@@ -6,8 +6,6 @@ import { addKitchenReviewToCurrentUser } from '../../actions/users.js'
 import ReactStars from 'react-stars'
 import '../../style/reviews.css'
 
-const picUrl = "http://hgtvhome.sndimg.com/content/dam/images/hgtv/editorial/blogs/unsized/Kayla/RX-Frigidaire_kitchen-design-ideas_3.jpg"
-
 
 class ReviewForm extends Component {
 
@@ -48,7 +46,7 @@ class ReviewForm extends Component {
       >
         <Modal.Header>{this.props.reservation.kitchen.title}</Modal.Header>
         <Modal.Content image>
-          <Image wrapped size='medium' src={picUrl} />
+          <Image wrapped size='medium' src={this.props.reservation.kitchen.kitchen_pictures[0].url} />
           <Modal.Description>
             <div>
               <h4>Write a review</h4>

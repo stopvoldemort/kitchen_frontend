@@ -25,12 +25,20 @@ export function userReducer(state = {
       stateWithNewReview.currentUser.reviewed_kitchens.push(action.payload)
       return stateWithNewReview
     case "DELETE_KITCHEN_FROM_CURRENT_USER":
-      // THIS MUTATES STATE FOR SOME REASON, SO I JUST FORCE THE COMPONENT TO UPDATE
-      const stateWithoutDeletedKitchen = Object.assign({}, state)
+      let stateWithoutDeletedKitchen = JSON.parse(JSON.stringify(state))
       const originalKitchens = stateWithoutDeletedKitchen.currentUser.kitchens.slice()
       const remainingKitchens = originalKitchens.filter(k => (k.id!==action.payload))
       stateWithoutDeletedKitchen.currentUser.kitchens = remainingKitchens
       return stateWithoutDeletedKitchen
+    case "EDIT_KITCHEN_FROM_CURRENT_USER":
+      let stateWithEditedKitchen = JSON.parse(JSON.stringify(state))
+      const editedKitchens = stateWithEditedKitchen.currentUser.kitchens.reduce((agg, k) => {
+        if (k.id===action.payload.id) agg.push(action.payload)
+        else agg.push(k)
+        return agg
+      }, [])
+      stateWithEditedKitchen.currentUser.kitchens = editedKitchens
+      return stateWithEditedKitchen
     default:
       return state
   }

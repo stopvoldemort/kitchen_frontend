@@ -42,3 +42,9 @@ export function deleteKitchenFromCurrentUser(kitchenID) {
     dispatch({type: "DELETE_KITCHEN_FROM_CURRENT_USER", payload: kitchenID})
   }
 }
+
+export function editKitchenFromCurrentUser(kitchenObj) {
+  return function(dispatch) {
+    dispatch({type: "EDIT_KITCHEN_FROM_CURRENT_USER", payload: kitchenObj.kitchen})
+  }
+}

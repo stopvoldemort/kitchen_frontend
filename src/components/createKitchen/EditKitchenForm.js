@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Form, Header, Checkbox, Divider } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { createKitchen } from '../../actions/kitchens.js'
+import { editKitchenOnBackend } from '../../actions/kitchens.js'
+import { editKitchenFromCurrentUser } from '../../actions/users.js'
 import { Redirect } from 'react-router-dom'
 import { Loading } from '../kitchenList/Loading.js'
 import { AddKitchenPics } from './AddKitchenPics.js'
@@ -41,7 +42,6 @@ class CreateKitchenForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const kitchenObj = {kitchen: this.state}
-    kitchenObj.kitchen.owner_id = this.props.currentUser.id
 
     const address = this.createAddress()
     ExternalAPI.geocoder(address)
@@ -50,14 +50,11 @@ class CreateKitchenForm extends Component {
         const lng = json.results[0].geometry.location.lng
         kitchenObj.kitchen.latitude = lat
         kitchenObj.kitchen.longitude = lng
-        console.log(kitchenObj);
-        // this.props.createKitchen(kitchenObj);
+        console.log(kitchenObj)
+        this.props.editKitchenOnBackend(kitchenObj)
+        this.props.editKitchenFromCurrentUser(kitchenObj)
+        this.setState({redirectToKitchen: `/kitchens/${this.props.selectedKitchen.id}`})
       })
-      // Submit should both update the backend and the front end separately.
-      // Rails should return the revised kitchenObj as json, which then goes
-      // to the store.
-      // Also, the fact that this redirects every time the form is updated
-      // is an issue.
   }
 
   createAddress = () => {
@@ -65,17 +62,10 @@ class CreateKitchenForm extends Component {
     return state.street_address + ", " + state.city + ", " + state.state + " " + state.zipcode
   }
 
-  componentDidUpdate = () => {
-    if (this.props.selectedKitchen.id) {
-      this.setState({redirectToKitchen: `/kitchens/${this.props.selectedKitchen.id}`})
-    }
-  }
-
   addImage = (imgUrl) => {
     const newImg = {url: imgUrl}
     this.setState({kitchen_pictures: [...this.state.kitchen_pictures, newImg]})
   }
-
 
   render() {
     console.log(this.state)
@@ -132,7 +122,7 @@ class CreateKitchenForm extends Component {
 
           <Divider section hidden />
 
-          <Form.Button primary>Add Kitchen</Form.Button>
+          <Form.Button primary>Update Kitchen</Form.Button>
         </Form>
         {(this.state.redirectToKitchen) ? <Redirect push to={this.state.redirectToKitchen}/> : null}
       </div>
@@ -150,7 +140,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    createKitchen: (kitchenObj) => dispatch(createKitchen(kitchenObj))
+    editKitchenOnBackend: (kitchenObj) => dispatch(editKitchenOnBackend(kitchenObj)),
+    editKitchenFromCurrentUser: (kitchenObj) => dispatch(editKitchenFromCurrentUser(kitchenObj))
   })
 }
 
