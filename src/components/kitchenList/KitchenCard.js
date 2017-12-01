@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import { Card, Image, Button } from 'semantic-ui-react'
 import ReactStars from 'react-stars'
 
-const KitchenCard = ({ kitchen, currentUser, deleteKitchen }) => {
+const KitchenCard = ({ kitchen, currentUser, deleteKitchen, editKitchen }) => {
 
-  const handleClick = () => {deleteKitchen(kitchen.id)}
+  const handleDeleteClick = () => deleteKitchen(kitchen.id)
 
   const maxPrice = kitchen.base_price + (kitchen.price_per_guest * kitchen.max_guests)
 
@@ -40,7 +40,12 @@ const KitchenCard = ({ kitchen, currentUser, deleteKitchen }) => {
         <a>{avgRating()}</a>
       </Card.Content>
       {(!currentUser) ? null : (
-        <Button onClick={handleClick}>Remove Your Kitchen</Button>
+        <Card.Content>
+          <Link to={`/mykitchens/${kitchen.id}`}>
+            <Button>Edit Your Kitchen</Button>
+          </Link>
+          <Button onClick={handleDeleteClick}>Remove Your Kitchen</Button>
+        </Card.Content>
       )}
     </Card>  )
 }

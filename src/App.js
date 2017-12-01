@@ -8,6 +8,7 @@ import ReservationListContainer from './components/reservationList/ReservationLi
 import CreateUserContainer from './components/createUser/CreateUserContainer.js'
 import CreateKitchenContainer from './components/createKitchen/CreateKitchenContainer.js'
 import MyKitchensContainer from './components/myKitchens/MyKitchensContainer.js'
+import EditKitchenContainer from './components/createKitchen/EditKitchenContainer.js'
 
 class App extends Component {
   render() {
@@ -22,7 +23,8 @@ class App extends Component {
         </Switch>
         <Route path='/reservations' exact component={ReservationListContainer}/>
         <Route path='/users/new' exact component={CreateUserContainer}/>
-        <Route path='/mykitchens' exact component={MyKitchensContainer}/>
+        <Route path='/mykitchens/' exact component={MyKitchensContainer}/>
+        <Route path='/mykitchens/:id' exact component={EditKitchenContainer}/>
       </div>
     );
   }

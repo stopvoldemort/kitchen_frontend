@@ -8,32 +8,9 @@ import { AddKitchenPics } from './AddKitchenPics.js'
 import ExternalAPI from '../../services/ExternalAPI.js'
 
 
-class EditKitchenForm extends Component {
+class CreateKitchenForm extends Component {
 
-  state = {
-    title: "",
-    blurb: "",
-    street_address: "",
-    city: "",
-    state: "",
-    zipcode: "",
-    description: "",
-    size: 0,
-    max_guests: 2,
-    knives: "",
-    pots: "",
-    pans: "",
-    food_processor: false,
-    standing_mixer: false,
-    deep_fryer: false,
-    pressure_cooker: false,
-    base_price: 0,
-    price_per_guest: 0,
-
-    kitchen_pictures: [],
-
-    redirectToKitchen: false
-  }
+  state = {...this.props.savedKitchenData, redirectToKitchen: false}
 
   checkPositive = (num) => {return (num>0) ? true : false}
 
@@ -76,6 +53,11 @@ class EditKitchenForm extends Component {
         console.log(kitchenObj);
         // this.props.createKitchen(kitchenObj);
       })
+      // Submit should both update the backend and the front end separately.
+      // Rails should return the revised kitchenObj as json, which then goes
+      // to the store.
+      // Also, the fact that this redirects every time the form is updated
+      // is an issue.
   }
 
   createAddress = () => {
@@ -96,6 +78,7 @@ class EditKitchenForm extends Component {
 
 
   render() {
+    console.log(this.state)
     return (
       <div className="create-kitchen-container">
         {(this.props.isLoading) ? <Loading /> : null}
@@ -145,7 +128,7 @@ class EditKitchenForm extends Component {
           <Divider section hidden />
 
           <Header as="h3">Add Pictures</Header>
-          <AddKitchenPics addImage={this.addImage}/>
+          <AddKitchenPics savedPics={this.state.kitchen_pictures} addImage={this.addImage}/>
 
           <Divider section hidden />
 
@@ -172,4 +155,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditKitchenForm)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateKitchenForm)

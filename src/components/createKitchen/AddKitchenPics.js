@@ -19,6 +19,15 @@ export class AddKitchenPics extends Component {
     };
   }
 
+  componentDidMount = () => {
+    const savedPics = this.props.savedPics
+    console.log(savedPics)
+    if (savedPics) {
+      const savedPicObjs = this.props.savedPics.map(pic => ({picUrl: pic.url, name: cuid()}))
+      this.setState({images: savedPicObjs})
+    }
+  }
+
   onImageDrop = (files) => {
     this.setState({uploadedFile: files[0]});
     this.handleImageUpload(files[0]);
