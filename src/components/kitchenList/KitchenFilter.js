@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Checkbox, Form, Input } from 'semantic-ui-react'
+import { Checkbox, Form, Input, Label, Header } from 'semantic-ui-react'
 
 
 export class KitchenFilter extends Component {
@@ -10,9 +10,11 @@ export class KitchenFilter extends Component {
         food_processor: false,
         standing_mixer: false,
         deep_fryer: false,
-        pressure_cooker: false,
-        guests: 0
-      }
+        pressure_cooker: false
+      },
+      guests: 2,
+      max_price: 500,
+      min_price: 0
     }
   }
 
@@ -28,24 +30,58 @@ export class KitchenFilter extends Component {
     const filter = this.dehumanize(ev.target.innerText)
     const newState = JSON.parse(JSON.stringify(this.state))
     newState.filters.equipment[filter] = !this.state.filters.equipment[filter]
-    this.setState(newState, () => {
-      this.props.importFilters(this.state.filters)
-    })
+    this.setState(newState, () => {this.exportFilters()})
   }
 
-  // THIS IS WHERE YOU LEFT OFF MAKING FILTERS
-  handleInputChange = (ev) => {
-    console.log(ev.target.value);
-    console.log(ev.target.name);
-    this.setState({})
+  handleGuestChange = (ev) => {
+    const value = parseInt(ev.target.value, 10)
+    const newState = JSON.parse(JSON.stringify(this.state))
+    newState.filters.guests = value
+    if (value>=0) this.setState(newState, () => {this.exportFilters()})
   }
+
+  handleMaxPriceChange = (ev) => {
+    const value = parseInt(ev.target.value, 10)
+    const newState = JSON.parse(JSON.stringify(this.state))
+    newState.filters.max_price = value
+    if (value>=0) this.setState(newState, () => {this.exportFilters()})
+  }
+
+  handleMinPriceChange = (ev) => {
+    const value = parseInt(ev.target.value, 10)
+    const newState = JSON.parse(JSON.stringify(this.state))
+    newState.filters.min_price = value
+    if (value>=0) this.setState(newState, () => {this.exportFilters()})
+  }
+
+  exportFilters = () => {this.props.importFilters(this.state.filters)}
+
+
 
   render() {
     return (
       <div>
-        <h3>Filter Results</h3>
-        <h4>Equipment</h4>
+        <Header as="h2">Filter</Header>
         <Form>
+          <Form.Field>
+            <Header as="h4">Numbers of guests</Header>
+            <Input onChange={this.handleGuestChange} type="number" value={this.state.filters.guests} />
+          </Form.Field>
+          <Form.Field>
+            <Header as="h4">Minimum Price</Header>
+            <Input fluid labelPosition='left' onChange={this.handleMinPriceChange} type="number" value={this.state.filters.min_price}>
+              <Label size="tiny">$</Label>
+              <input step="10"/>
+            </Input>
+          </Form.Field>
+          <Form.Field>
+            <Header as="h4">Maximum Price</Header>
+            <Input fluid labelPosition='left' onChange={this.handleMaxPriceChange} type="number" value={this.state.filters.max_price}>
+              <Label size="tiny">$</Label>
+              <input step="10"/>
+            </Input>
+          </Form.Field>
+          <Header as="h3">Equipment</Header>
           <Form.Field onChange={this.handleEquipmentChange}
             control={Checkbox}
             label={{ children: 'Food Processor' }}
@@ -62,10 +98,6 @@ export class KitchenFilter extends Component {
             control={Checkbox}
             label={{ children: 'Pressure Cooker' }}
           />
-          <Form.Field>
-            <label>Numbers of guests</label>
-            <Input onChange={this.handleInputChange} name="guests" type="number" value={this.state.guests} />
-          </Form.Field>
         </Form>
       </div>
     )

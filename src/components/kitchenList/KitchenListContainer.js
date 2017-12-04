@@ -12,7 +12,9 @@ import ExternalAPI from '../../services/ExternalAPI.js'
 class KitchenListContainer extends Component {
 
   state = {
-    filters: [],
+    filters: {
+      equipment: {}
+    },
     cityLongitude: 0,
     cityLatitude: 0,
     selectedKitchenID: 0
@@ -33,20 +35,21 @@ class KitchenListContainer extends Component {
     })
   }
 
-  importFilters = (state) => {
-    let filters = []
-    for (var e in state.equipment) {
-      if (state.equipment[e]) filters.push(e)
-    }
-    this.setState({filters: filters})
-  }
+  importFilters = (filters) => {this.setState({filters: filters})}
 
   filterKitchens = () => {
-    let filteredKitchens = [...this.props.kitchens]
-    this.state.filters.forEach(filter => {
-      filteredKitchens = filteredKitchens.filter(kitchen => (kitchen[filter]))
+    const filters = this.state.filters
+    return this.props.kitchens.filter(k => {
+      if (
+        !(filters.equipment.food_processor && !k.food_processor) &&
+        !(filters.equipment.deep_fryer && !k.deep_fryer) &&
+        !(filters.equipment.pressure_cooker && !k.pressure_cooker) &&
+        !(filters.equipment.standing_mixer && !k.standing_mixer) &&
+        !(filters.guests > k.max_guests) &&
+        !(filters.min_price > (k.base_price + ((filters.guests - 2) * k.price_per_guest))) &&
+        !(filters.max_price < (k.base_price + ((filters.guests - 2) * k.price_per_guest)))
+      ) return k
     })
-    return filteredKitchens
   }
 
   moveSelectedKitchenToTop = (marker) => {
