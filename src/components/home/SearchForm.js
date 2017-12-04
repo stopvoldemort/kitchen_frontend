@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'semantic-ui-react'
+import { Button, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import '../../style/home.css'
 import { Redirect } from 'react-router-dom'
@@ -9,7 +9,8 @@ class SearchForm extends Component {
 
   state = {
     input: "",
-    redirectToKitchenList: false
+    redirectToKitchenList: false,
+    showErrorMessage: false
   }
 
   handleChange = (ev) => {
@@ -18,8 +19,10 @@ class SearchForm extends Component {
 
   handleSubmit = (ev) => {
     ev.preventDefault()
-    this.setState({redirectToKitchenList: true})
+    this.state.input ? this.setState({redirectToKitchenList: true}) : this.setState({showErrorMessage: true})
   }
+
+  resetErrorMessage = () => this.setState({showErrorMessage: false})
 
   searchSubmitted = () => {
     if (this.state.redirectToKitchenList) {
@@ -41,6 +44,11 @@ class SearchForm extends Component {
           </div>
         </form>
         {this.searchSubmitted()}
+        {(this.state.showErrorMessage) ? (
+          <Message negative onDismiss={this.resetErrorMessage}>
+            <Message.Header>Please enter a location</Message.Header>
+          </Message>
+        ) : null }
       </div>
     )
   }

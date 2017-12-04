@@ -4,7 +4,7 @@ import ReactStars from 'react-stars'
 
 
 
-export const ReviewCard = ({ review }) => {
+export const ReviewCard = ({ review, reviewAuthor }) => {
 
   const humanize = (date) => {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -17,7 +17,7 @@ export const ReviewCard = ({ review }) => {
 
   return (
     <Card fluid >
-      <Card.Content header={`${review.guest} says...`} />
+      <Card.Content header={`${reviewAuthor.name} says...`} />
       <Card.Content description={review.review} />
       <Card.Content><ReactStars value={review.stars} edit={false}/></Card.Content>
       <Card.Content extra>{humanize(review.created_at)}</Card.Content>

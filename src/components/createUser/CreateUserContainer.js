@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { Form, Icon } from 'semantic-ui-react'
+import { Form, Icon, Message } from 'semantic-ui-react'
 import '../../style/user.css'
 import { connect } from 'react-redux'
 import { createUser } from '../../actions/users.js'
-import { Redirect } from 'react-router-dom'
 import AddUserPic from './AddUserPic.js'
 
 class CreateUserContainer extends Component {
@@ -13,8 +12,7 @@ class CreateUserContainer extends Component {
     email: "",
     password: "",
     bio: "",
-    pic_url: "",
-    redirectToHome: false
+    pic_url: ""
   }
 
   handleNameChange = (e, { value }) => this.setState({ name: value })
@@ -32,10 +30,14 @@ class CreateUserContainer extends Component {
   }
 
   componentDidUpdate = () => {
-    if (this.props.currentUser.id) this.setState({redirectToHome: true})
+    if (localStorage.getItem('jwt')) this.props.history.push('/')
   }
 
   addImage = (imgUrl) => {this.setState({pic_url: imgUrl})}
+
+  handleClick = () => {
+    this.props.resetSignupFail()
+  }
 
   render() {
     return (
@@ -56,7 +58,11 @@ class CreateUserContainer extends Component {
 
           <Form.Button primary>Sign Up</Form.Button>
         </Form>
-        {(this.state.redirectToHome) ? <Redirect push to="/"/> : null}
+        {(this.props.signupFail) ? (
+          <Message negative onDismiss={this.handleClick}>
+            <Message.Header>Something went wrong with your submission. Please try again.</Message.Header>
+          </Message>
+        ) : null }
       </div>
     )
   }
@@ -64,13 +70,15 @@ class CreateUserContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.user.currentUser
+    currentUser: state.user.currentUser,
+    signupFail: state.user.signupFail
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    createUser: (bookObj) => dispatch(createUser(bookObj))
+    createUser: (bookObj) => dispatch(createUser(bookObj)),
+    resetSignupFail: () => dispatch({type: "RESET_SIGNUP_FAIL"})
   })
 }
 

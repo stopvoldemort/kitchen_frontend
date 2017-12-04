@@ -19,14 +19,13 @@ export default class ReservationCard extends Component {
   }
 
   handleCancelClick = () => {
-    console.log("clicked from reservation card");
     this.props.cancelReservation(this.props.reservation.id)
   }
 
   render() {
-    const picUrl = this.props.reservation.kitchen_pictures[0].url
-    const currentKitchenId = this.props.reservation.kitchen.id
-    const previouslyReviewedKitchenIds = this.props.currentUser.reviewed_kitchens.map(k => k.kitchen_id)
+    const picUrl = this.props.kitchenPicture.url
+    const currentKitchenId = this.props.kitchen.id
+    const previouslyReviewedKitchenIds = this.props.usersReviews.map(k => k.kitchen_id)
     const previouslyReviewed = (previouslyReviewedKitchenIds.includes(currentKitchenId))
     const kitchenUrl = `/kitchens/${currentKitchenId}`
 
@@ -42,18 +41,23 @@ export default class ReservationCard extends Component {
             </Card.Header>
             <Card.Meta>
               <Link to={kitchenUrl}>
-                <span className='date'>{this.props.reservation.kitchen.title}</span>
+                <span className='date'>{this.props.kitchen.title}</span>
               </Link>
             </Card.Meta>
             <Card.Description>
-              {this.props.reservation.kitchen.blurb}
+              {this.props.kitchen.blurb}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
             {this.props.reservation.guest_number} guests
           </Card.Content>
           {this.props.prior && !previouslyReviewed ?
-            <ReviewForm reservation={this.props.reservation} showErrorMessage={this.resetReviewFail} />
+            <ReviewForm
+              kitchen={this.props.kitchen}
+              reservation={this.props.reservation}
+              showErrorMessage={this.resetReviewFail}
+              kitchenPicture={this.props.kitchenPicture}
+            />
           : null}
           {this.props.prior && previouslyReviewed ?
             <Button disabled>You previously reviewed this kitchen</Button>

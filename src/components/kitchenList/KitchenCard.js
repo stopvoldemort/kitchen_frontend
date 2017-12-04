@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom'
 import { Card, Image, Button } from 'semantic-ui-react'
 import ReactStars from 'react-stars'
 
-const KitchenCard = ({ kitchen, currentUser, deleteKitchen, editKitchen }) => {
+const KitchenCard = ({ kitchen, currentUser, deleteKitchen, editKitchen, pic, reviews }) => {
 
   const handleDeleteClick = () => deleteKitchen(kitchen.id)
 
   const maxPrice = kitchen.base_price + (kitchen.price_per_guest * kitchen.max_guests)
 
   const avgRating = () => {
-    const numReviews = kitchen.reviews.length
+    const numReviews = reviews.length
     if (numReviews) {
-      const totalStars = kitchen.reviews.reduce((sum, review) => (sum + review.stars), 0)
+      const totalStars = reviews.reduce((sum, review) => (sum + review.stars), 0)
       const avg = totalStars / numReviews
       return (
         <div>
@@ -23,9 +23,11 @@ const KitchenCard = ({ kitchen, currentUser, deleteKitchen, editKitchen }) => {
     } else return "No reviews"
   }
 
+  const picUrl = pic ? pic.url : "http://www.tourniagara.com/wp-content/uploads/2014/10/default-img.gif"
+
   return (
     <Card fluid>
-      <Image src={kitchen.kitchen_pictures[0].url} />
+      <Image src={picUrl} />
       <Card.Content>
           <Card.Header>
             <Link to={`/kitchens/${kitchen.id}`} >

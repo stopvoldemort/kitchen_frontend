@@ -23,7 +23,7 @@ class CreateKitchenContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    selectedKitchen: state.kitchens.selectedKitchen,
+    // selectedKitchen: state.kitchens.selectedKitchen,
     currentUser: state.user.currentUser
   }
 }

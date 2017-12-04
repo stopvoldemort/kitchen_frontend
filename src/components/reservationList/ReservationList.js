@@ -21,6 +21,11 @@ class ReservationList extends Component {
         currentUser={this.props.currentUser}
         prior={isPrior}
         cancelReservation={this.props.cancelReservation}
+        kitchenPicture={this.props.kitchenPictures.find(pic => {
+          return pic.kitchen_id === reservation.kitchen_id
+        })}
+        usersReviews={this.props.usersReviews}
+        kitchen={this.props.kitchens.find(kitchen => kitchen.id === reservation.kitchen_id)}
       />
     ))
   }
@@ -98,7 +103,10 @@ const mapStateToProps = (state) => {
   const reservationsObj = categorize(reservations)
   return {
     currentUser: state.user.currentUser,
-    reservations: reservationsObj
+    reservations: reservationsObj,
+    kitchenPictures: state.reservations.kitchenPics,
+    kitchens: state.reservations.kitchens,
+    usersReviews: state.user.usersReviews
   }
 }
 

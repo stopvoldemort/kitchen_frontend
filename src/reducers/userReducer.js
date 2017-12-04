@@ -1,44 +1,104 @@
 export function userReducer(state = {
+  currentUser: {},
+  usersKitchens: [],
+  usersKitchensPictures: [],
+  usersKitchensReviews: [],
+  usersReviews: [],
+  usersReservations: [],
   loggedIn: false,
   loginFail: false,
-  signUpFail: false,
-  currentUser: {}
+  signUpFail: false
 }, action) {
+
   switch (action.type) {
+
     case "LOGIN":
-      const loggedInState = {...state, loggedIn: true, currentUser: action.payload, loginFail: false}
-      return loggedInState
+      const data = action.payload
+      const loggedInState = {
+        ...state,
+        currentUser: data.user,
+        usersKitchens: data.kitchens,
+        usersKitchensPictures: data.kitchen_pictures,
+        usersReviews: data.kitchen_reviews,
+        usersReservations: data.reservations,
+        usersKitchensReviews: data.reviews_of_users_kitchens,
+        loginFail: false,
+        loggedIn: true
+      }
+      return {...loggedInState}
+
     case "LOGIN_FAILED":
-      const failedStated = {...state, loginFail: true}
-      return failedStated
+      const failedLogin = {...state, loginFail: true}
+      return failedLogin
+
+    case "SIGNUP_FAILED":
+      const failedSignup = {...state, signupFail: true}
+      return failedSignup
+
     case "RESET_LOGIN_FAIL":
-      const resetState = {...state, loginFail: false}
-      return resetState
+      const resetLogin = {...state, loginFail: false}
+      return resetLogin
+
+    case "RESET_SIGNUP_FAIL":
+      const resetSignup = {...state, signupFail: false}
+      return resetSignup
+
     case "LOGOUT":
-      const newState = {...state, loggedIn: false, currentUser: {}}
-      return newState
-    case "CREATE_USER":
-      const signedUpState = {...state, loggedIn: true, currentUser: action.payload, signUpFail: false}
-      return signedUpState
+      const loggedOutState = {
+        ...state,
+        currentUser: {},
+        usersKitchensReviews: [],
+        usersKitchens: [],
+        usersKitchensPictures: [],
+        usersReviews: [],
+        usersReservations: [],
+        loggedIn: false,
+        loginFail: false,
+        signUpFail: false
+      }
+      return loggedOutState
+
     case "ADD_KITCHEN_REVIEW_TO_CURRENT_USER":
-      let stateWithNewReview = {...state}
-      stateWithNewReview.currentUser.reviewed_kitchens.push(action.payload)
-      return stateWithNewReview
+      const newUsersReviews = state.usersReviews.concat(action.payload)
+      return {...state, usersReviews: newUsersReviews}
+
+    case "ADD_KITCHEN_TO_CURRENT_USER":
+      let newUsersKitchens = state.usersKitchens.concat(action.payload.selected_kitchen)
+      let newUsersKitchensPictures = state.usersKitchensPictures.concat(action.payload.selected_kitchen_pictures)
+      return {
+        ...state,
+        usersKitchens: newUsersKitchens,
+        usersKitchensPictures: newUsersKitchensPictures
+      }
+
     case "DELETE_KITCHEN_FROM_CURRENT_USER":
-      let stateWithoutDeletedKitchen = JSON.parse(JSON.stringify(state))
-      const originalKitchens = stateWithoutDeletedKitchen.currentUser.kitchens.slice()
-      const remainingKitchens = originalKitchens.filter(k => (k.id!==action.payload))
-      stateWithoutDeletedKitchen.currentUser.kitchens = remainingKitchens
-      return stateWithoutDeletedKitchen
+      const smallerUsersKitchens = state.usersKitchens.filter(k => (k.id!==action.payload))
+      return {
+        ...state,
+        usersKitchens: smallerUsersKitchens
+      }
+
     case "EDIT_KITCHEN_FROM_CURRENT_USER":
-      let stateWithEditedKitchen = JSON.parse(JSON.stringify(state))
-      const editedKitchens = stateWithEditedKitchen.currentUser.kitchens.reduce((agg, k) => {
-        if (k.id===action.payload.id) agg.push(action.payload)
-        else agg.push(k)
-        return agg
-      }, [])
-      stateWithEditedKitchen.currentUser.kitchens = editedKitchens
-      return stateWithEditedKitchen
+      console.log("state", state, "payload", action.payload);
+      let editedUsersKitchens = state.usersKitchens.filter(k => {
+        return k.id !== action.payload.selected_kitchen.id
+      })
+      editedUsersKitchens.push(action.payload.selected_kitchen)
+      let editedUsersKitchensPictures = state.usersKitchensPictures.filter(kp => {
+        return kp.kitchen_id !== action.payload.selected_kitchen.id
+      })
+      editedUsersKitchensPictures.push(action.payload.selected_kitchen_pictures[0])
+      let editedUsersKitchensReviews = state.usersKitchensReviews.filter(kp => {
+        return kp.kitchen_id !== action.payload.selected_kitchen.id
+      })
+      editedUsersKitchensReviews.push([...action.payload.selected_kitchen_reviews])
+      return {
+        ...state,
+        usersKitchens: editedUsersKitchens,
+        usersKitchensPictures: editedUsersKitchensPictures,
+        usersKitchensReviews: editedUsersKitchensReviews
+      }
+
     default:
       return state
   }

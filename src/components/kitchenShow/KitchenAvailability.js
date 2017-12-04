@@ -28,7 +28,7 @@ class KitchenAvailability extends Component {
   }
 
   reservedDates = () => {
-    return this.props.kitchen.reservations.map((reservation) => {
+    return this.props.reservations.map((reservation) => {
       let dateArr = reservation.date.split("-")
       // Turns "2017-11-25" into "(2017, 10, 25)"
       const dateObj = new Date(dateArr[0], (dateArr[1]-1), dateArr[2])

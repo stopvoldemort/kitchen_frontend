@@ -4,7 +4,8 @@ const makePostInit = (obj) => {
   return {
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
       },
       method: "POST",
       body: JSON.stringify(obj)
@@ -15,10 +16,32 @@ const makePutInit = (obj) => {
   return {
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
       },
       method: "PUT",
       body: JSON.stringify(obj)
+  }
+}
+
+const makeDeleteInit = () => {
+  return {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+    },
+    method: "DELETE"
+  }
+}
+
+const makeGetInit = () => {
+  return {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+    }
   }
 }
 
@@ -26,19 +49,23 @@ const makePutInit = (obj) => {
 export default class BackendAPI {
 
   static fetchCities() {
-    return fetch(BASE_URL)
+    const url = BASE_URL
+    const myInit = makeGetInit()
+    return fetch(url, myInit)
       .then(res => res.json())
   }
 
   static fetchKitchens(longitude, latitude) {
     const url = `${BASE_URL}/kitchens?longitude=${longitude}&latitude=${latitude}`
-    return fetch(url)
+    const myInit = makeGetInit()
+    return fetch(url, myInit)
       .then(res => res.json())
   }
 
   static fetchKitchen(id) {
     const url = `${BASE_URL}/kitchens/${id}`
-    return fetch(url)
+    const myInit = makeGetInit()
+    return fetch(url, myInit)
       .then(res => res.json())
   }
 
@@ -49,9 +76,10 @@ export default class BackendAPI {
       .then(res => res.json())
   }
 
-  static logout() {
-    const url = `${BASE_URL}/logout`
-    return fetch(url)
+  static autoLogin() {
+    const url = `${BASE_URL}/me`
+    const myInit = makeGetInit()
+    return fetch(url, myInit)
       .then(res => res.json())
   }
 
@@ -64,19 +92,22 @@ export default class BackendAPI {
 
   static fetchReservations(userID) {
     const url = `${BASE_URL}/reservations/${userID}`
-    return fetch(url)
+    const myInit = makeGetInit()
+    return fetch(url, myInit)
       .then(res => res.json())
   }
 
   static cancelReservation(reservationID) {
     const url = `${BASE_URL}/reservations/${reservationID}`
-    return fetch(url, {method: "DELETE"})
+    const myInit = makeDeleteInit()
+    return fetch(url, myInit)
       .then(res => res.json())
   }
 
   static deleteKitchenFromBackend(kitchenID) {
     const url = `${BASE_URL}/kitchens/${kitchenID}`
-    return fetch(url, {method: "DELETE"})
+    const myInit = makeDeleteInit()
+    return fetch(url, myInit)
       .then(res => res.json())
   }
 
@@ -101,7 +132,7 @@ export default class BackendAPI {
       .then(res => res.json())
   }
 
-  static editKitchenOnBackend(kitchenObj) {
+  static editKitchen(kitchenObj) {
     const url = `${BASE_URL}/kitchens/${kitchenObj.kitchen.id}`
     const myInit = makePutInit(kitchenObj)
     return fetch(url, myInit)

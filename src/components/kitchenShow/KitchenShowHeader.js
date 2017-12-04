@@ -11,27 +11,25 @@ export default class KitchenShowHeader extends Component {
   }
 
   handleRightClick = () => {
-    const kitchen = this.props.kitchen
-    if ((this.state.picNum + 1) < kitchen.kitchen_pictures.length) {
+    if ((this.state.picNum + 1) < this.props.pictures.length) {
       const newNum = this.state.picNum + 1
       this.setState({picNum: newNum})
     } else {this.setState({picNum: 0})}
   }
 
   handleLeftClick = () => {
-    const kitchen = this.props.kitchen
     if (this.state.picNum > 0) {
       const newNum = this.state.picNum - 1
       this.setState({picNum: newNum})
-    } else {this.setState({picNum: kitchen.kitchen_pictures.length - 1})}
+    } else {this.setState({picNum: this.props.pictures.length - 1})}
   }
 
 
   avgRating = () => {
-    const kitchen = this.props.kitchen
-    const numReviews = kitchen.reviews.length
+    const reviews = this.props.reviews
+    const numReviews = reviews.length
     if (numReviews) {
-      const totalStars = kitchen.reviews.reduce((sum, review) => (sum + review.stars), 0)
+      const totalStars = reviews.reduce((sum, review) => (sum + review.stars), 0)
       const avg = totalStars / numReviews
       return (
         <div>
@@ -44,16 +42,15 @@ export default class KitchenShowHeader extends Component {
 
   render() {
     const kitchen = this.props.kitchen
-
     return (
       <div>
         <Segment>
-          {(!kitchen.kitchen_pictures.length) ? null :
+          {(!this.props.pictures.length) ? null :
             <ShowImage
-              picUrl={kitchen.kitchen_pictures[this.state.picNum].url}
+              picUrl={this.props.pictures[this.state.picNum].url}
               handleRightClick={this.handleRightClick}
               handleLeftClick={this.handleLeftClick}
-              kitchenHasMultiplePics={this.props.kitchen.kitchen_pictures.length > 1}
+              kitchenHasMultiplePics={this.props.pictures.length > 1}
             />
           }
           <Divider fitted />

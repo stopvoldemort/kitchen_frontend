@@ -33,10 +33,10 @@ class KitchenListContainer extends Component {
     })
   }
 
-  importFilters = (equipment) => {
+  importFilters = (state) => {
     let filters = []
-    for (var e in equipment) {
-      if (equipment[e]) filters.push(e)
+    for (var e in state.equipment) {
+      if (state.equipment[e]) filters.push(e)
     }
     this.setState({filters: filters})
   }
@@ -62,7 +62,14 @@ class KitchenListContainer extends Component {
             <KitchenFilter importFilters={this.importFilters}/>
           </Grid.Column>
           <Grid.Column width={6}>
-            {this.props.isLoading ? <Loading className="col"/> : <KitchenList selectedKitchenID={this.state.selectedKitchenID} kitchens={this.filterKitchens()}/>}
+            {this.props.isLoading ? <Loading className="col"/> :
+              <KitchenList
+                selectedKitchenID={this.state.selectedKitchenID}
+                kitchenPictures={this.props.kitchenPictures}
+                kitchenReviews={this.props.kitchenReviews}
+                kitchens={this.filterKitchens()}
+              />
+            }
           </Grid.Column>
           <Grid.Column width={8}>
             {(!this.state.cityLatitude) ? null :
@@ -83,6 +90,8 @@ class KitchenListContainer extends Component {
 const mapStateToProps = (state) => {
   return ({
     kitchens: state.kitchens.list,
+    kitchenPictures: state.kitchens.pictureList,
+    kitchenReviews: state.kitchens.reviewList,
     isLoading: state.kitchens.isLoading
   })
 }

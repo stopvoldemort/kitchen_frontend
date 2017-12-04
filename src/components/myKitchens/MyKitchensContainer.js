@@ -20,7 +20,14 @@ class MyKitchensContainer extends Component {
         </Grid.Column>
         <Grid.Column width={8}>
           {(!this.props.currentUser.id) ? <p>You must be logged in to see your kitchens</p> : (
-            (!this.props.currentUser.kitchens.length) ? <p>You do not have any kitchens.</p> : (
+            (!this.props.kitchens.length) ?
+              <div>
+                <p>You do not have any kitchens.</p>
+                <br/>
+                <Link to="/kitchens/new"><Button size="huge" fluid primary>
+                  Add A Kitchen
+                </Button></Link>
+              </div> : (
               <div>
                 <br/>
                 <Link to="/kitchens/new"><Button size="huge" fluid primary>
@@ -28,7 +35,9 @@ class MyKitchensContainer extends Component {
                 </Button></Link>
                 <br/><br/><br/>
                 <KitchenList
-                  kitchens={this.props.currentUser.kitchens}
+                  kitchens={this.props.kitchens}
+                  kitchenPictures={this.props.kitchenPictures}
+                  kitchenReviews={this.props.kitchenReviews}
                   currentUser={true}
                   deleteKitchen={this.deleteKitchen}
                 />
@@ -46,6 +55,9 @@ class MyKitchensContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.user.currentUser,
+    kitchens: state.user.usersKitchens,
+    kitchenPictures: state.user.usersKitchensPictures,
+    kitchenReviews: state.user.usersKitchensReviews,
     isLoading: state.kitchens.isLoading
   }
 }

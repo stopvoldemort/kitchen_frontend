@@ -23,7 +23,7 @@ class ReviewForm extends Component {
       kitchen_review: {
         stars: parseInt(this.state.stars, 10),
         review: this.state.review,
-        kitchen_id: this.props.reservation.kitchen.id,
+        kitchen_id: this.props.kitchen.id,
         guest_id: this.props.currentUser.id
       }
     }
@@ -44,9 +44,9 @@ class ReviewForm extends Component {
         open={this.state.modalOpen}
         onClose={this.handleClose}
       >
-        <Modal.Header>{this.props.reservation.kitchen.title}</Modal.Header>
+        <Modal.Header>{this.props.reservation.title}</Modal.Header>
         <Modal.Content image>
-          <Image wrapped size='medium' src={this.props.reservation.kitchen.kitchen_pictures[0].url} />
+          <Image wrapped size='medium' src={this.props.kitchenPicture.url} />
           <Modal.Description>
             <div>
               <h4>Write a review</h4>

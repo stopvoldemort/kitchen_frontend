@@ -65,7 +65,10 @@ class EditKitchenForm extends Component {
     e.preventDefault()
     const kitchenObj = {kitchen: this.state}
     kitchenObj.kitchen.owner_id = this.props.currentUser.id
-
+    if (!kitchenObj.kitchen.kitchen_pictures.length) {
+      const newImg = {url: "http://www.tourniagara.com/wp-content/uploads/2014/10/default-img.gif"}
+      kitchenObj.kitchen.kitchen_pictures.push(newImg)
+    }
     const address = this.createAddress()
     ExternalAPI.geocoder(address)
       .then(json => {

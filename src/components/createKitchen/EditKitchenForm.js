@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Form, Header, Checkbox, Divider } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { editKitchenOnBackend, clearKitchenList } from '../../actions/kitchens.js'
-import { editKitchenFromCurrentUser } from '../../actions/users.js'
+import { editKitchen, clearKitchenList } from '../../actions/kitchens.js'
+// import { editKitchenFromCurrentUser } from '../../actions/users.js'
 import { Redirect } from 'react-router-dom'
 import { Loading } from '../kitchenList/Loading.js'
 import { AddKitchenPics } from './AddKitchenPics.js'
@@ -11,7 +11,10 @@ import ExternalAPI from '../../services/ExternalAPI.js'
 
 class CreateKitchenForm extends Component {
 
-  state = {...this.props.savedKitchenData, redirectToKitchen: false}
+  state = {
+    ...this.props.selectedKitchen,
+    kitchen_pictures: this.props.selectedKitchenPictures
+  }
 
   checkPositive = (num) => {return (num>0) ? true : false}
 
@@ -43,6 +46,10 @@ class CreateKitchenForm extends Component {
     e.preventDefault()
     const kitchenObj = {kitchen: this.state}
 
+    if (!kitchenObj.kitchen.kitchen_pictures.length) {
+      const newImg = {url: "http://www.tourniagara.com/wp-content/uploads/2014/10/default-img.gif"}
+      kitchenObj.kitchen.kitchen_pictures.push(newImg)
+    }
     const address = this.createAddress()
     ExternalAPI.geocoder(address)
       .then(json => {
@@ -50,10 +57,11 @@ class CreateKitchenForm extends Component {
         const lng = json.results[0].geometry.location.lng
         kitchenObj.kitchen.latitude = lat
         kitchenObj.kitchen.longitude = lng
-        this.props.editKitchenOnBackend(kitchenObj)
-        this.props.editKitchenFromCurrentUser(kitchenObj)
+        this.props.editKitchen(kitchenObj)
         this.props.clearKitchenList()
-        this.setState({redirectToKitchen: "/mykitchens"})
+        // Need to have it load, and then redirect to /mykitchens.
+        // Maybe some state like "kitchen updated"
+        // this.setState({redirectToKitchen: "/mykitchens"})
       })
   }
 
@@ -64,7 +72,7 @@ class CreateKitchenForm extends Component {
 
   addImage = (imgUrl) => {
     const newImg = {url: imgUrl}
-    this.setState({kitchen_pictures: [...this.state.kitchen_pictures, newImg]})
+    this.setState({kitchen_pictures: [...this.props.kitchenPictures, newImg]})
   }
 
   render() {
@@ -117,30 +125,32 @@ class CreateKitchenForm extends Component {
           <Divider section hidden />
 
           <Header as="h3">Add Pictures</Header>
-          <AddKitchenPics savedPics={this.state.kitchen_pictures} addImage={this.addImage}/>
+          <AddKitchenPics savedPics={this.props.kitchenPictures} addImage={this.addImage}/>
 
           <Divider section hidden />
 
           <Form.Button primary>Update Kitchen</Form.Button>
         </Form>
-        {(this.state.redirectToKitchen) ? <Redirect push to={this.state.redirectToKitchen}/> : null}
+        {(this.props.kitchenUpdated) ? <Redirect push to="/mykitchens"/> : null}
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
+  console.log("state", state);
   return {
     currentUser: state.user.currentUser,
     selectedKitchen: state.kitchens.selectedKitchen,
-    isLoading: state.kitchens.isLoading
+    selectedKitchenPictures: state.kitchens.selectedKitchenPictures,
+    kitchenUpdated: state.kitchens.kitchenUpdated
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    editKitchenOnBackend: (kitchenObj) => dispatch(editKitchenOnBackend(kitchenObj)),
-    editKitchenFromCurrentUser: (kitchenObj) => dispatch(editKitchenFromCurrentUser(kitchenObj)),
+    editKitchen: (kitchenObj) => dispatch(editKitchen(kitchenObj)),
+    // editKitchenFromCurrentUser: (kitchenObj) => dispatch(editKitchenFromCurrentUser(kitchenObj)),
     clearKitchenList: () => dispatch(clearKitchenList())
   })
 }

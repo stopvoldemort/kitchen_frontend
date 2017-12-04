@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
-import { Checkbox, Form } from 'semantic-ui-react'
+import { Checkbox, Form, Input } from 'semantic-ui-react'
 
 
 export class KitchenFilter extends Component {
 
   state = {
-    equipment: {
-      food_processor: false,
-      standing_mixer: false,
-      deep_fryer: false,
-      pressure_cooker: false
+    filters: {
+      equipment: {
+        food_processor: false,
+        standing_mixer: false,
+        deep_fryer: false,
+        pressure_cooker: false,
+        guests: 0
+      }
     }
   }
 
@@ -23,18 +26,25 @@ export class KitchenFilter extends Component {
 
   handleEquipmentChange = (ev) => {
     const filter = this.dehumanize(ev.target.innerText)
-    const newEquipment = Object.assign({}, this.state.equipment)
-    newEquipment[filter] = !this.state.equipment[filter]
-    this.setState({equipment: newEquipment}, () => {
-      this.props.importFilters(this.state.equipment)
+    const newState = JSON.parse(JSON.stringify(this.state))
+    newState.filters.equipment[filter] = !this.state.filters.equipment[filter]
+    this.setState(newState, () => {
+      this.props.importFilters(this.state.filters)
     })
+  }
+
+  // THIS IS WHERE YOU LEFT OFF MAKING FILTERS
+  handleInputChange = (ev) => {
+    console.log(ev.target.value);
+    console.log(ev.target.name);
+    this.setState({})
   }
 
   render() {
     return (
       <div>
-        <h3>Filter</h3>
-        <h4>By Equipment</h4>
+        <h3>Filter Results</h3>
+        <h4>Equipment</h4>
         <Form>
           <Form.Field onChange={this.handleEquipmentChange}
             control={Checkbox}
@@ -52,6 +62,10 @@ export class KitchenFilter extends Component {
             control={Checkbox}
             label={{ children: 'Pressure Cooker' }}
           />
+          <Form.Field>
+            <label>Numbers of guests</label>
+            <Input onChange={this.handleInputChange} name="guests" type="number" value={this.state.guests} />
+          </Form.Field>
         </Form>
       </div>
     )

@@ -36,6 +36,7 @@ export function createKitchen(kitchenObj) {
     BackendAPI.createKitchen(kitchenObj)
       .then(json => {
         dispatch({type: "CREATE_KITCHEN", payload: json})
+        dispatch({type: "ADD_KITCHEN_TO_CURRENT_USER", payload: json})
       }
     )
   }
@@ -57,11 +58,13 @@ export function deleteKitchenFromBackend(kitchenID) {
   }
 }
 
-export function editKitchenOnBackend(kitchenObj) {
+export function editKitchen(kitchenObj) {
   return function(dispatch) {
-    BackendAPI.editKitchenOnBackend(kitchenObj)
+    BackendAPI.editKitchen(kitchenObj)
       .then(json => {
-        dispatch({type: "EDIT_KITCHEN_ON_BACKEND"})
+        // dispatch({type: "FETCH_KITCHEN", payload: json})
+        dispatch({type: "EDIT_KITCHEN_FROM_CURRENT_USER", payload: json})
+        dispatch({type: "KITCHEN_UPDATED"})
       }
     )
   }

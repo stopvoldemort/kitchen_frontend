@@ -25,17 +25,30 @@ class KitchenShowContainer extends Component {
       <div>
         {(!this.props.kitchen.id) ? <Loading /> :
           <div>
-            <KitchenShowHeader kitchen={this.props.kitchen} />
+            <KitchenShowHeader
+              kitchen={this.props.kitchen}
+              pictures={this.props.pictures}
+              reviews={this.props.reviews}
+            />
             <Grid padded>
               <Grid.Row>
                 <Grid.Column width={4}>
-                  <HostCard host={this.props.kitchen.owner} />
+                  <HostCard
+                    host={this.props.owner}
+                  />
                 </Grid.Column>
                 <Grid.Column width={8}>
-                  <KitchenInfo kitchen={this.props.kitchen} />
+                  <KitchenInfo
+                    kitchen={this.props.kitchen}
+                    reviews={this.props.reviews}
+                    reviewAuthors={this.props.reviewAuthors}
+                  />
                 </Grid.Column>
                 <Grid.Column width={4}>
-                  <KitchenAvailability kitchen={this.props.kitchen}/>
+                  <KitchenAvailability
+                    kitchen={this.props.kitchen}
+                    reservations={this.props.reservations}
+                  />
                 </Grid.Column>
               </Grid.Row>
             </Grid>
@@ -50,6 +63,11 @@ class KitchenShowContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     kitchen: state.kitchens.selectedKitchen,
+    reservations: state.kitchens.selectedKitchenReservations,
+    reviews: state.kitchens.selectedKitchenReviews,
+    reviewAuthors: state.kitchens.selectedKitchenReviewAuthors,
+    pictures: state.kitchens.selectedKitchenPictures,
+    owner: state.kitchens.selectedKitchenOwner,
     isLoading: state.kitchens.isLoading
   }
 }

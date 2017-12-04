@@ -23,7 +23,6 @@ export function resetNewReservationCreated() {
 }
 
 export function cancelReservation(reservationID) {
-  console.log("clicked from reservation action creators");
   return function(dispatch) {
     BackendAPI.cancelReservation(reservationID)
       .then(json => {
