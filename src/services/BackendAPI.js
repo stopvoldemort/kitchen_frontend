@@ -76,7 +76,7 @@ export default class BackendAPI {
       .then(res => res.json())
   }
 
-  static autoLogin() {
+  static refreshUser() {
     const url = `${BASE_URL}/me`
     const myInit = makeGetInit()
     return fetch(url, myInit)

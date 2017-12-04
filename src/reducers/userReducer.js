@@ -62,42 +62,11 @@ export function userReducer(state = {
       const newUsersReviews = state.usersReviews.concat(action.payload)
       return {...state, usersReviews: newUsersReviews}
 
-    case "ADD_KITCHEN_TO_CURRENT_USER":
-      let newUsersKitchens = state.usersKitchens.concat(action.payload.selected_kitchen)
-      let newUsersKitchensPictures = state.usersKitchensPictures.concat(action.payload.selected_kitchen_pictures)
-      return {
-        ...state,
-        usersKitchens: newUsersKitchens,
-        usersKitchensPictures: newUsersKitchensPictures
-      }
-
     case "DELETE_KITCHEN_FROM_CURRENT_USER":
       const smallerUsersKitchens = state.usersKitchens.filter(k => (k.id!==action.payload))
       return {
         ...state,
         usersKitchens: smallerUsersKitchens
-      }
-
-    case "EDIT_KITCHEN_FROM_CURRENT_USER":
-      console.log("state", state, "payload", action.payload);
-      let editedUsersKitchens = state.usersKitchens.filter(k => {
-        return k.id !== action.payload.selected_kitchen.id
-      })
-      editedUsersKitchens.push(action.payload.selected_kitchen)
-      console.log(state.usersKitchensPictures);
-      let editedUsersKitchensPictures = state.usersKitchensPictures.filter(kp => {
-        return kp.kitchen_id !== action.payload.selected_kitchen.id
-      })
-      editedUsersKitchensPictures.push(action.payload.selected_kitchen_pictures[0])
-      let editedUsersKitchensReviews = state.usersKitchensReviews.filter(kp => {
-        return kp.kitchen_id !== action.payload.selected_kitchen.id
-      })
-      editedUsersKitchensReviews.push([...action.payload.selected_kitchen_reviews])
-      return {
-        ...state,
-        usersKitchens: editedUsersKitchens,
-        usersKitchensPictures: editedUsersKitchensPictures,
-        usersKitchensReviews: editedUsersKitchensReviews
       }
 
     default:

@@ -44,6 +44,10 @@ export class AddKitchenPics extends Component {
   removeImage = (name) => {
     const newImages = this.state.images.filter(image => (image.name!==name))
     this.setState({images: newImages})
+    if (this.props.deleteImageFromParent) {
+      const imageToDelete = this.state.images.find(image => image.name===name)
+      this.props.deleteImageFromParent(imageToDelete.picUrl)
+    }
   }
 
   imgPreviews = () => {

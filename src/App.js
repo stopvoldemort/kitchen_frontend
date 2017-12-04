@@ -11,13 +11,13 @@ import CreateKitchenContainer from './components/createKitchen/CreateKitchenCont
 import MyKitchensContainer from './components/myKitchens/MyKitchensContainer.js'
 import EditKitchenContainer from './components/createKitchen/EditKitchenContainer.js'
 
-import { autoLogin } from './actions/users.js'
+import { refreshUser } from './actions/users.js'
 
 class App extends Component {
 
 
   componentDidMount = () => {
-    this.props.autoLogin()
+    this.props.refreshUser()
   }
 
   render() {
@@ -44,7 +44,7 @@ class App extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    autoLogin: () => dispatch(autoLogin())
+    refreshUser: () => dispatch(refreshUser())
   })
 }
 export default withRouter(connect(null, mapDispatchToProps)(App))

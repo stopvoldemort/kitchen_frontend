@@ -12,9 +12,9 @@ export function login(email, password) {
   }
 }
 
-export function autoLogin() {
+export function refreshUser() {
   return function(dispatch) {
-    BackendAPI.autoLogin()
+    return BackendAPI.refreshUser()
       .then(json => {
         if (!json.error) dispatch({type: "LOGIN", payload: json})
       })
@@ -51,9 +51,3 @@ export function deleteKitchenFromCurrentUser(kitchenID) {
     dispatch({type: "DELETE_KITCHEN_FROM_CURRENT_USER", payload: kitchenID})
   }
 }
-
-// export function editKitchenFromCurrentUser(kitchenObj) {
-//   return function(dispatch) {
-//     dispatch({type: "EDIT_KITCHEN_FROM_CURRENT_USER", payload: kitchenObj.kitchen})
-//   }
-// }

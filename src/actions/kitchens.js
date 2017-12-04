@@ -1,4 +1,5 @@
 import BackendAPI from '../services/BackendAPI.js'
+import { refreshUser } from './users.js'
 
 export function fetchCities() {
   return function(dispatch) {
@@ -35,8 +36,8 @@ export function createKitchen(kitchenObj) {
     dispatch({type: "CREATING_KITCHEN"})
     BackendAPI.createKitchen(kitchenObj)
       .then(json => {
+        dispatch(refreshUser())
         dispatch({type: "CREATE_KITCHEN", payload: json})
-        dispatch({type: "ADD_KITCHEN_TO_CURRENT_USER", payload: json})
       }
     )
   }
@@ -62,8 +63,8 @@ export function editKitchen(kitchenObj) {
   return function(dispatch) {
     BackendAPI.editKitchen(kitchenObj)
       .then(json => {
-        dispatch({type: "EDIT_KITCHEN_FROM_CURRENT_USER", payload: json})
-        dispatch({type: "KITCHEN_UPDATED"})
+        dispatch(refreshUser())
+          .then(() => dispatch({type: "KITCHEN_UPDATED"}))
       }
     )
   }

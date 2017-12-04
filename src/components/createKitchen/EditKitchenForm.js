@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Form, Header, Checkbox, Divider } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { editKitchen, clearKitchenList } from '../../actions/kitchens.js'
-// import { editKitchenFromCurrentUser } from '../../actions/users.js'
 import { Redirect } from 'react-router-dom'
 import { Loading } from '../kitchenList/Loading.js'
 import { AddKitchenPics } from './AddKitchenPics.js'
@@ -67,6 +66,11 @@ class CreateKitchenForm extends Component {
     return state.street_address + ", " + state.city + ", " + state.state + " " + state.zipcode
   }
 
+  deleteImageFromParent = (imgUrl) => {
+    const fewerImages = this.state.kitchen_pictures.filter(kp => kp.url!==imgUrl)
+    this.setState({kitchen_pictures: fewerImages})
+  }
+
   addImage = (imgUrl) => {
     const newImg = {url: imgUrl}
     const newKitchenPictures = this.props.selectedKitchenPictures.concat(newImg)
@@ -123,7 +127,11 @@ class CreateKitchenForm extends Component {
           <Divider section hidden />
 
           <Header as="h3">Add Pictures</Header>
-          <AddKitchenPics savedPics={this.props.selectedKitchenPictures} addImage={this.addImage}/>
+          <AddKitchenPics
+            savedPics={this.props.selectedKitchenPictures}
+            addImage={this.addImage}
+            deleteImageFromParent={this.deleteImageFromParent}
+          />
 
           <Divider section hidden />
 
@@ -136,7 +144,6 @@ class CreateKitchenForm extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("state", state);
   return {
     currentUser: state.user.currentUser,
     selectedKitchen: state.kitchens.selectedKitchen,
