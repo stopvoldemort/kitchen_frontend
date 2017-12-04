@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input, Menu, Button, Form, Message, Container, Header } from 'semantic-ui-react'
+import { Input, Menu, Button, Form, Message, Container, Header, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { login } from '../../actions/users'
@@ -12,11 +12,24 @@ class NavbarContainer extends Component {
 
   state = {
     email: "elise@guest.com",
-    password: "12345"
+    password: "12345",
+    searchInput: ""
+  }
+
+  searchSubmitted = () => {
+    if (this.state.searchInput) {
+      const path = `/kitchens/?query=${this.state.searchInput}`
+      this.setState({searchInput: ""})
+      this.props.history.push(path)
+    } else {
+      return null
+    }
   }
 
   handleEmailChange = (ev) => {this.setState({email: ev.target.value})}
   handlePasswordChange = (ev) => {this.setState({password: ev.target.value})}
+  handleSearchChange = (ev) => {this.setState({searchInput: ev.target.value})}
+
 
   handleLogin = (ev) => {
     ev.preventDefault()
@@ -26,6 +39,11 @@ class NavbarContainer extends Component {
 
   handleLogout = () => {this.props.logout()}
   resetLoginFail = () => {this.props.resetLoginFail()}
+
+  firstName = () => {
+    const first = this.props.currentUser.name.split(" ")[0]
+    return first.charAt(0).toUpperCase() + first.slice(1)
+  }
 
   render() {
     return (
@@ -37,6 +55,19 @@ class NavbarContainer extends Component {
               <Header color="blue" as='h1'>CounterSpace</Header>
             </Link>
           </Menu.Item>
+
+          {(this.props.location.pathname==="/") ? null : (
+            <Menu.Item>
+              <Form onSubmit={this.searchSubmitted}>
+                <Input
+                  type="text"
+                  placeholder='Search...'
+                  value={this.state.searchInput}
+                  onChange={this.handleSearchChange}
+                />
+              </Form>
+            </Menu.Item>
+          )}
 
           {(!this.props.loggedIn) ? (
             <Container>
@@ -55,13 +86,19 @@ class NavbarContainer extends Component {
           ) : (
             <Container>
               <Menu.Item position='right'>
-                <Menu.Item>
-                  <Link to="/reservations"><Button size="small">My Reservations</Button></Link>
-                  <Link to="/"><Button size="small" onClick={this.handleLogout}>Logout</Button></Link>
-                </Menu.Item>
-                <Menu.Item>
-                  <Link to="/mykitchens"><Button size="small">My Kitchens</Button></Link>
-                </Menu.Item>
+                <Dropdown basic pointing="right" item text={`Welcome, ${this.firstName()}`}>
+                  <Dropdown.Menu>
+                    <Link to="/reservations">
+                      <Dropdown.Item icon='globe' text='My Reservations' />
+                    </Link>
+                    <Link to="/mykitchens">
+                      <Dropdown.Item icon='globe' text='My Kitchens' />
+                    </Link>
+                    <Link to="/">
+                      <Dropdown.Item onClick={this.handleLogout} text='Logout' />
+                    </Link>
+                  </Dropdown.Menu>
+                </Dropdown>
               </Menu.Item>
             </Container>
           )}
