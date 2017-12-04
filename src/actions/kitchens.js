@@ -62,7 +62,6 @@ export function editKitchen(kitchenObj) {
   return function(dispatch) {
     BackendAPI.editKitchen(kitchenObj)
       .then(json => {
-        // dispatch({type: "FETCH_KITCHEN", payload: json})
         dispatch({type: "EDIT_KITCHEN_FROM_CURRENT_USER", payload: json})
         dispatch({type: "KITCHEN_UPDATED"})
       }

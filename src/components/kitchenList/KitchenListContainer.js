@@ -40,7 +40,7 @@ class KitchenListContainer extends Component {
   filterKitchens = () => {
     const filters = this.state.filters
     return this.props.kitchens.filter(k => {
-      if (
+      return (
         !(filters.equipment.food_processor && !k.food_processor) &&
         !(filters.equipment.deep_fryer && !k.deep_fryer) &&
         !(filters.equipment.pressure_cooker && !k.pressure_cooker) &&
@@ -48,7 +48,7 @@ class KitchenListContainer extends Component {
         !(filters.guests > k.max_guests) &&
         !(filters.min_price > (k.base_price + ((filters.guests - 2) * k.price_per_guest))) &&
         !(filters.max_price < (k.base_price + ((filters.guests - 2) * k.price_per_guest)))
-      ) return k
+      )
     })
   }
 

@@ -11,13 +11,7 @@ const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dwtfwfzsx/upload'
 
 export class AddKitchenPics extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      images: []
-    };
-  }
+  state = {images: []}
 
   componentDidMount = () => {
     const savedPics = this.props.savedPics

@@ -84,6 +84,7 @@ export function userReducer(state = {
         return k.id !== action.payload.selected_kitchen.id
       })
       editedUsersKitchens.push(action.payload.selected_kitchen)
+      console.log(state.usersKitchensPictures);
       let editedUsersKitchensPictures = state.usersKitchensPictures.filter(kp => {
         return kp.kitchen_id !== action.payload.selected_kitchen.id
       })

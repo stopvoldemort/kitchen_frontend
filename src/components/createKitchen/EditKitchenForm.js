@@ -59,9 +59,6 @@ class CreateKitchenForm extends Component {
         kitchenObj.kitchen.longitude = lng
         this.props.editKitchen(kitchenObj)
         this.props.clearKitchenList()
-        // Need to have it load, and then redirect to /mykitchens.
-        // Maybe some state like "kitchen updated"
-        // this.setState({redirectToKitchen: "/mykitchens"})
       })
   }
 
@@ -72,7 +69,8 @@ class CreateKitchenForm extends Component {
 
   addImage = (imgUrl) => {
     const newImg = {url: imgUrl}
-    this.setState({kitchen_pictures: [...this.props.kitchenPictures, newImg]})
+    const newKitchenPictures = this.props.selectedKitchenPictures.concat(newImg)
+    this.setState({kitchen_pictures: newKitchenPictures})
   }
 
   render() {
@@ -125,7 +123,7 @@ class CreateKitchenForm extends Component {
           <Divider section hidden />
 
           <Header as="h3">Add Pictures</Header>
-          <AddKitchenPics savedPics={this.props.kitchenPictures} addImage={this.addImage}/>
+          <AddKitchenPics savedPics={this.props.selectedKitchenPictures} addImage={this.addImage}/>
 
           <Divider section hidden />
 
@@ -150,7 +148,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return ({
     editKitchen: (kitchenObj) => dispatch(editKitchen(kitchenObj)),
-    // editKitchenFromCurrentUser: (kitchenObj) => dispatch(editKitchenFromCurrentUser(kitchenObj)),
     clearKitchenList: () => dispatch(clearKitchenList())
   })
 }
