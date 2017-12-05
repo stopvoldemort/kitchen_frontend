@@ -5,6 +5,10 @@ export function userReducer(state = {
   usersKitchensReviews: [],
   usersReviews: [],
   usersReservations: [],
+  usersSentMessages: [],
+  usersReceivedMessages: [],
+  usersReservationsKitchens: [],
+  usersReservationsKitchensPictures: [],
   loggedIn: false,
   loginFail: false,
   signUpFail: false
@@ -24,6 +28,8 @@ export function userReducer(state = {
         usersKitchensReviews: data.reviews_of_users_kitchens,
         usersSentMessages: data.sent_messages,
         usersReceivedMessages: data.received_messages,
+        usersReservationsKitchens: data.reservations_kitchens,
+        usersReservationsKitchensPictures: data.reservations_kitchens_pictures,
         loginFail: false,
         loggedIn: true
       }
@@ -54,6 +60,10 @@ export function userReducer(state = {
         usersKitchensPictures: [],
         usersReviews: [],
         usersReservations: [],
+        usersSentMessages: [],
+        usersReceivedMessages: [],
+        usersReservationsKitchens: [],
+        usersReservationsKitchensPictures: [],
         loggedIn: false,
         loginFail: false,
         signUpFail: false
@@ -71,6 +81,14 @@ export function userReducer(state = {
         usersKitchens: smallerUsersKitchens
       }
 
+    case "ADD_MESSAGE_TO_USERSSENTMESSAGES":
+      const newUsersSentMessages = [...state.usersSentMessages, action.payload]
+      return {...state, usersSentMessages: newUsersSentMessages}
+
+    case "READ_MESSAGES":
+      const newUsersReceivedMessages = [...state.usersReceivedMessages]
+      const readMessages = newUsersReceivedMessages.map(m => m.read=true)
+      return {...state, readMessages}
     default:
       return state
   }

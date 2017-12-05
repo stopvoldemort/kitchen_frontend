@@ -1,20 +1,27 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Header, Grid } from 'semantic-ui-react'
 import cuid from 'cuid'
-import moment from 'moment'
 import ReservationCard from './ReservationCard.js'
-import { fetchReservations, cancelReservation } from '../../actions/reservations.js'
 
 class ReservationList extends Component {
 
-  componentDidMount = () => {
-    const userID = this.props.currentUser.id
-    this.props.fetchReservations(userID)
+  bringSelectedToTheTop = (reservationsArray) => {
+    const selected = this.props.selectedReservation
+    if (selected.id) {
+      const index = reservationsArray.findIndex(i => i.id === selected.id)
+      if (index!==-1) {
+        return[selected]
+        // return [selected, ...reservationsArray.slice(0,index), ...reservationsArray.slice(index+1)]
+      }
+    }
+    return reservationsArray
   }
 
   reservationCards = (reservationsArray, isPrior) => {
-    return reservationsArray.map(reservation => (
+
+    const modReservationsArray = this.bringSelectedToTheTop(reservationsArray)
+
+    return modReservationsArray.map(reservation => (
       <ReservationCard
         key={cuid()}
         reservation={reservation}
@@ -26,15 +33,14 @@ class ReservationList extends Component {
         })}
         usersReviews={this.props.usersReviews}
         kitchen={this.props.kitchens.find(kitchen => kitchen.id === reservation.kitchen_id)}
-        sentMessages={this.props.usersSentMessages.filter(m => m.reservation_id===reservation.id)}
-        receivedMessages={this.props.usersReceivedMessages.filter(m => m.reservation_id===reservation.id)}
+        sentMessages={this.props.sentMessages.filter(m => m.reservation_id===reservation.id)}
+        receivedMessages={this.props.receivedMessages.filter(m => m.reservation_id===reservation.id)}
+        messagesButtonClicked={this.props.messagesButtonClicked}
       />
     ))
   }
 
-
   render() {
-    console.log(this.props)
     return (
       <div>
         <Grid divided='vertically'>
@@ -70,59 +76,6 @@ class ReservationList extends Component {
   }
 }
 
-const turnStringDatesToNumbers = (dateString) => {
-  const dateArr = dateString.split("-")
-  const parsedDateArr = dateArr.map(n => parseInt(n, 10))
-  return ((parsedDateArr[0]*10000) + (parsedDateArr[1]*100) + (parsedDateArr[2]*1))
-}
 
-const compareDescending = (a,b) => {
-  return turnStringDatesToNumbers(b.date) - turnStringDatesToNumbers(a.date)
-}
 
-const compareAscending = (a,b) => {
-  return turnStringDatesToNumbers(a.date) - turnStringDatesToNumbers(b.date)
-}
-
-const categorize = (reservations) => {
-  const todayJS = new Date()
-  const todayString = moment(todayJS).format('YYYY-MM-DD')
-  const todaysNumber = turnStringDatesToNumbers(todayString)
-  if (reservations.length) {
-    const categorizedReservations = reservations.reduce((agg, res) => {
-      if (turnStringDatesToNumbers(res.date) < todaysNumber) {
-        agg.prior.push(res)
-      } else if (turnStringDatesToNumbers(res.date) >= todaysNumber) {
-        agg.future.push(res)
-      }
-      return agg
-    }, {prior: [], future: []})
-    categorizedReservations.prior = categorizedReservations.prior.sort(compareDescending)
-    categorizedReservations.future = categorizedReservations.future.sort(compareAscending)
-    return categorizedReservations
-  } else return []
-}
-
-const mapStateToProps = (state) => {
-  const reservations = state.reservations.list
-  const reservationsObj = categorize(reservations)
-  return {
-    currentUser: state.user.currentUser,
-    reservations: reservationsObj,
-    kitchenPictures: state.reservations.kitchenPics,
-    kitchens: state.reservations.kitchens,
-    usersReviews: state.user.usersReviews,
-    usersSentMessages: state.user.usersSentMessages,
-    usersReceivedMessages: state.user.usersReceivedMessages,
-    usersReservations: state.user.usersReservations
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    fetchReservations: (userID) => dispatch(fetchReservations(userID)),
-    cancelReservation: (reservationID) => dispatch(cancelReservation(reservationID))
-  })
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ReservationList)
+export default ReservationList

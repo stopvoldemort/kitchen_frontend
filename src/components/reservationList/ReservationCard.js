@@ -8,7 +8,10 @@ export default class ReservationCard extends Component {
 
   // Note: 'prior' is an optional prop passed dwon from ReservationList
   // that is either true or undefined
-  state = {noReviewContent: false}
+  state = {
+    noReviewContent: false,
+    messageButtonClicked: false
+  }
 
   resetReviewFail = () => {this.setState({noReviewContent: !this.state.noReviewContent})}
 
@@ -31,12 +34,18 @@ export default class ReservationCard extends Component {
     else return `You have ${unread.length} new messages`
   }
 
+  handleMessageClick = () => {
+    this.props.messagesButtonClicked(this.props.reservation.id)
+  }
+
   render() {
     const picUrl = this.props.kitchenPicture.url
     const currentKitchenId = this.props.kitchen.id
     const previouslyReviewedKitchenIds = this.props.usersReviews.map(k => k.kitchen_id)
     const previouslyReviewed = (previouslyReviewedKitchenIds.includes(currentKitchenId))
     const kitchenUrl = `/kitchens/${currentKitchenId}`
+
+
 
     return (
       <div>
@@ -61,7 +70,9 @@ export default class ReservationCard extends Component {
             {this.props.reservation.guest_number} guests
           </Card.Content>
           <Card.Content>
-            <Button>{this.unreadMessagesNote()}</Button>
+            <Button onClick={this.handleMessageClick} active={this.state.messageButtonClicked}>
+              {this.unreadMessagesNote()}
+            </Button>
           </Card.Content>
           {this.props.prior && !previouslyReviewed ?
             <ReviewForm

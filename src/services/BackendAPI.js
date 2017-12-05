@@ -139,5 +139,19 @@ export default class BackendAPI {
       .then(res => res.json())
   }
 
+  static createMessage(messageObj) {
+    const url = `${BASE_URL}/messages`
+    const myInit = makePostInit(messageObj)
+    return fetch(url, myInit)
+      .then(res => res.json())
+  }
+
+  static readMessages(messageIDs) {
+    const url = `${BASE_URL}/read_messages`
+    const myInit = makePostInit(messageIDs)
+    return fetch(url, myInit)
+      .then(res => res.json())
+  }
+
 
 }
