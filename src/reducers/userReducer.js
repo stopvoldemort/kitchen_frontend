@@ -85,10 +85,6 @@ export function userReducer(state = {
       const newUsersSentMessages = [...state.usersSentMessages, action.payload]
       return {...state, usersSentMessages: newUsersSentMessages}
 
-    case "READ_MESSAGES":
-      const newUsersReceivedMessages = [...state.usersReceivedMessages]
-      const readMessages = newUsersReceivedMessages.map(m => m.read=true)
-      return {...state, readMessages}
     default:
       return state
   }

@@ -1,4 +1,5 @@
 import BackendAPI from '../services/BackendAPI.js'
+import { refreshUser } from './users.js'
 
 export function createMessage(messageObj) {
   return function(dispatch) {
@@ -13,7 +14,7 @@ export function readMessages(messageIDs) {
   return function(dispatch) {
     BackendAPI.readMessages(messageIDs)
       .then(json => {
-        dispatch({type: "READ_MESSAGES", payload: json})
+        dispatch(refreshUser())
       })
   }
 }

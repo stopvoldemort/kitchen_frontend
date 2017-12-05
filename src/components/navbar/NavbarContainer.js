@@ -30,6 +30,8 @@ class NavbarContainer extends Component {
   handlePasswordChange = (ev) => {this.setState({password: ev.target.value})}
   handleSearchChange = (ev) => {this.setState({searchInput: ev.target.value})}
 
+  // handleInboxClick = () => {this.props}
+
 
   handleLogin = (ev) => {
     ev.preventDefault()
@@ -43,6 +45,10 @@ class NavbarContainer extends Component {
   firstName = () => {
     const first = this.props.currentUser.name.split(" ")[0]
     return first.charAt(0).toUpperCase() + first.slice(1)
+  }
+
+  hasUnreadMessages = () => {
+    return this.props.receivedMessages.some((m) => !m.read)
   }
 
   render() {
@@ -101,7 +107,15 @@ class NavbarContainer extends Component {
                 </Dropdown>
               </Menu.Item>
               <Menu.Item>
-                <Icon disabled name='inbox' />
+                <Link to="/reservations">
+                  <Icon
+                    link
+                    size="large"
+                    disabled={!this.hasUnreadMessages()}
+                    name='inbox'
+                    onClick={this.handleInboxClick}
+                  />
+                </Link>
               </Menu.Item>
             </Container>
           )}
@@ -119,11 +133,13 @@ class NavbarContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.user.usersReceivedMessages)
   return {
     loggedIn: state.user.loggedIn,
     currentUser: state.user.currentUser,
     loginFail: state.user.loginFail,
-    resetLoginFail: state.user.resetLoginFail
+    resetLoginFail: state.user.resetLoginFail,
+    receivedMessages: state.user.usersReceivedMessages
   }
 }
 
