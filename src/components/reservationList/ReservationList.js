@@ -26,41 +26,46 @@ class ReservationList extends Component {
         })}
         usersReviews={this.props.usersReviews}
         kitchen={this.props.kitchens.find(kitchen => kitchen.id === reservation.kitchen_id)}
+        sentMessages={this.props.usersSentMessages.filter(m => m.reservation_id===reservation.id)}
+        receivedMessages={this.props.usersReceivedMessages.filter(m => m.reservation_id===reservation.id)}
       />
     ))
   }
 
 
   render() {
+    console.log(this.props)
     return (
-      <Grid divided='vertically'>
-        <Grid.Row columns={2}>
-          <Grid.Column>
-            {(this.props.reservations.prior) ? (
-              <div>
-                <Header as='h2'>Prior Reservations</Header>
-                <div>{this.reservationCards(this.props.reservations.prior, true)}</div>
-              </div>
-            ) : (
-              <div>
-                You have no prior reservations.
-              </div>
-            ) }
-          </Grid.Column>
-          <Grid.Column>
-            {(this.props.reservations.future) ? (
-              <div>
-                <Header as='h2'>Upcoming Reservations</Header>
-                <div>{this.reservationCards(this.props.reservations.future)}</div>
-              </div>
-            ) : (
-              <div>
-                You have no upcoming reservations.
-              </div>
-            ) }
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <div>
+        <Grid divided='vertically'>
+          <Grid.Row columns={2}>
+            <Grid.Column>
+              {(this.props.reservations.prior) ? (
+                <div>
+                  <Header as='h2'>Prior Reservations</Header>
+                  <div>{this.reservationCards(this.props.reservations.prior, true)}</div>
+                </div>
+              ) : (
+                <div>
+                  You have no prior reservations.
+                </div>
+              ) }
+            </Grid.Column>
+            <Grid.Column>
+              {(this.props.reservations.future) ? (
+                <div>
+                  <Header as='h2'>Upcoming Reservations</Header>
+                  <div>{this.reservationCards(this.props.reservations.future)}</div>
+                </div>
+              ) : (
+                <div>
+                  You have no upcoming reservations.
+                </div>
+              ) }
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
     )
   }
 }
@@ -106,7 +111,10 @@ const mapStateToProps = (state) => {
     reservations: reservationsObj,
     kitchenPictures: state.reservations.kitchenPics,
     kitchens: state.reservations.kitchens,
-    usersReviews: state.user.usersReviews
+    usersReviews: state.user.usersReviews,
+    usersSentMessages: state.user.usersSentMessages,
+    usersReceivedMessages: state.user.usersReceivedMessages,
+    usersReservations: state.user.usersReservations
   }
 }
 

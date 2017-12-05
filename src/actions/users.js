@@ -6,7 +6,7 @@ export function login(email, password) {
       .then(json => {
         if (!json.error) {
           localStorage.setItem("jwt", json.jwt)
-          dispatch({type: "LOGIN", payload: json.current_user})
+          dispatch({type: "LOGIN", payload: json.response})
         } else dispatch({type: "LOGIN_FAILED"})
       })
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input, Menu, Button, Form, Message, Container, Header, Dropdown } from 'semantic-ui-react'
+import { Input, Menu, Button, Form, Message, Container, Header, Dropdown, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { login } from '../../actions/users'
@@ -11,7 +11,7 @@ import '../../style/navbar.css'
 class NavbarContainer extends Component {
 
   state = {
-    email: "elise@guest.com",
+    email: "david@guest.com",
     password: "12345",
     searchInput: ""
   }
@@ -99,6 +99,9 @@ class NavbarContainer extends Component {
                     </Link>
                   </Dropdown.Menu>
                 </Dropdown>
+              </Menu.Item>
+              <Menu.Item>
+                <Icon disabled name='inbox' />
               </Menu.Item>
             </Container>
           )}

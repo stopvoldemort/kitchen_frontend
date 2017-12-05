@@ -22,6 +22,8 @@ export function userReducer(state = {
         usersReviews: data.kitchen_reviews,
         usersReservations: data.reservations,
         usersKitchensReviews: data.reviews_of_users_kitchens,
+        usersSentMessages: data.sent_messages,
+        usersReceivedMessages: data.received_messages,
         loginFail: false,
         loggedIn: true
       }

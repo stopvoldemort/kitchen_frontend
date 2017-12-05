@@ -22,6 +22,15 @@ export default class ReservationCard extends Component {
     this.props.cancelReservation(this.props.reservation.id)
   }
 
+  unreadMessages = () => (this.props.receivedMessages.filter(m => !m.read))
+
+  unreadMessagesNote = () => {
+    const unread = this.unreadMessages()
+    if (unread.length===1) return `You have 1 new messages`
+    if (unread.length===0) return `You have no new messages`
+    else return `You have ${unread.length} new messages`
+  }
+
   render() {
     const picUrl = this.props.kitchenPicture.url
     const currentKitchenId = this.props.kitchen.id
@@ -50,6 +59,9 @@ export default class ReservationCard extends Component {
           </Card.Content>
           <Card.Content extra>
             {this.props.reservation.guest_number} guests
+          </Card.Content>
+          <Card.Content>
+            <Button>{this.unreadMessagesNote()}</Button>
           </Card.Content>
           {this.props.prior && !previouslyReviewed ?
             <ReviewForm
