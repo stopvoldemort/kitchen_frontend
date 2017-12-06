@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Header, Checkbox, Divider } from 'semantic-ui-react'
+import { Form, Header, Checkbox, Divider, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { editKitchen, clearKitchenList } from '../../actions/kitchens.js'
 import { Redirect } from 'react-router-dom'
@@ -12,7 +12,10 @@ class CreateKitchenForm extends Component {
 
   state = {
     ...this.props.selectedKitchen,
-    kitchen_pictures: this.props.selectedKitchenPictures
+    kitchen_pictures: this.props.selectedKitchenPictures,
+
+    invalidZip: false,
+    invalidAddress: false
   }
 
   checkPositive = (num) => {return (num>0) ? true : false}
@@ -32,9 +35,12 @@ class CreateKitchenForm extends Component {
   handleZipBlur = (ev) => {
     const zip = ev.target.value
     const isZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zip)
-    if (isZip) this.setState({zipcode: zip})
-    else this.setState({zipcode: ""})
+    if (isZip) this.setState({zipcode: zip, invalidZip: false})
+    else this.setState({zipcode: "", invalidZip: true})
   }
+
+  resetInvalidZip = () => {this.setState({invalidZip: false})}
+  resetInvalidAddress = () => {this.setState({invalidAddress: false})}
 
   handleFoodProcessorChange = (ev) => {this.setState({food_processor : !this.state.food_processor})}
   handleStandingMixerChange = (ev) => {this.setState({standing_mixer : !this.state.standing_mixer})}
@@ -52,12 +58,16 @@ class CreateKitchenForm extends Component {
     const address = this.createAddress()
     ExternalAPI.geocoder(address)
       .then(json => {
-        const lat = json.results[0].geometry.location.lat
-        const lng = json.results[0].geometry.location.lng
-        kitchenObj.kitchen.latitude = lat
-        kitchenObj.kitchen.longitude = lng
-        this.props.editKitchen(kitchenObj)
-        this.props.clearKitchenList()
+        if (json.status==="ZERO_RESULTS") {
+          this.setState({invalidAddress: true})
+        } else {
+          const lat = json.results[0].geometry.location.lat
+          const lng = json.results[0].geometry.location.lng
+          kitchenObj.kitchen.latitude = lat
+          kitchenObj.kitchen.longitude = lng
+          this.props.editKitchen(kitchenObj)
+          this.props.clearKitchenList()
+        }
       })
   }
 
@@ -94,19 +104,27 @@ class CreateKitchenForm extends Component {
             <Form.Input required name="state" label='State' value={this.state.state} placeholder='e.g. NY'/>
             <Form.Input required name="zipcode" label='Zip Code' onBlur={this.handleZipBlur} value={this.state.zipcode} placeholder='e.g. 10021'/>
           </Form.Group>
+          {(this.state.invalidZip) ? (
+            <Message negative onDismiss={this.resetInvalidZip}>
+              <Message.Header>Please enter a valid zip code.</Message.Header>
+            </Message>
+          ) : null }
+          {(this.state.invalidAddress) ? (
+            <Message negative onDismiss={this.resetInvalidAddress}>
+            <Message.Header>Please enter a valid address.</Message.Header>
+            </Message>
+          ) : null }
 
           <Divider section hidden />
 
           <Header as="h3">Kitchen Details</Header>
           <Form.TextArea name="description" value={this.state.description} placeholder='Tell us about your kitchen...'/>
-          <Form.Group widths='equal'>
-            <Form.Input required name="size" label="Size of Kitchen (Sq Ft)" value={this.state.size} type="number" placeholder='How many square feet?'/>
-            <Form.Input required name="max_guests" label="Maximum Number of Guests" value={this.state.max_guests} type="number" placeholder='Maximum number of guests'/>
-          </Form.Group>
-          <Form.Group widths='equal'>
-            <Form.Input name="pots" label="Pots" value={this.state.pots} placeholder='e.g., AllClad, Steel'/>
-            <Form.Input name="pans" label="Pans" value={this.state.pans} placeholder='e.g., Lodge, Castiron'/>
-            <Form.Input name="knives" label="Knife Set" value={this.state.knives} placeholder='e.g., Wusthof'/>
+          <Form.Group>
+            <Form.Input required name="max_guests" label="Max # of Guests" value={this.state.max_guests} type="number" width={2}/>
+            <Form.Input required name="size" label="Sq Ft" value={this.state.size} type="number" step="10" width={2}/>
+            <Form.Input name="pots" label="Pots" value={this.state.pots} placeholder='e.g., AllClad, Steel' width={4}/>
+            <Form.Input name="pans" label="Pans" value={this.state.pans} placeholder='e.g., Lodge, Castiron' width={4}/>
+            <Form.Input name="knives" label="Knife Set" value={this.state.knives} placeholder='e.g., Wusthof' width={4}/>
           </Form.Group>
           <Header as="h4">Does your kitchen have a...</Header>
           <Form.Group widths='equal'>
@@ -120,8 +138,8 @@ class CreateKitchenForm extends Component {
 
           <Header as="h3">Booking Details</Header>
           <Form.Group widths='equal'>
-            <Form.Input required name="base_price" label="Minimum price (for 2 guests)" value={this.state.base_price} icon='dollar' iconPosition='left' placeholder="Base price" type="number"/>
-            <Form.Input required name="price_per_guest" label="Premium for each additional guest" value={this.state.price_per_guest} icon='dollar' iconPosition='left' placeholder='Price per guest' type="number"/>
+            <Form.Input required name="base_price" label="Minimum price (for 2 guests)" value={this.state.base_price} icon='dollar' iconPosition='left' placeholder="Base price" type="number" step="10"/>
+            <Form.Input required name="price_per_guest" label="Premium for each additional guest" value={this.state.price_per_guest} icon='dollar' iconPosition='left' placeholder='Price per guest' type="number" step="5"/>
           </Form.Group>
 
           <Divider section hidden />

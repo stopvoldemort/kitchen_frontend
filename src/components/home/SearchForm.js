@@ -3,6 +3,7 @@ import { Button, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import '../../style/home.css'
 import { Redirect } from 'react-router-dom'
+import ExternalAPI from '../../services/ExternalAPI.js'
 
 
 class SearchForm extends Component {
@@ -10,19 +11,30 @@ class SearchForm extends Component {
   state = {
     input: "",
     redirectToKitchenList: false,
-    showErrorMessage: false
+    noInput: false,
+    invalidAddress: false
   }
 
-  handleChange = (ev) => {
-    this.setState({input: ev.target.value})
-  }
+  handleChange = (ev) => {this.setState({input: ev.target.value})}
 
   handleSubmit = (ev) => {
+    const address = this.state.input
     ev.preventDefault()
-    this.state.input ? this.setState({redirectToKitchenList: true}) : this.setState({showErrorMessage: true})
+    if (!address) this.setState({noInput: true})
+    else {
+      ExternalAPI.geocoder(address)
+        .then(json => {
+          if (json.status==="ZERO_RESULTS") {
+            this.setState({invalidAddress: true})
+          } else {
+            this.setState({redirectToKitchenList: true})
+          }
+      })
+    }
   }
 
-  resetErrorMessage = () => this.setState({showErrorMessage: false})
+  resetNoInput = () => this.setState({noInput: false})
+  resetInvalidAddress = () => this.setState({invalidAddress: false})
 
   searchSubmitted = () => {
     if (this.state.redirectToKitchenList) {
@@ -44,9 +56,14 @@ class SearchForm extends Component {
           </div>
         </form>
         {this.searchSubmitted()}
-        {(this.state.showErrorMessage) ? (
-          <Message negative onDismiss={this.resetErrorMessage}>
+        {(this.state.noInput) ? (
+          <Message negative onDismiss={this.resetNoInput}>
             <Message.Header>Please enter a location</Message.Header>
+          </Message>
+        ) : null }
+        {(this.state.invalidAddress) ? (
+          <Message negative onDismiss={this.resetInvalidAddress}>
+            <Message.Header>Please enter a valid location</Message.Header>
           </Message>
         ) : null }
       </div>
