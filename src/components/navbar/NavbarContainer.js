@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input, Menu, Button, Form, Message, Container, Header, Dropdown, Icon } from 'semantic-ui-react'
+import { Input, Menu, Button, Form, Message, Container, Header, Dropdown, Label, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { login } from '../../actions/users'
@@ -32,9 +32,25 @@ class NavbarContainer extends Component {
     return first.charAt(0).toUpperCase() + first.slice(1)
   }
 
-  hasUnreadMessages = () => {
-    return this.props.receivedMessages.some((m) => !m.read)
+  unreadMessages = () => (this.props.receivedMessages.filter((m) => !m.read))
+
+  unreadMessagesAsGuest = () => {
+    const unread = this.unreadMessages()
+    const unreadGuestMessages = unread.filter(m => (
+      this.props.usersReservations.find(r => r.guest_id === m.recipient_id)
+    ))
+    return unreadGuestMessages.length
   }
+
+  unreadMessagesAsOwner = () => {
+    const unread = this.unreadMessages()
+    const unreadOwnerMessages = unread.filter(m => (
+      !this.props.usersReservations.find(r => r.guest_id === m.recipient_id)
+    ))
+    return unreadOwnerMessages.length
+  }
+
+
 
 
   render() {
@@ -67,25 +83,30 @@ class NavbarContainer extends Component {
               <Menu.Item position='right'>
                 <Dropdown basic pointing="right" item text={`Welcome, ${this.firstName()}`}>
                   <Dropdown.Menu>
+                    <Dropdown.Item disabled />
                     <Link to="/reservations">
-                      <Dropdown.Item icon='calendar' text='My Reservations' />
+                      <Dropdown.Item>
+                        <Icon name="calendar"/>
+                        My Reservations
+                        <Label color='red'>{this.unreadMessagesAsGuest()}</Label>
+                      </Dropdown.Item>
                     </Link>
                     <Link to="/mykitchens">
-                      <Dropdown.Item icon='globe' text='My Kitchens' />
+                      <Dropdown.Item>
+                        <Icon name="globe"/>
+                        My Kitchens
+                        <Label color='red'>{this.unreadMessagesAsOwner()}</Label>
+                      </Dropdown.Item>
                     </Link>
                     <Link to="/kitchens/new">
                       <Dropdown.Item icon='food' text='Add My Kitchen' />
                     </Link>
+                    <Dropdown.Item disabled />
                     <Link to="/">
                       <Dropdown.Item onClick={this.handleLogout} text='Logout' />
                     </Link>
                   </Dropdown.Menu>
                 </Dropdown>
-              </Menu.Item>
-              <Menu.Item>
-                {!this.hasUnreadMessages() ? null : (
-                  <Icon link size="big" name='inbox'/>
-                )}
               </Menu.Item>
             </Container>
           )}
@@ -108,7 +129,8 @@ const mapStateToProps = (state) => {
     currentUser: state.user.currentUser,
     loginFail: state.user.loginFail,
     resetLoginFail: state.user.resetLoginFail,
-    receivedMessages: state.user.usersReceivedMessages
+    receivedMessages: state.user.usersReceivedMessages,
+    usersReservations: state.user.usersReservations
   }
 }
 

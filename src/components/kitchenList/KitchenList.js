@@ -1,6 +1,6 @@
 import React from 'react'
 import KitchenCard from './KitchenCard.js'
-import { Card } from 'semantic-ui-react'
+import { Card, Header } from 'semantic-ui-react'
 import cuid from 'cuid'
 
 
@@ -53,7 +53,14 @@ export const KitchenList = (props) => {
 
   return (
     <Card.Group itemsPerRow={1} >
-      { props.kitchens.length ? kitchenCards() : <p>No kitchens available. Please search for a new location.</p>}
+      { props.kitchens.length ?
+        kitchenCards() :
+        <div>
+          <br/><br/>
+          <Header as="h3">No kitchens available. Please search for a new location.</Header>
+          <br/><br/>
+        </div>
+      }
     </Card.Group>
   )
 }

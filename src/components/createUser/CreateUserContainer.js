@@ -12,7 +12,8 @@ class CreateUserContainer extends Component {
     email: "",
     password: "",
     bio: "",
-    pic_url: ""
+    pic_url: "",
+    invalidEmail: false
   }
 
   handleNameChange = (e, { value }) => this.setState({ name: value })
@@ -22,11 +23,21 @@ class CreateUserContainer extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    const state = this.state
-    const userObj = {user: {
-      name: state.name, email: state.email, password: state.password, bio: state.bio, pic_url: state.pic_url
-    }}
-    this.props.createUser(userObj)
+    if (!this.validateEmail()) this.setState({invalidEmail: true})
+    else {
+      const state = this.state
+      const userObj = {user: {
+        name: state.name, email: state.email, password: state.password, bio: state.bio, pic_url: state.pic_url
+      }}
+      this.props.createUser(userObj)
+    }
+  }
+
+  handleEmailBlur = () => {if (!this.validateEmail()) this.setState({invalidEmail: true})}
+
+  validateEmail = () => {
+      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(this.state.email)
   }
 
   componentDidUpdate = () => {
@@ -35,22 +46,21 @@ class CreateUserContainer extends Component {
 
   addImage = (imgUrl) => {this.setState({pic_url: imgUrl})}
 
-  handleClick = () => {
-    this.props.resetSignupFail()
-  }
+  resetSignupFail = () => {this.props.resetSignupFail()}
+  resetInvalidEmail = () => {this.setState({invalidEmail: false})}
 
   render() {
     return (
       <div className="create-user-container">
         <Form onSubmit={this.handleSubmit}>
           <h1>Sign Up</h1>
-          <Form.Input label='Name' placeholder='Name' onChange={this.handleNameChange} />
+          <Form.Input required label='Name' placeholder='Name' onChange={this.handleNameChange} />
           <Form.Group widths='equal'>
-            <Form.Input iconPosition='left' label='Email' placeholder='Email address' onChange={this.handleEmailChange} >
+            <Form.Input required iconPosition='left' label='Email' placeholder='Email address' onChange={this.handleEmailChange} onBlur={this.handleEmailBlur} >
               <Icon name='at' />
               <input />
             </Form.Input>
-            <Form.Input type="password" label='Password' placeholder='Password' onChange={this.handlePasswordChange} />
+            <Form.Input required type="password" label='Password' placeholder='Password' onChange={this.handlePasswordChange} />
           </Form.Group>
           <Form.TextArea label='Bio' placeholder='Tell us more about you...' onChange={this.handleBioChange} />
 
@@ -59,8 +69,13 @@ class CreateUserContainer extends Component {
           <Form.Button primary>Sign Up</Form.Button>
         </Form>
         {(this.props.signupFail) ? (
-          <Message negative onDismiss={this.handleClick}>
+          <Message negative onDismiss={this.resetSignupFail}>
             <Message.Header>Something went wrong with your submission. Please try again.</Message.Header>
+          </Message>
+        ) : null }
+        {(this.state.invalidEmail) ? (
+          <Message negative onDismiss={this.resetInvalidEmail}>
+            <Message.Header>Please enter a valid email address.</Message.Header>
           </Message>
         ) : null }
       </div>
