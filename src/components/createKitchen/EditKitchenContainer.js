@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchKitchen } from '../../actions/kitchens.js'
 import EditKitchenForm from './EditKitchenForm.js'
+import { Container, Header } from 'semantic-ui-react'
 
 class EditKitchenContainer extends Component {
 
@@ -27,7 +28,11 @@ class EditKitchenContainer extends Component {
           ) : (
             <div>
               <br/><br/>
-              <EditKitchenForm />
+              <Container>
+                <Header as="h1" textAlign='center'>Edit Your Kitchen</Header>
+                <br/><br/>
+                <EditKitchenForm />
+              </Container>
             </div>
           )
         )}

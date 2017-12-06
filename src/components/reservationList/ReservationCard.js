@@ -70,7 +70,7 @@ export default class ReservationCard extends Component {
             {this.props.reservation.guest_number} guests
           </Card.Content>
           <Card.Content>
-            <Button onClick={this.handleMessageClick} active={this.state.messageButtonClicked}>
+            <Button primary basic size="large" onClick={this.handleMessageClick} active={this.state.messageButtonClicked}>
               {this.unreadMessagesNote()}
             </Button>
           </Card.Content>
@@ -85,8 +85,11 @@ export default class ReservationCard extends Component {
           {this.props.prior && previouslyReviewed ?
             <Button disabled>You previously reviewed this kitchen</Button>
           : null}
+
           {!this.props.prior ?
-            <Button onClick={this.handleCancelClick}>Cancel Reservation</Button>
+            <Card.Content>
+              <Button negative basic size="tiny" onClick={this.handleCancelClick}>Cancel Reservation</Button>
+            </Card.Content>
           : null}
 
         </Card>
