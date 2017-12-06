@@ -34,7 +34,7 @@ export function createUser(userObj) {
       .then(json => {
         if (!json.error) {
           localStorage.setItem("jwt", json.jwt)
-          dispatch({type: "LOGIN", payload: json.current_user})
+          dispatch({type: "LOGIN", payload: json.response})
         } else dispatch({type: "SIGNUP_FAILED"})
       })
   }

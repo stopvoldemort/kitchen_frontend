@@ -40,7 +40,7 @@ class KitchenAvailability extends Component {
     if (guests > this.props.kitchen.max_guests) {
       this.setState({tooManyGuests: true, guests: this.props.kitchen.max_guests})
     } else if (guests < 0) this.setState({guests: 0})
-    else this.setState({guests: guests})
+    else this.setState({guests: guests, tooManyGuests: false})
   }
 
   estimatedPrice = () => {

@@ -51,8 +51,6 @@ class NavbarContainer extends Component {
   }
 
 
-
-
   render() {
     return (
       <div>
