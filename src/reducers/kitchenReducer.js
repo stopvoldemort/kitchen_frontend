@@ -9,6 +9,8 @@ export function kitchenReducer(state = {
   selectedKitchenReservations: [],
   selectedKitchenPictures: [],
   selectedKitchenOwner: {},
+  selectedKitchenMessages: [],
+  selectedKitchenGuests: [],
   isLoading: false,
   kitchenUpdated: true
 }, action) {
@@ -39,6 +41,8 @@ export function kitchenReducer(state = {
         selectedKitchenReservations: data.selected_kitchen_reservations,
         selectedKitchenPictures: data.selected_kitchen_pictures,
         selectedKitchenOwner: data.selected_kitchen_owner,
+        selectedKitchenMessages: data.selected_kitchen_messages,
+        selectedKitchenGuests: data.selected_kitchen_guests,
         isLoading: false}
 
     case "CLEAR_KITCHEN_LIST":

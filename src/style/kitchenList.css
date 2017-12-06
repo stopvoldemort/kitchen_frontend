@@ -27,3 +27,8 @@
 .card-max-guests {
   float: right;
 }
+
+.guest-pic {
+  width: 100%;
+  height: 100%;
+}

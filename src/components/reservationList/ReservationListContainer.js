@@ -171,6 +171,7 @@ const categorize = (reservations) => {
 }
 
 const mapStateToProps = (state) => {
+  console.log("received", state.user.usersReceivedMessages, "sent", state.user.usersSentMessages);
   const reservations = state.user.usersReservations
   const reservationsObj = categorize(reservations)
   return {

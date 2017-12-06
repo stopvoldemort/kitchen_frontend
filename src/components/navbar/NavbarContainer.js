@@ -95,10 +95,13 @@ class NavbarContainer extends Component {
                 <Dropdown basic pointing="right" item text={`Welcome, ${this.firstName()}`}>
                   <Dropdown.Menu>
                     <Link to="/reservations">
-                      <Dropdown.Item icon='globe' text='My Reservations' />
+                      <Dropdown.Item icon='calendar' text='My Reservations' />
                     </Link>
                     <Link to="/mykitchens">
                       <Dropdown.Item icon='globe' text='My Kitchens' />
+                    </Link>
+                    <Link to="/kitchens/new">
+                      <Dropdown.Item icon='food' text='Add My Kitchen' />
                     </Link>
                     <Link to="/">
                       <Dropdown.Item onClick={this.handleLogout} text='Logout' />
@@ -110,7 +113,7 @@ class NavbarContainer extends Component {
                 <Link to="/reservations">
                   <Icon
                     link
-                    size="large"
+                    size="big"
                     disabled={!this.hasUnreadMessages()}
                     name='inbox'
                     onClick={this.handleInboxClick}
@@ -133,7 +136,6 @@ class NavbarContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.user.usersReceivedMessages)
   return {
     loggedIn: state.user.loggedIn,
     currentUser: state.user.currentUser,

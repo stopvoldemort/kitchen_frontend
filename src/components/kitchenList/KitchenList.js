@@ -25,6 +25,7 @@ export const KitchenList = (props) => {
           deleteKitchen={props.deleteKitchen}
           pic={pic}
           reviews={reviews}
+          clickedShowReservations={props.clickedShowReservations}
         />
       )
     })

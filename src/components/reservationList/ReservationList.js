@@ -11,7 +11,6 @@ class ReservationList extends Component {
       const index = reservationsArray.findIndex(i => i.id === selected.id)
       if (index!==-1) {
         return[selected]
-        // return [selected, ...reservationsArray.slice(0,index), ...reservationsArray.slice(index+1)]
       }
     }
     return reservationsArray
