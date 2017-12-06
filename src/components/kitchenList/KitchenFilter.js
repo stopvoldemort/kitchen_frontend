@@ -14,7 +14,7 @@ export class KitchenFilter extends Component {
       },
       guests: 2,
       max_price: 500,
-      min_price: 0
+      min_price: 20
     }
   }
 

@@ -55,7 +55,7 @@ export default class KitchenShowHeader extends Component {
           }
           <Divider fitted />
           <h1>{kitchen.title}</h1>
-          <a>{this.avgRating()}</a>
+          <span>{this.avgRating()}</span>
           <br/>
           <div>Up to {kitchen.max_guests} guests || {kitchen.size} square feet</div>
           <div>{kitchen.street_address}, {kitchen.city}, {kitchen.state} {kitchen.zipcode}</div>

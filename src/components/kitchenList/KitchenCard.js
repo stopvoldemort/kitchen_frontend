@@ -28,7 +28,9 @@ const KitchenCard = ({ kitchen, currentUser, deleteKitchen, editKitchen, pic, re
 
   return (
       <Card fluid>
-        <Image centered src={picUrl} />
+        <Link to={`/kitchens/${kitchen.id}`} >
+          <Image centered src={picUrl} />
+        </Link>
         <Card.Content>
             <Card.Header>
               <Link to={`/kitchens/${kitchen.id}`} >
@@ -40,7 +42,7 @@ const KitchenCard = ({ kitchen, currentUser, deleteKitchen, editKitchen, pic, re
           <Card.Description>{kitchen.blurb}</Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <a>{avgRating()}</a>
+          <span>{avgRating()}</span>
         </Card.Content>
         {(!currentUser) ? null : (
           <div>
