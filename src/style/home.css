@@ -17,7 +17,7 @@
 
 .animation-box {
   width: 100%;
-  height: 50rem;
+  height: 70rem;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
@@ -26,7 +26,7 @@
 
 .animation-container {
   width: 1000rem;
-  height: 30rem;
+  height: 50rem;
 }
 
 @keyframes topFadeOut {

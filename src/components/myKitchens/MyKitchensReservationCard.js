@@ -23,6 +23,11 @@ export const MyKitchensReservationCard = (props) => {
     return months[parseInt(dateArr[1],10)] + " " + dateArr[2] + ", " + dateArr[0]
   }
 
+  const handleMessagesClick = () => {
+    props.messagesButtonClicked(props.reservation.id)
+  }
+
+
   return (
     <div>
       <br/>
@@ -40,7 +45,7 @@ export const MyKitchensReservationCard = (props) => {
           {props.reservation.guest_number} guests
         </Card.Content>
         <Card.Content>
-          <Button fluid>
+          <Button onClick={handleMessagesClick} fluid>
             {unreadMessagesNote()}
           </Button>
         </Card.Content>

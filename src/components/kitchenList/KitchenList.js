@@ -5,6 +5,22 @@ import cuid from 'cuid'
 
 
 export const KitchenList = (props) => {
+
+
+  const unreadMessagesForKitchen = (kitchenID) => {
+    const reservations = props.kitchenReservations.filter(r => (
+      r.kitchen_id === kitchenID
+    ))
+    const unread = reservations.reduce((agg, r) => (
+      [...agg, ...unreadMessagesForReservation(r.id)]
+    ), [])
+    return unread
+  }
+
+  const unreadMessagesForReservation = (reservationID) => (
+    props.receivedMessages.filter(m => (m.reservation_id === reservationID))
+  )
+
   const kitchenCards = () => {
     const sortedKitchens = props.kitchens.reduce((agg, kitchen) => {
       if (kitchen.id!==props.selectedKitchenID) {
@@ -13,6 +29,7 @@ export const KitchenList = (props) => {
     }, [])
 
     return sortedKitchens.map((kitchen) => {
+
       const reviews = props.kitchenReviews.filter(kr => kr.kitchen_id===kitchen.id)
       const pics = props.kitchenPictures.filter(kp => kp && kp.kitchen_id===kitchen.id)
       const pic = pics[0]
@@ -26,6 +43,7 @@ export const KitchenList = (props) => {
           pic={pic}
           reviews={reviews}
           clickedShowReservations={props.clickedShowReservations}
+          unreadNum={unreadMessagesForKitchen(kitchen.id).length}
         />
       )
     })

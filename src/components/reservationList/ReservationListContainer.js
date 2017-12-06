@@ -103,6 +103,11 @@ class ReservationListContainer extends Component {
                 direction={this.sideToSlideFrom()} visible={this.state.visible}
                 icon='labeled' vertical inverted>
                   <Menu.Item>
+                    <Header
+                      as="h3"
+                      inverted
+                      content={`Messages with your host`}
+                    />
                     <MessageList
                       currentUser={this.props.currentUser}
                       messages={this.viewReservationMessages()}
@@ -113,7 +118,7 @@ class ReservationListContainer extends Component {
                 <Sidebar.Pusher>
                   <Segment basic>
                     <ReservationList
-                      setSelectedReservation={this.setSelectedReservation}
+                      // setSelectedReservation={this.setSelectedReservation}
                       selectedReservation={this.state.selectedReservation}
                       reservations={this.props.reservations}
                       currentUser={this.props.currentUser}
@@ -171,7 +176,6 @@ const categorize = (reservations) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log("received", state.user.usersReceivedMessages, "sent", state.user.usersSentMessages);
   const reservations = state.user.usersReservations
   const reservationsObj = categorize(reservations)
   return {

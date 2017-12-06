@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Card, Image, Button } from 'semantic-ui-react'
+import { Card, Image, Button, Label } from 'semantic-ui-react'
 import ReactStars from 'react-stars'
 
-const KitchenCard = ({ kitchen, currentUser, deleteKitchen, editKitchen, pic, reviews, clickedShowReservations }) => {
+const KitchenCard = ({ kitchen, currentUser, deleteKitchen, editKitchen, pic, reviews, clickedShowReservations, unreadNum }) => {
 
   const handleDeleteClick = () => deleteKitchen(kitchen.id)
   const handleReservationsClick = () => clickedShowReservations(kitchen)
@@ -27,10 +27,8 @@ const KitchenCard = ({ kitchen, currentUser, deleteKitchen, editKitchen, pic, re
   const picUrl = pic ? pic.url : "http://www.tourniagara.com/wp-content/uploads/2014/10/default-img.gif"
 
   return (
-    <div>
-      <br/>
       <Card fluid>
-        <Image src={picUrl} />
+        <Image centered src={picUrl} />
         <Card.Content>
             <Card.Header>
               <Link to={`/kitchens/${kitchen.id}`} >
@@ -47,7 +45,10 @@ const KitchenCard = ({ kitchen, currentUser, deleteKitchen, editKitchen, pic, re
         {(!currentUser) ? null : (
           <div>
             <Card.Content>
-              <Button primary size="huge" fluid onClick={handleReservationsClick}>Show Reservations</Button>
+              <Button primary size="huge" fluid onClick={handleReservationsClick}>
+                {unreadNum ? <Label color='red' floating>{unreadNum}</Label> : null}
+                Show Reservations
+              </Button>
             </Card.Content>
             <br/>
             <Card.Content>
@@ -59,8 +60,6 @@ const KitchenCard = ({ kitchen, currentUser, deleteKitchen, editKitchen, pic, re
           </div>
         )}
       </Card>
-      <br/>
-    </div>
   )
 }
 

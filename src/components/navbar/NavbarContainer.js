@@ -30,9 +30,6 @@ class NavbarContainer extends Component {
   handlePasswordChange = (ev) => {this.setState({password: ev.target.value})}
   handleSearchChange = (ev) => {this.setState({searchInput: ev.target.value})}
 
-  // handleInboxClick = () => {this.props}
-
-
   handleLogin = (ev) => {
     ev.preventDefault()
     this.props.login(this.state.email, this.state.password)
@@ -50,6 +47,7 @@ class NavbarContainer extends Component {
   hasUnreadMessages = () => {
     return this.props.receivedMessages.some((m) => !m.read)
   }
+
 
   render() {
     return (
@@ -110,15 +108,9 @@ class NavbarContainer extends Component {
                 </Dropdown>
               </Menu.Item>
               <Menu.Item>
-                <Link to="/reservations">
-                  <Icon
-                    link
-                    size="big"
-                    disabled={!this.hasUnreadMessages()}
-                    name='inbox'
-                    onClick={this.handleInboxClick}
-                  />
-                </Link>
+                {!this.hasUnreadMessages() ? null : (
+                  <Icon link size="big" name='inbox'/>
+                )}
               </Menu.Item>
             </Container>
           )}
