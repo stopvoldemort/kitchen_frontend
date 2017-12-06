@@ -11,6 +11,10 @@ import { createMessage, readMessages } from '../../actions/messages.js'
 class MyKitchensContainer extends Component {
 
   componentWillUnmount = () => {this.props.clearKitchen()}
+  componentDidMount = () => {
+    console.log(this.props)
+    // this.props.fetchKitchen(this.props.kitchens[0].id)
+  }
 
   deleteKitchen = (kitchenID) => {
     this.props.deleteKitchenFromBackend(kitchenID)
@@ -25,16 +29,18 @@ class MyKitchensContainer extends Component {
 
   render() {
     return (
-      <Grid padded>
-        <Grid.Column width={1}>
-        </Grid.Column>
-        <Grid.Column width={6}>
-          {(!this.props.currentUser.id) ? <p>You must be logged in to see your kitchens</p> : (
-            (!this.props.kitchens.length) ?
-              <div>
-                <p>You do not have any kitchens.</p>
-                <br/>
-              </div> : (
+      (!this.props.kitchens.length) ? (
+        <div>
+          <br/><br/>
+          <Header as="h3">You have not yet added your kitchen to CounterSpace.</Header>
+          <br/><br/>
+        </div>
+      ) : (
+        <Grid padded>
+          <Grid.Column width={1}>
+          </Grid.Column>
+          <Grid.Column width={6}>
+            {(!this.props.currentUser.id) ? <p>You must be logged in to see your kitchens</p> : (
               <div>
                 <br/>
                 <Header textAlign='center' as="h1">My Kitchens</Header>
@@ -50,30 +56,30 @@ class MyKitchensContainer extends Component {
                   clickedShowReservations={this.clickedShowReservations}
                 />
               </div>
-            )
-          )}
-        </Grid.Column>
-        <Grid.Column width={9}>
-          <div>
-            <br/>
-            <Header textAlign='center' as="h1">
-              {(!this.props.selectedKitchen.title) ? null : `Reservations for "${this.props.selectedKitchen.title}"`}
-            </Header>
-            <br/><br/>
-            <MyKitchensReservationList
-              selectedKitchen={this.props.selectedKitchen}
-              receivedMessages={this.props.receivedMessages}
-              sentMessages={this.props.sentMessages}
-              reservations={this.props.selectedKitchenReservations}
-              guests={this.props.selectedKitchenGuests}
-              messagesButtonClicked={this.messagesButtonClicked}
-              currentUser={this.props.currentUser}
-              createMessage={this.props.createMessage}
-              readMessages={this.props.readMessages}
-            />
-          </div>
-        </Grid.Column>
-      </Grid>
+            )}
+          </Grid.Column>
+          <Grid.Column width={9}>
+            <div>
+              <br/>
+              <Header textAlign='center' as="h1">
+                {(!this.props.selectedKitchen.title) ? null : `Reservations for "${this.props.selectedKitchen.title}"`}
+              </Header>
+              <br/><br/>
+              <MyKitchensReservationList
+                selectedKitchen={this.props.selectedKitchen}
+                receivedMessages={this.props.receivedMessages}
+                sentMessages={this.props.sentMessages}
+                reservations={this.props.selectedKitchenReservations}
+                guests={this.props.selectedKitchenGuests}
+                messagesButtonClicked={this.messagesButtonClicked}
+                currentUser={this.props.currentUser}
+                createMessage={this.props.createMessage}
+                readMessages={this.props.readMessages}
+              />
+            </div>
+          </Grid.Column>
+        </Grid>
+      )
     )
   }
 }

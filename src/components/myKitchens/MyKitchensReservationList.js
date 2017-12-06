@@ -33,17 +33,39 @@ class MyKitchensReservationList extends Component {
 
   reservationCards = () => {
     const sortedReservations = this.props.reservations.sort(this.compareDescending)
-    return sortedReservations.map(res => (
-      <MyKitchensReservationCard
+    if (this.props.selectedKitchen.id && !sortedReservations.length) {
+      return this.noReservationsNote()
+    } else if (!this.props.selectedKitchen.id) {
+      return this.noSelectedKitchensNote()
+    } else {
+      return sortedReservations.map(res => (
+        <MyKitchensReservationCard
         reservation={res}
         key={cuid()}
         messages={this.props.receivedMessages.filter(m => m.reservation_id===res.id)}
         guest={this.props.guests.find(g => res.guest_id===g.id)}
         currentUser={this.props.currentUser}
         messagesButtonClicked={this.messagesButtonClicked}
-      />
-    ))
+        />
+      ))
+    }
   }
+
+  noSelectedKitchensNote = () => (
+    <div>
+      <br/><br/>
+      <Header textAlign="center" as="h3" content={`Select a kitchen to see its reservations.`} />
+      <br/><br/>
+    </div>
+  )
+
+  noReservationsNote = () => (
+    <div>
+      <br/><br/>
+      <Header textAlign="center" as="h3" content={`This kitchen has never been reserved!`} />
+      <br/><br/>
+    </div>
+  )
 
   turnStringDatesToNumbers = (dateString) => {
     const dateArr = dateString.split("-")
