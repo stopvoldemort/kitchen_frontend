@@ -8,17 +8,19 @@ export const KitchenList = (props) => {
 
 
   const unreadMessagesForKitchen = (kitchenID) => {
-    const reservations = props.kitchenReservations.filter(r => (
-      r.kitchen_id === kitchenID
-    ))
-    const unread = reservations.reduce((agg, r) => (
-      [...agg, ...unreadMessagesForReservation(r.id)]
-    ), [])
-    return unread
+    if (props.kitchenReservations) {
+      const reservations = props.kitchenReservations.filter(r => (
+        r.kitchen_id === kitchenID
+      ))
+      const unread = reservations.reduce((agg, r) => (
+        [...agg, ...unreadMessagesForReservation(r.id)]
+      ), [])
+      return unread.length
+    } return null
   }
 
   const unreadMessagesForReservation = (reservationID) => (
-    props.receivedMessages.filter(m => (m.reservation_id === reservationID))
+    props.receivedMessages.filter(m => (m.reservation_id === reservationID && !m.read))
   )
 
   const kitchenCards = () => {
@@ -43,7 +45,7 @@ export const KitchenList = (props) => {
           pic={pic}
           reviews={reviews}
           clickedShowReservations={props.clickedShowReservations}
-          unreadNum={unreadMessagesForKitchen(kitchen.id).length}
+          unreadNum={unreadMessagesForKitchen(kitchen.id)}
         />
       )
     })

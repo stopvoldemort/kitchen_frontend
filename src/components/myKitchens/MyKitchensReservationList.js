@@ -15,8 +15,7 @@ class MyKitchensReservationList extends Component {
 
   handleContainerClick = () => {
     if (this.state.visible) this.setState({
-      visible: false,
-      selectedReservation: {}
+      visible: false
     })
   }
 

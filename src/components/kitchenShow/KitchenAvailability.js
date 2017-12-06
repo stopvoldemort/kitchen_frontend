@@ -17,7 +17,8 @@ class KitchenAvailability extends Component {
       selectedDate: moment(),
       guests: 0,
       notLoggedIn: false,
-      noGuests: false
+      noGuests: false,
+      tooManyGuests: false
     };
   }
 
@@ -39,10 +40,9 @@ class KitchenAvailability extends Component {
   handleGuestChange = (ev) => {
     const guests = ev.target.value
     if (guests > this.props.kitchen.max_guests) {
-      // Show error message
-      console.log("too many guests for this kitchen");
-    }
-    else if (guests > 0) this.setState({guests: guests})
+      this.setState({tooManyGuests: true, guests: this.props.kitchen.max_guests})
+    } else if (guests < 0) this.setState({guests: 0})
+    else this.setState({guests: guests})
   }
 
   estimatedPrice = () => {
@@ -72,6 +72,7 @@ class KitchenAvailability extends Component {
   }
 
   resetBookFail = () => {this.setState({notLoggedIn: false, noGuests: false})}
+  resetTooManyGuests = () => {this.setState({tooManyGuests: false})}
 
   componentWillUnmount = () => {this.props.resetNewReservationCreated()}
 
@@ -88,7 +89,14 @@ class KitchenAvailability extends Component {
         />
         <br /><br />
         <div className="ui input guest-counter">
-          <Input onChange={this.handleGuestChange} size="mini" label="Guests" value={this.state.guests} type="number" />
+          <Input
+            onChange={this.handleGuestChange}
+            onBlur={this.handleGuestBlur}
+            size="mini"
+            label="Guests"
+            value={this.state.guests}
+            type="number"
+          />
         </div>
         <br /><br />
         <div className="price-wrapper">
@@ -109,6 +117,11 @@ class KitchenAvailability extends Component {
         {(this.state.noGuests) ? (
           <Message negative onDismiss={this.resetBookFail}>
             <Message.Header>How many guests will there be?</Message.Header>
+          </Message>
+        ) : null }
+        {(this.state.tooManyGuests) ? (
+          <Message negative onDismiss={this.resetTooManyGuests}>
+            <Message.Header>This kitchen only fits {this.props.kitchen.max_guests} guests</Message.Header>
           </Message>
         ) : null }
       </div>

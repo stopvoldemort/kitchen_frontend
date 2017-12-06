@@ -66,13 +66,17 @@ class ReservationListContainer extends Component {
         selectedReservationIsPrior: prior,
         visible: true
       })
-    } else {
+    }
+    window.scrollTo(0, 0)
+  }
+
+  handleContainerClick = () => {
+    if (this.state.visible) {
       this.setState({
         selectedReservation: {},
         visible: false
       })
     }
-    window.scrollTo(0, 0)
   }
 
   readMessages = (messages) => {
@@ -116,7 +120,7 @@ class ReservationListContainer extends Component {
                   </Menu.Item>
                 </Sidebar>
                 <Sidebar.Pusher>
-                  <Segment basic>
+                  <Segment basic onClick={this.handleContainerClick}>
                     <ReservationList
                       // setSelectedReservation={this.setSelectedReservation}
                       selectedReservation={this.state.selectedReservation}

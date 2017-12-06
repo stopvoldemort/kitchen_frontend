@@ -12,23 +12,11 @@ class NavbarContainer extends Component {
 
   state = {
     email: "david@guest.com",
-    password: "12345",
-    searchInput: ""
-  }
-
-  searchSubmitted = () => {
-    if (this.state.searchInput) {
-      const path = `/kitchens/?query=${this.state.searchInput}`
-      this.setState({searchInput: ""})
-      this.props.history.push(path)
-    } else {
-      return null
-    }
+    password: "12345"
   }
 
   handleEmailChange = (ev) => {this.setState({email: ev.target.value})}
   handlePasswordChange = (ev) => {this.setState({password: ev.target.value})}
-  handleSearchChange = (ev) => {this.setState({searchInput: ev.target.value})}
 
   handleLogin = (ev) => {
     ev.preventDefault()
@@ -59,19 +47,6 @@ class NavbarContainer extends Component {
               <Header color="blue" as='h1'>CounterSpace</Header>
             </Link>
           </Menu.Item>
-
-          {(this.props.location.pathname==="/") ? null : (
-            <Menu.Item>
-              <Form onSubmit={this.searchSubmitted}>
-                <Input
-                  type="text"
-                  placeholder='Search...'
-                  value={this.state.searchInput}
-                  onChange={this.handleSearchChange}
-                />
-              </Form>
-            </Menu.Item>
-          )}
 
           {(!this.props.loggedIn) ? (
             <Container>

@@ -40,6 +40,7 @@ export class KitchenFilter extends Component {
     if (value>=0) this.setState(newState, () => {this.exportFilters()})
   }
 
+
   handleMaxPriceChange = (ev) => {
     const value = parseInt(ev.target.value, 10)
     const newState = JSON.parse(JSON.stringify(this.state))
