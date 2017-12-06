@@ -11,15 +11,13 @@ import { Message, Input } from 'semantic-ui-react'
 import 'react-datepicker/dist/react-datepicker.css';
 
 class KitchenAvailability extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      selectedDate: moment(),
-      guests: 0,
-      notLoggedIn: false,
-      noGuests: false,
-      tooManyGuests: false
-    };
+  state = {
+    selectedDate: moment(),
+    guests: 0,
+    notLoggedIn: false,
+    noGuests: false,
+    tooManyGuests: false,
+    guestsCantBeHosts: false
   }
 
   handleChange = (date) => {
@@ -57,6 +55,8 @@ class KitchenAvailability extends Component {
       this.setState({notLoggedIn: true})
     } else if (!this.state.guests) {
       this.setState({noGuests: true})
+    } else if (this.props.currentUser.id === this.props.kitchen.owner_id) {
+      this.setState({guestsCantBeHosts: true})
     } else {
       const date = this.state.selectedDate.toDate()
       const dateString = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate()
@@ -73,6 +73,7 @@ class KitchenAvailability extends Component {
 
   resetBookFail = () => {this.setState({notLoggedIn: false, noGuests: false})}
   resetTooManyGuests = () => {this.setState({tooManyGuests: false})}
+  resetGuestsCantBeHosts = () => {this.setState({guestsCantBeHosts: false})}
 
   componentWillUnmount = () => {this.props.resetNewReservationCreated()}
 
@@ -104,11 +105,9 @@ class KitchenAvailability extends Component {
             Estimated price: ${this.estimatedPrice()}
           </h4>
         </div>
+
         <br /><br />
-        <div className="button-wrapper">
-          <button onClick={this.handleBook} className="ui primary massive button">Book Now</button>
-          {(this.props.newReservationCreated) ? <Redirect push to="/reservations" /> : null}
-        </div>
+
         {(this.state.notLoggedIn) ? (
           <Message negative onDismiss={this.resetBookFail}>
             <Message.Header>You need to be logged in to book a kitchen.</Message.Header>
@@ -124,6 +123,17 @@ class KitchenAvailability extends Component {
             <Message.Header>This kitchen only fits {this.props.kitchen.max_guests} guests</Message.Header>
           </Message>
         ) : null }
+        {(this.state.guestsCantBeHosts) ? (
+          <Message negative onDismiss={this.resetGuestsCantBeHosts}>
+            <Message.Header>You are not allowed to book your own kitchen!</Message.Header>
+          </Message>
+        ) : null }
+
+        <div className="button-wrapper">
+          <button onClick={this.handleBook} className="ui primary massive button">Book Now</button>
+          {(this.props.newReservationCreated) ? <Redirect push to="/reservations" /> : null}
+        </div>
+
       </div>
     )
   }
