@@ -17,8 +17,8 @@ export const ShowImage = (props) => {
     <div className="image frame-square">
       {(!props.kitchenHasMultiplePics) ? null :
         <div>
-          <Icon onClick={clickedLeft} className="left-arrow" size="large" name="chevron left" />
-          <Icon onClick={clickedRight} className="right-arrow" size="large" name="chevron right" />
+          <Icon onClick={clickedLeft} className="left-arrow" link size="huge" name="chevron left" />
+          <Icon onClick={clickedRight} className="right-arrow" link size="huge" name="chevron right" />
         </div>
       }
       <Image

@@ -50,7 +50,7 @@ class SearchForm extends Component {
     return (
       <div className="home-search-container" >
         <form onSubmit={this.handleSubmit}>
-          <div className="ui action input huge">
+          <div className="ui action input large">
             <input type="text" size="50" onChange={this.handleChange} value={this.state.input} className="home-search" placeholder="Where do you live?" />
             <Button size="huge" className="blue" value="Search">Search</Button>
           </div>
