@@ -29,7 +29,7 @@ const KitchenCard = ({ kitchen, currentUser, selectedKitchenID, deleteKitchen, e
   const isSelectedKitchen = selectedKitchenID === kitchen.id
 
   return (
-    <Card fluid color={ isSelectedKitchen ? "black" : ""}>
+    <Card fluid color={ isSelectedKitchen ? "black" : "grey"}>
       <Link to={`/kitchens/${kitchen.id}`} >
         <Image centered src={picUrl} />
       </Link>

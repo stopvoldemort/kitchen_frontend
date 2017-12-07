@@ -11,10 +11,6 @@ import { createMessage, readMessages } from '../../actions/messages.js'
 class MyKitchensContainer extends Component {
 
   componentWillUnmount = () => {this.props.clearKitchen()}
-  componentDidMount = () => {
-    console.log(this.props)
-    // this.props.fetchKitchen(this.props.kitchens[0].id)
-  }
 
   deleteKitchen = (kitchenID) => {
     this.props.deleteKitchenFromBackend(kitchenID)

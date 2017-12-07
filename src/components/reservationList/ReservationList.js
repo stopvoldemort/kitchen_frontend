@@ -9,8 +9,9 @@ class ReservationList extends Component {
     const selected = this.props.selectedReservation
     if (selected.id) {
       const index = reservationsArray.findIndex(i => i.id === selected.id)
+      const remainingReservations = [...reservationsArray.slice(0,index), ...reservationsArray.slice(index + 1)]
       if (index!==-1) {
-        return[selected]
+        return[selected, ...remainingReservations]
       }
     }
     return reservationsArray

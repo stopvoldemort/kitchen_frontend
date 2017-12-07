@@ -122,7 +122,6 @@ class ReservationListContainer extends Component {
                 <Sidebar.Pusher>
                   <Segment basic onClick={this.handleContainerClick}>
                     <ReservationList
-                      // setSelectedReservation={this.setSelectedReservation}
                       selectedReservation={this.state.selectedReservation}
                       reservations={this.props.reservations}
                       currentUser={this.props.currentUser}
