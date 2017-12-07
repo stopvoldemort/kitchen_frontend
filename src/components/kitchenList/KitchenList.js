@@ -46,6 +46,7 @@ export const KitchenList = (props) => {
           reviews={reviews}
           clickedShowReservations={props.clickedShowReservations}
           unreadNum={unreadMessagesForKitchen(kitchen.id)}
+          selectedKitchenID={props.selectedKitchenID}
         />
       )
     })
