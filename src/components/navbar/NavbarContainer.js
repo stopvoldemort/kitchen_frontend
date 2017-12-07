@@ -34,6 +34,11 @@ class NavbarContainer extends Component {
 
   unreadMessages = () => (this.props.receivedMessages.filter((m) => !m.read))
 
+  unreadNum = () => {
+    const unread = this.unreadMessages()
+    return unread.length
+  }
+
   unreadMessagesAsGuest = () => {
     const unread = this.unreadMessages()
     const unreadGuestMessages = unread.filter(m => {
@@ -109,6 +114,7 @@ class NavbarContainer extends Component {
                     </Link>
                   </Dropdown.Menu>
                 </Dropdown>
+                <Label color='red'>{this.unreadNum()}</Label>
               </Menu.Item>
             </Container>
           )}
