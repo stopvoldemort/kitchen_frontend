@@ -18,7 +18,7 @@ class CreateKitchenForm extends Component {
     invalidAddress: false
   }
 
-  checkPositive = (num) => {return (num>0) ? true : false}
+  checkPositive = (num) => {return (num<0) ? false : true}
 
   handleInputChange = (ev) => {
     const target = ev.target;

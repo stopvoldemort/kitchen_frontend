@@ -33,7 +33,10 @@ class CreateUserContainer extends Component {
     }
   }
 
-  handleEmailBlur = () => {if (!this.validateEmail()) this.setState({invalidEmail: true})}
+  handleEmailBlur = () => {
+    if (!this.validateEmail()) this.setState({invalidEmail: true})
+    else this.setState({invalidEmail: false})
+  }
 
   validateEmail = () => {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
