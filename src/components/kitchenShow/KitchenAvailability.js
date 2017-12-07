@@ -35,6 +35,14 @@ class KitchenAvailability extends Component {
     })
   }
 
+  pastDates = () => {
+    let past = []
+    for (let i = 0; i<100; i++) {
+      past.push(moment().subtract(i, "days"))
+    }
+    return past
+  }
+
   handleGuestChange = (ev) => {
     const guests = ev.target.value
     if (guests > this.props.kitchen.max_guests) {
@@ -86,7 +94,8 @@ class KitchenAvailability extends Component {
           selected={this.state.selectedDate}
           onChange={this.handleChange}
           inline={true}
-          excludeDates={this.reservedDates()}
+          minDate={moment().subtract(99, "days")}
+          excludeDates={[...this.pastDates(), ...this.reservedDates()]}
         />
         <br /><br />
         <div className="ui input guest-counter">
