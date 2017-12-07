@@ -36,18 +36,22 @@ class NavbarContainer extends Component {
 
   unreadMessagesAsGuest = () => {
     const unread = this.unreadMessages()
-    const unreadGuestMessages = unread.filter(m => (
-      this.props.usersReservations.find(r => r.guest_id === m.recipient_id)
-    ))
+    const unreadGuestMessages = unread.filter(m => {
+      const res = this.props.usersReservations.find(r => r.id === m.reservation_id)
+      if (res && res.guest_id === m.recipient_id) return true
+      else return false
+    })
     return unreadGuestMessages.length
   }
 
   unreadMessagesAsOwner = () => {
     const unread = this.unreadMessages()
-    const unreadOwnerMessages = unread.filter(m => (
-      !this.props.usersReservations.find(r => r.guest_id === m.recipient_id)
-    ))
-    return unreadOwnerMessages.length
+    const unreadGuestMessages = unread.filter(m => {
+      const res = this.props.usersReservations.find(r => r.id === m.reservation_id)
+      if (res && res.guest_id === m.recipient_id) return false
+      else return true
+    })
+    return unreadGuestMessages.length
   }
 
 

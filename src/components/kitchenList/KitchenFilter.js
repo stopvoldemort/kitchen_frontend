@@ -37,22 +37,21 @@ export class KitchenFilter extends Component {
     const value = parseInt(ev.target.value, 10)
     const newState = JSON.parse(JSON.stringify(this.state))
     newState.filters.guests = value
-    if (value>=0) this.setState(newState, () => {this.exportFilters()})
+    if (!(value < 0)) this.setState(newState, () => {this.exportFilters()})
   }
-
 
   handleMaxPriceChange = (ev) => {
     const value = parseInt(ev.target.value, 10)
     const newState = JSON.parse(JSON.stringify(this.state))
     newState.filters.max_price = value
-    if (value>=0) this.setState(newState, () => {this.exportFilters()})
+    if (!(value < 0)) this.setState(newState, () => {this.exportFilters()})
   }
 
   handleMinPriceChange = (ev) => {
     const value = parseInt(ev.target.value, 10)
     const newState = JSON.parse(JSON.stringify(this.state))
     newState.filters.min_price = value
-    if (value>=0) this.setState(newState, () => {this.exportFilters()})
+    if (!(value < 0)) this.setState(newState, () => {this.exportFilters()})
   }
 
   exportFilters = () => {this.props.importFilters(this.state.filters)}

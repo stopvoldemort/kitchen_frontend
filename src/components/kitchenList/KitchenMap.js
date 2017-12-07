@@ -23,7 +23,7 @@ export class KitchenMap extends Component {
       <div>
         <Map
           google={this.props.google}
-          zoom={11}
+          zoom={10}
           style={{width: '100%', height: '500px'}}
           initialCenter={{
             lat: this.props.cityLatitude,
