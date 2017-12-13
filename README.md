@@ -27,7 +27,7 @@ Guests are able to search for kitchens by location, book reservations, message t
 * 'superagent'
 
 ## State
-
+```
 state = {
   kitchens: {
     cities: [array of city names],
@@ -62,3 +62,4 @@ state = {
     signUpFail: boolean
   }
 }
+```
