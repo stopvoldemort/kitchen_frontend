@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000"
+const BASE_URL = "https://radiant-falls-64401.herokuapp.com/"
 
 const makePostInit = (obj) => {
   return {
