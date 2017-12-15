@@ -5,7 +5,7 @@ import { KitchenPic } from './KitchenPic.js'
 import cuid from 'cuid'
 import { Grid } from 'semantic-ui-react'
 
-const CLOUDINARY_UPLOAD_PRESET = 'rzj0ppvh';
+const CLOUDINARY_UPLOAD_PRESET = 'ubao7svc';
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dwtfwfzsx/upload';
 
 
