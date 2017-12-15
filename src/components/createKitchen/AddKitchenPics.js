@@ -31,13 +31,14 @@ export class AddKitchenPics extends Component {
                         .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
                         .field('file', file);
     upload.end((err, response) => {
-      if (response.body.secure_url !== '') {
-        const newPic = {picUrl: response.body.secure_url, name: file.name}
-        this.setState({
-          images: [...this.state.images, newPic]
-        })
-        this.props.addImage(newPic.picUrl)
-      }
+      console.log(err, response);
+      // if (response.body.secure_url !== '') {
+      //   const newPic = {picUrl: response.body.secure_url, name: file.name}
+      //   this.setState({
+      //     images: [...this.state.images, newPic]
+      //   })
+      //   this.props.addImage(newPic.picUrl)
+      // }
     });
   }
 
