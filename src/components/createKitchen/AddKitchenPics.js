@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import { KitchenPic } from './KitchenPic.js'
 import cuid from 'cuid'
-import { Grid } from 'semantic-ui-react'
+import { Grid, Message } from 'semantic-ui-react'
 
 const CLOUDINARY_UPLOAD_PRESET = 'ubao7svc';
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dwtfwfzsx/upload';
@@ -11,7 +11,7 @@ const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dwtfwfzsx/upload'
 
 export class AddKitchenPics extends Component {
 
-  state = {images: []}
+  state = {images: [], errorMessage: false}
 
   componentDidMount = () => {
     const savedPics = this.props.savedPics
@@ -31,14 +31,18 @@ export class AddKitchenPics extends Component {
                         .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
                         .field('file', file);
     upload.end((err, response) => {
-      console.log(err, response);
-      // if (response.body.secure_url !== '') {
-      //   const newPic = {picUrl: response.body.secure_url, name: file.name}
-      //   this.setState({
-      //     images: [...this.state.images, newPic]
-      //   })
-      //   this.props.addImage(newPic.picUrl)
-      // }
+      if (!response) {
+        this.setState({errorMessage: true})
+        console.log(err, response)
+      }
+
+      else if (response.body.secure_url !== '') {
+        const newPic = {picUrl: response.body.secure_url, name: file.name}
+        this.setState({
+          images: [...this.state.images, newPic]
+        })
+        this.props.addImage(newPic.picUrl)
+      }
     });
   }
 
@@ -70,6 +74,12 @@ export class AddKitchenPics extends Component {
             onDrop={this.onImageDrop}>
             <p>Drop an image or click to select a file to upload.</p>
           </Dropzone>
+          {(!this.state.errorMessage) ? null :
+            <Message negative>
+              <p>My apologies -- there was an error uploading your image.</p>
+              <p>Please disable any adblockers on this page -- sometimes these cause the issue.</p>
+            </Message>
+          }
         </div>
         <Grid>
           <Grid.Row columns={8} >
